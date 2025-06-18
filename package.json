@@ -1,0 +1,50 @@
+{
+  "name": "@payjp/payjpv2",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "test": "jest",
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "prebuild": "npm run clean",
+    "prepublishOnly": "npm run build",
+    "lint": "tsc --noEmit",
+    "dev": "tsc --watch",
+    "format": "npx @biomejs/biome check --write --unsafe && npx @biomejs/biome format --write"
+  },
+  "keywords": [
+    "payjp",
+    "payment",
+    "api",
+    "sdk",
+    "typescript"
+  ],
+  "author": "PAY.JP",
+  "license": "MIT",
+  "description": "PAY.JP v2 API client for Node.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/payjp/payjpv2-node.git"
+  },
+  "bugs": {
+    "url": "https://github.com/payjp/payjpv2-node/issues"
+  },
+  "homepage": "https://github.com/payjp/payjpv2-node#readme",
+  "dependencies": {
+    "@hey-api/client-fetch": "^0.10.1"
+  },
+  "devDependencies": {
+    "@types/jest": "29.5.14",
+    "@types/node": "^22.15.19",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.2",
+    "typescript": "^5.8.3"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
