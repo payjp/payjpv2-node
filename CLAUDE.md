@@ -16,12 +16,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 This is a Node.js SDK for the PAY.JP v2 API built with TypeScript. The architecture consists of:
 
 ### Core Components
-- **Client Creation**: `payjp2.ts` - Main client factory using `@hey-api/client-fetch`
+- **Client Creation**: `payjpv2.ts` - Main client factory using `@hey-api/client-fetch`
 - **Generated API**: `client/` directory contains auto-generated API functions and types from OpenAPI spec
 - **Entry Point**: `index.ts` exports the client factory and all API functions
 
 ### Key Files
-- `payjp2.ts` - Creates authenticated HTTP client with proper headers and user agent
+- `payjpv2.ts` - Creates authenticated HTTP client with proper headers and user agent
 - `client/sdk.gen.ts` - Auto-generated API functions (healthcheck, plans, payment methods, etc.)
 - `client/types.gen.ts` - Auto-generated TypeScript types
 - `client/client.gen.ts` - Auto-generated client configuration

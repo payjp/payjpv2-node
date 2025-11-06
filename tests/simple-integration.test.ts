@@ -1,5 +1,5 @@
 import { describe, expect, test } from "@jest/globals";
-import { createClient } from "../payjp2";
+import { createClient } from "../payjpv2";
 import { createCustomer } from "../index";
 
 describe("Simple Integration Tests", () => {

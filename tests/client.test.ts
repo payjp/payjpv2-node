@@ -3,13 +3,13 @@ import { describe, expect, jest, test } from "@jest/globals";
 import * as sdkExports from "../client/sdk.gen";
 import * as indexExports from "../index";
 import { createCustomer } from "../index";
-import * as payjp2Exports from "../payjp2";
+import * as payjpv2Exports from "../payjpv2";
 
 describe("index.ts", () => {
   test("correctly exports modules", () => {
     // Verify that createClient and ClientConfig are correctly exported
     expect(indexExports.createClient).toBeDefined();
-    expect(indexExports.createClient).toBe(payjp2Exports.createClient);
+    expect(indexExports.createClient).toBe(payjpv2Exports.createClient);
 
     // Verify that all functions exported from client/sdk.gen are included
     for (const key in sdkExports) {
@@ -40,7 +40,7 @@ describe("index.ts", () => {
   });
 
   test("default baseUrl is used", () => {
-    const spy = jest.spyOn(payjp2Exports, "createClient");
+    const spy = jest.spyOn(payjpv2Exports, "createClient");
 
     indexExports.createClient({
       apiKey: "sk_test_dummy_key",
@@ -55,7 +55,7 @@ describe("index.ts", () => {
   });
 
   test("custom baseUrl is used", () => {
-    const spy = jest.spyOn(payjp2Exports, "createClient");
+    const spy = jest.spyOn(payjpv2Exports, "createClient");
 
     indexExports.createClient({
       apiKey: "sk_test_dummy_key",

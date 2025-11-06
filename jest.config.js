@@ -6,7 +6,7 @@ module.exports = {
   collectCoverage: true,
   collectCoverageFrom: [
     "index.ts",
-    "payjp2.ts",
+    "payjpv2.ts",
     "!**/node_modules/**",
     "!**/dist/**",
     "!**/tests/**",

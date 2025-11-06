@@ -1,7 +1,7 @@
 import { describe, expect, jest, test } from "@jest/globals";
-import { createClient } from "../payjp2";
+import { createClient } from "../payjpv2";
 
-describe("payjp2.ts", () => {
+describe("payjpv2.ts", () => {
   test("createClient creates a client with correct configuration", () => {
     const client = createClient({
       apiKey: "sk_test_dummy_key",
