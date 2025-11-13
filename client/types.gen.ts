@@ -319,7 +319,7 @@ export type CheckoutSessionCreateRequest = {
     /**
      * `payment` モード指定時に PaymentFlow 作成に使用するパラメーター。
      */
-    payment_flow_data?: PaymentFlowDataRequestInput;
+    payment_flow_data?: PaymentFlowDataRequest;
     /**
      * この PaymentFlow の支払い方法の個別設定。
      */
@@ -455,9 +455,7 @@ export type CheckoutSessionDetailsResponse = {
      *
      * `payment` モードの Checkout Session の PaymentFlow の ID。PaymentFlow を確定 (confirm)、またはキャンセルすることはできません。キャンセルするには、代わりに Checkout Session を期限切れにしてください。
      */
-    payment_flow?: string | {
-        [key: string]: unknown;
-    } | null;
+    payment_flow?: string | PaymentFlowResponse | null;
     /**
      * Payment Method Types
      *
@@ -473,9 +471,11 @@ export type CheckoutSessionDetailsResponse = {
         [key: string]: unknown;
     } | null;
     /**
+     * Setup Flow
+     *
      * `setup` モードの Checkout Session の SetupFlow の ID。Checkout Session の SetupFlow を確定 (confirm)、またはキャンセルすることはできません。キャンセルするには、代わりに Checkout Session を期限切れにしてください。
      */
-    setup_flow?: PaymentFlowDataRequestOutput | null;
+    setup_flow?: string | SetupFlowResponse | null;
     /**
      * Checkout の画面上に表示される送信ボタンなど、ページ上の関連テキストをカスタマイズするために使用されます。<br>
      * `submit_type` は、`payment` モードの Checkout Session でのみ指定できます。未指定時、あるいは `auto` の場合、`pay` が使用されます。
@@ -1091,10 +1091,6 @@ export type PaymentFlowConfirmRequest = {
      */
     payment_method?: string;
     /**
-     * 指定した場合、PaymentMethodの作成に使用されます。新しいPaymentMethodは、PaymentFlowのpayment_methodプロパティに表示されます。
-     */
-    payment_method_data?: PaymentMethodCreateRequest;
-    /**
      * このPaymentFlowに固有の支払い方法の設定
      */
     payment_method_options?: PaymentMethodOptionsRequest;
@@ -1143,10 +1139,6 @@ export type PaymentFlowCreateRequest = {
      * 支払い方法ID
      */
     payment_method?: string;
-    /**
-     * 指定した場合、PaymentMethodの作成に使用されます。新しいPaymentMethodは、PaymentFlowのpayment_methodプロパティに表示されます。
-     */
-    payment_method_data?: PaymentMethodCreateRequest;
     /**
      * このPaymentFlowに固有の支払い方法の設定
      */
@@ -1219,7 +1211,7 @@ export type PaymentFlowCreateRequest = {
 /**
  * PaymentFlowDataRequest
  */
-export type PaymentFlowDataRequestInput = {
+export type PaymentFlowDataRequest = {
     /**
      * 支払いの確定方法を指定します。
      *
@@ -1245,55 +1237,6 @@ export type PaymentFlowDataRequestInput = {
      * その後、顧客が必要な操作を完了すると、支払い方法を Customer に紐付けることが可能です。また、Customer を指定しない場合でも、取引が完了した後に支払い方法を Customer に紐付けることはできます。
      */
     setup_future_usage?: 'off_session' | 'on_session';
-};
-
-/**
- * PaymentFlowDataRequest
- */
-export type PaymentFlowDataRequestOutput = {
-    /**
-     * 支払いの確定方法を指定します。
-     *
-     * | 指定できる値 |
-     * |:---|
-     * | **automatic**: (デフォルト) 顧客が支払いを承認すると自動的に確定します。 |
-     * | **manual**: 顧客が支払いを承認すると一旦確定を保留し、後で Capture API を使用して確定します。（すべての支払い方法がこれをサポートしているわけではありません）。 |
-     */
-    capture_method?: CaptureMethod;
-    /**
-     * Meta Data
-     *
-     * キーバリューの任意のデータを格納できます。<a href="https://docs.pay.jp/v2/metadata">詳細はメタデータのドキュメントを参照してください。</a>
-     */
-    meta_data?: {
-        [key: string]: string | number | boolean;
-    };
-    /**
-     * Setup Future Usage
-     *
-     * この PaymentFlow に設定されている支払い方法で今後決済を行うかの設定です。<br><br>
-     * PaymentFlow に Customer を指定した場合、このパラメータを使って PaymentFlow を確定できます。
-     * その後、顧客が必要な操作を完了すると、支払い方法を Customer に紐付けることが可能です。また、Customer を指定しない場合でも、取引が完了した後に支払い方法を Customer に紐付けることはできます。
-     */
-    setup_future_usage?: 'off_session' | 'on_session';
-};
-
-/**
- * PaymentFlowIncrementAuthorizationRequest
- */
-export type PaymentFlowIncrementAuthorizationRequest = {
-    /**
-     * Amount
-     *
-     * 支払い予定の金額。50円以上9,999,999円以下である必要があります。支払い手段によって上限金額は異なります。
-     */
-    amount: number;
-    /**
-     * Description
-     *
-     * オブジェクトにセットする任意の文字列。ユーザーには表示されません。
-     */
-    description?: string;
 };
 
 /**
@@ -1475,6 +1418,10 @@ export type PaymentFlowResponse = {
      */
     capture_method: CaptureMethod;
     /**
+     * このPaymentFlowの支払い方法で将来の支払いを行う意図があることを示します。<br><br>PaymentFlow に Customer を指定した場合、このパラメータを使って PaymentFlow を確定できます。その後、顧客が必要な操作を完了すると、支払い方法を Customer に紐付けることが可能です。また、Customer を指定しない場合でも、取引が完了した後に支払い方法を Customer に紐付けることはできます。
+     */
+    setup_future_usage?: Usage | null;
+    /**
      * Last Payment Error
      *
      * このPaymentFlowで発生した最後の支払いエラーです。
@@ -1499,10 +1446,6 @@ export type PaymentFlowUpdateRequest = {
      * 支払い方法ID
      */
     payment_method?: string;
-    /**
-     * 指定した場合、PaymentMethodの作成に使用されます。新しいPaymentMethodは、PaymentFlowのpayment_methodプロパティに表示されます。
-     */
-    payment_method_data?: PaymentMethodCreateRequest;
     /**
      * このPaymentFlowに固有の支払い方法の設定
      */
@@ -1587,6 +1530,30 @@ export type PaymentMethodApplePayCreateRequest = {
      * Apple Payのトークン
      */
     token: string;
+};
+
+/**
+ * PaymentMethodApplePayUpdateRequest
+ */
+export type PaymentMethodApplePayUpdateRequest = {
+    /**
+     * 請求先情報
+     */
+    billing_details?: PaymentMethodBillingDetailsRequest;
+    /**
+     * Metadata
+     *
+     * キーバリューの任意のデータを格納できます。<a href="https://docs.pay.jp/v2/metadata">詳細はメタデータのドキュメントを参照してください。</a>
+     */
+    metadata?: {
+        [key: string]: string | number | boolean;
+    };
+    /**
+     * Type
+     *
+     * Apple Pay決済の場合は `apple_pay` を指定します。
+     */
+    type: 'apple_pay';
 };
 
 /**
@@ -1912,12 +1879,6 @@ export type PaymentMethodCardResponse = {
  */
 export type PaymentMethodCardUpdateRequest = {
     /**
-     * Customer
-     *
-     * 顧客ID
-     */
-    customer?: string;
-    /**
      * 請求先情報
      */
     billing_details?: PaymentMethodBillingDetailsRequest;
@@ -1931,6 +1892,8 @@ export type PaymentMethodCardUpdateRequest = {
     };
     /**
      * Type
+     *
+     * クレジットカード決済の場合は `card` を指定します。
      */
     type: 'card';
 };
@@ -2272,6 +2235,30 @@ export type PaymentMethodPayPayResponse = {
 };
 
 /**
+ * PaymentMethodPayPayUpdateRequest
+ */
+export type PaymentMethodPayPayUpdateRequest = {
+    /**
+     * 請求先情報
+     */
+    billing_details?: PaymentMethodBillingDetailsRequest;
+    /**
+     * Metadata
+     *
+     * キーバリューの任意のデータを格納できます。<a href="https://docs.pay.jp/v2/metadata">詳細はメタデータのドキュメントを参照してください。</a>
+     */
+    metadata?: {
+        [key: string]: string | number | boolean;
+    };
+    /**
+     * Type
+     *
+     * PayPay決済の場合は `paypay` を指定します。
+     */
+    type: 'paypay';
+};
+
+/**
  * PaymentMethodResponse
  */
 export type PaymentMethodResponse = PaymentMethodCardResponse | PaymentMethodPayPayResponse;
@@ -2282,9 +2269,161 @@ export type PaymentMethodResponse = PaymentMethodCardResponse | PaymentMethodPay
 export type PaymentMethodTypes = 'card' | 'paypay' | 'apple_pay';
 
 /**
+ * PaymentMethodUpdateRequest
+ */
+export type PaymentMethodUpdateRequest = ({
+    type: 'card';
+} & PaymentMethodCardUpdateRequest) | ({
+    type: 'paypay';
+} & PaymentMethodPayPayUpdateRequest) | ({
+    type: 'apple_pay';
+} & PaymentMethodApplePayUpdateRequest);
+
+/**
+ * PaymentRefundCreateRequest
+ */
+export type PaymentRefundCreateRequest = {
+    /**
+     * Payment Flow
+     *
+     * 返金対象となる PaymentFlow の ID
+     */
+    payment_flow: string;
+    /**
+     * Amount
+     *
+     * 返金金額
+     */
+    amount?: number;
+    /**
+     * Metadata
+     *
+     * キーバリューの任意のデータを格納できます。<a href="https://docs.pay.jp/v2/metadata">詳細はメタデータのドキュメントを参照してください。</a>
+     */
+    metadata?: {
+        [key: string]: string | number | boolean;
+    };
+    /**
+     * 返金理由
+     *
+     * | 指定できる値 |
+     * |:---|
+     * | **duplicate**: 重複した支払い |
+     * | **fraudulent**: 不正な支払い |
+     * | **requested_by_customer**: 顧客の要求 |
+     */
+    reason?: PaymentRefundReason;
+};
+
+/**
+ * PaymentRefundListResponse
+ */
+export type PaymentRefundListResponse = {
+    /**
+     * Object
+     */
+    object?: 'list';
+    /**
+     * Url
+     *
+     * リスト取得URL
+     */
+    url: string;
+    /**
+     * Has More
+     *
+     * 次のページがあるかどうか
+     */
+    has_more: boolean;
+    /**
+     * Data
+     *
+     * 支払いインテントリスト
+     */
+    data: Array<PaymentRefundResponse>;
+};
+
+/**
  * PaymentRefundReason
  */
 export type PaymentRefundReason = 'duplicate' | 'fraudulent' | 'requested_by_customer';
+
+/**
+ * PaymentRefundResponse
+ */
+export type PaymentRefundResponse = {
+    /**
+     * Id
+     *
+     * 返金対象となる PaymentFlow の ID
+     */
+    id: string;
+    /**
+     * Object
+     */
+    object?: 'refund';
+    /**
+     * Created At
+     *
+     * 作成時の日時 (UTC, ISO 8601 形式)
+     */
+    created_at: string;
+    /**
+     * Updated At
+     *
+     * 更新時の日時 (UTC, ISO 8601 形式)
+     */
+    updated_at: string;
+    /**
+     * Livemode
+     *
+     * 本番環境かどうか
+     */
+    livemode: boolean;
+    /**
+     * Amount
+     *
+     * 返金金額
+     */
+    amount: number;
+    /**
+     * 返金ステータス
+     *
+     * <a href="https://docs.pay.jp/v2/payment_refunds#refund_status" target="_blank">返金ステータスの詳細についてはこちらを参照してください。</a>
+     *
+     * | 指定できる値 |
+     * |:---|
+     * | **succeeded**: 成功 |
+     * | **failed**: 失敗 |
+     * | **pending**: 保留中 |
+     * | **canceled**: キャンセル |
+     */
+    status: PaymentRefundStatus;
+    /**
+     * Payment Flow
+     *
+     * 返金対象となる PaymentFlow の ID
+     */
+    payment_flow: string;
+    /**
+     * 返金理由
+     *
+     * | 指定できる値 |
+     * |:---|
+     * | **duplicate**: 重複した支払い |
+     * | **fraudulent**: 不正な支払い |
+     * | **requested_by_customer**: 顧客の要求 |
+     */
+    reason: PaymentRefundReason | null;
+    /**
+     * Metadata
+     *
+     * メタデータ
+     */
+    metadata?: {
+        [key: string]: string | number | boolean;
+    };
+};
 
 /**
  * PaymentRefundStatus
@@ -2807,147 +2946,6 @@ export type ProductUpdateRequest = {
 };
 
 /**
- * RefundCreateRequest
- */
-export type RefundCreateRequest = {
-    /**
-     * Payment Flow
-     *
-     * 返金対象となる PaymentFlow の ID
-     */
-    payment_flow: string;
-    /**
-     * Amount
-     *
-     * 返金金額
-     */
-    amount?: number;
-    /**
-     * Metadata
-     *
-     * キーバリューの任意のデータを格納できます。<a href="https://docs.pay.jp/v2/metadata">詳細はメタデータのドキュメントを参照してください。</a>
-     */
-    metadata?: {
-        [key: string]: string | number | boolean;
-    };
-    /**
-     * 返金理由
-     *
-     * | 指定できる値 |
-     * |:---|
-     * | **duplicate**: 重複した支払い |
-     * | **fraudulent**: 不正な支払い |
-     * | **requested_by_customer**: 顧客の要求 |
-     */
-    reason?: PaymentRefundReason;
-};
-
-/**
- * RefundListResponse
- */
-export type RefundListResponse = {
-    /**
-     * Object
-     */
-    object?: 'list';
-    /**
-     * Url
-     *
-     * リスト取得URL
-     */
-    url: string;
-    /**
-     * Has More
-     *
-     * 次のページがあるかどうか
-     */
-    has_more: boolean;
-    /**
-     * Data
-     *
-     * 支払いインテントリスト
-     */
-    data: Array<RefundResponse>;
-};
-
-/**
- * RefundResponse
- */
-export type RefundResponse = {
-    /**
-     * Id
-     *
-     * 返金対象となる PaymentFlow の ID
-     */
-    id: string;
-    /**
-     * Object
-     */
-    object?: 'refund';
-    /**
-     * Created At
-     *
-     * 作成時の日時 (UTC, ISO 8601 形式)
-     */
-    created_at: string;
-    /**
-     * Updated At
-     *
-     * 更新時の日時 (UTC, ISO 8601 形式)
-     */
-    updated_at: string;
-    /**
-     * Livemode
-     *
-     * 本番環境かどうか
-     */
-    livemode: boolean;
-    /**
-     * Amount
-     *
-     * 返金金額
-     */
-    amount: number;
-    /**
-     * 返金ステータス
-     *
-     * <a href="https://docs.pay.jp/v2/refunds#refund_status" target="_blank">返金ステータスの詳細についてはこちらを参照してください。</a>
-     *
-     * | 指定できる値 |
-     * |:---|
-     * | **succeeded**: 成功 |
-     * | **failed**: 失敗 |
-     * | **pending**: 保留中 |
-     * | **canceled**: キャンセル |
-     */
-    status: PaymentRefundStatus;
-    /**
-     * Payment Flow
-     *
-     * 返金対象となる PaymentFlow の ID
-     */
-    payment_flow: string;
-    /**
-     * 返金理由
-     *
-     * | 指定できる値 |
-     * |:---|
-     * | **duplicate**: 重複した支払い |
-     * | **fraudulent**: 不正な支払い |
-     * | **requested_by_customer**: 顧客の要求 |
-     */
-    reason: PaymentRefundReason | null;
-    /**
-     * Metadata
-     *
-     * メタデータ
-     */
-    metadata?: {
-        [key: string]: string | number | boolean;
-    };
-};
-
-/**
  * SetupFlowCancelRequest
  */
 export type SetupFlowCancelRequest = {
@@ -2972,16 +2970,6 @@ export type SetupFlowCancellationReason = 'abondoned' | 'duplicate' | 'requested
  * SetupFlowConfirmRequest
  */
 export type SetupFlowConfirmRequest = {
-    /**
-     * Payment Method
-     *
-     * この SetupFlow に紐付ける決済方法のID
-     */
-    payment_method?: string;
-    /**
-     * 支払い方法データ
-     */
-    payment_method_data?: PaymentMethodCreateRequest;
     /**
      * Payment Method Options
      *
@@ -3035,16 +3023,6 @@ export type SetupFlowCreateRequest = {
         [key: string]: string | number | boolean;
     };
     /**
-     * Payment Method
-     *
-     * この SetupFlow に紐付ける決済方法のID
-     */
-    payment_method?: string;
-    /**
-     * 支払い方法データ
-     */
-    payment_method_data?: PaymentMethodCreateRequest;
-    /**
      * Payment Method Options
      *
      * この SetupFlow の支払い方法の個別設定。
@@ -3054,8 +3032,10 @@ export type SetupFlowCreateRequest = {
     };
     /**
      * Payment Method Types
+     *
+     * この SetupFlow で使用できる支払い方法の種類（カードなど）のリストです。 指定しない場合、ダッシュボードで利用可能な状態にしている支払い方法が自動的に設定されます。
      */
-    payment_method_types?: Array<PaymentMethodTypes>;
+    payment_method_types?: Array<'card' | 'apple_pay'> | null;
     /**
      * Return Url
      *
@@ -3244,12 +3224,6 @@ export type SetupFlowUpdateRequest = {
      */
     customer?: string;
     /**
-     * Payment Method
-     *
-     * この SetupFlow に紐付ける決済方法のID
-     */
-    payment_method?: string;
-    /**
      * Payment Method Options
      *
      * この SetupFlow の支払い方法の個別設定。
@@ -3259,8 +3233,10 @@ export type SetupFlowUpdateRequest = {
     };
     /**
      * Payment Method Types
+     *
+     * この SetupFlow で使用できる支払い方法の種類（カードなど）のリストです。 指定しない場合、ダッシュボードで利用可能な状態にしている支払い方法が自動的に設定されます。
      */
-    payment_method_types?: Array<PaymentMethodTypes>;
+    payment_method_types?: Array<'card' | 'apple_pay'> | null;
     /**
      * Description
      *
@@ -3849,7 +3825,7 @@ export type GetPaymentMethodResponses = {
 export type GetPaymentMethodResponse = GetPaymentMethodResponses[keyof GetPaymentMethodResponses];
 
 export type UpdatePaymentMethodData = {
-    body: PaymentMethodCardUpdateRequest;
+    body: PaymentMethodUpdateRequest;
     path: {
         /**
          * Payment Method Id
@@ -3892,7 +3868,7 @@ export type AttachPaymentMethodData = {
 
 export type AttachPaymentMethodErrors = {
     /**
-     * Payment Method Already Attached
+     * Payment Method Already Attached<br>Unsupported Payment Method Type
      */
     400: ErrorResponse;
     /**
@@ -4402,7 +4378,7 @@ export type UpdatePaymentFlowData = {
 
 export type UpdatePaymentFlowErrors = {
     /**
-     * Invalid Status
+     * Invalid Status<br>Detached Payment Method Not Usable
      */
     400: ErrorResponse;
     /**
@@ -4488,6 +4464,10 @@ export type CreatePaymentFlowData = {
 };
 
 export type CreatePaymentFlowErrors = {
+    /**
+     * Detached Payment Method Not Usable
+     */
+    400: ErrorResponse;
     /**
      * Not Found
      */
@@ -4608,7 +4588,7 @@ export type ConfirmPaymentFlowData = {
 
 export type ConfirmPaymentFlowErrors = {
     /**
-     * Invalid Status<br>Missing Payment Method
+     * Invalid Status<br>Missing Payment Method<br>Detached Payment Method Not Usable
      */
     400: ErrorResponse;
     /**
@@ -4632,53 +4612,19 @@ export type ConfirmPaymentFlowResponses = {
 
 export type ConfirmPaymentFlowResponse = ConfirmPaymentFlowResponses[keyof ConfirmPaymentFlowResponses];
 
-export type IncrementAuthorizationPaymentFlowData = {
-    body: PaymentFlowIncrementAuthorizationRequest;
-    path: {
-        /**
-         * Payment Flow Id
-         */
-        payment_flow_id: string;
-    };
-    query?: never;
-    url: '/v2/payment_flows/{payment_flow_id}/increment_authorization';
-};
-
-export type IncrementAuthorizationPaymentFlowErrors = {
-    /**
-     * Not Found
-     */
-    404: ErrorResponse;
-    /**
-     * Validation Error
-     */
-    422: ErrorResponse;
-};
-
-export type IncrementAuthorizationPaymentFlowError = IncrementAuthorizationPaymentFlowErrors[keyof IncrementAuthorizationPaymentFlowErrors];
-
-export type IncrementAuthorizationPaymentFlowResponses = {
-    /**
-     * Successful Response
-     */
-    200: PaymentFlowResponse;
-};
-
-export type IncrementAuthorizationPaymentFlowResponse = IncrementAuthorizationPaymentFlowResponses[keyof IncrementAuthorizationPaymentFlowResponses];
-
-export type RetrieveRefundData = {
+export type RetrievePaymentRefundData = {
     body?: never;
     path: {
         /**
-         * Refund Id
+         * Payment Refund Id
          */
-        refund_id: string;
+        payment_refund_id: string;
     };
     query?: never;
-    url: '/v2/refunds/{refund_id}';
+    url: '/v2/payment_refunds/{payment_refund_id}';
 };
 
-export type RetrieveRefundErrors = {
+export type RetrievePaymentRefundErrors = {
     /**
      * Not Found
      */
@@ -4689,30 +4635,30 @@ export type RetrieveRefundErrors = {
     422: ErrorResponse;
 };
 
-export type RetrieveRefundError = RetrieveRefundErrors[keyof RetrieveRefundErrors];
+export type RetrievePaymentRefundError = RetrievePaymentRefundErrors[keyof RetrievePaymentRefundErrors];
 
-export type RetrieveRefundResponses = {
+export type RetrievePaymentRefundResponses = {
     /**
      * Successful Response
      */
-    200: RefundResponse;
+    200: PaymentRefundResponse;
 };
 
-export type RetrieveRefundResponse = RetrieveRefundResponses[keyof RetrieveRefundResponses];
+export type RetrievePaymentRefundResponse = RetrievePaymentRefundResponses[keyof RetrievePaymentRefundResponses];
 
-export type UpdateRefundData = {
+export type UpdatePaymentRefundData = {
     body: PaymentRefundUpdateRequest;
     path: {
         /**
-         * Refund Id
+         * Payment Refund Id
          */
-        refund_id: string;
+        payment_refund_id: string;
     };
     query?: never;
-    url: '/v2/refunds/{refund_id}';
+    url: '/v2/payment_refunds/{payment_refund_id}';
 };
 
-export type UpdateRefundErrors = {
+export type UpdatePaymentRefundErrors = {
     /**
      * Not Found
      */
@@ -4723,18 +4669,18 @@ export type UpdateRefundErrors = {
     422: ErrorResponse;
 };
 
-export type UpdateRefundError = UpdateRefundErrors[keyof UpdateRefundErrors];
+export type UpdatePaymentRefundError = UpdatePaymentRefundErrors[keyof UpdatePaymentRefundErrors];
 
-export type UpdateRefundResponses = {
+export type UpdatePaymentRefundResponses = {
     /**
      * Successful Response
      */
-    200: RefundResponse;
+    200: PaymentRefundResponse;
 };
 
-export type UpdateRefundResponse = UpdateRefundResponses[keyof UpdateRefundResponses];
+export type UpdatePaymentRefundResponse = UpdatePaymentRefundResponses[keyof UpdatePaymentRefundResponses];
 
-export type GetAllRefundsData = {
+export type GetAllPaymentRefundsData = {
     body?: never;
     path?: never;
     query?: {
@@ -4757,35 +4703,35 @@ export type GetAllRefundsData = {
          */
         ending_before?: string | null;
     };
-    url: '/v2/refunds';
+    url: '/v2/payment_refunds';
 };
 
-export type GetAllRefundsErrors = {
+export type GetAllPaymentRefundsErrors = {
     /**
      * Validation Error
      */
     422: ErrorResponse;
 };
 
-export type GetAllRefundsError = GetAllRefundsErrors[keyof GetAllRefundsErrors];
+export type GetAllPaymentRefundsError = GetAllPaymentRefundsErrors[keyof GetAllPaymentRefundsErrors];
 
-export type GetAllRefundsResponses = {
+export type GetAllPaymentRefundsResponses = {
     /**
      * Successful Response
      */
-    200: RefundListResponse;
+    200: PaymentRefundListResponse;
 };
 
-export type GetAllRefundsResponse = GetAllRefundsResponses[keyof GetAllRefundsResponses];
+export type GetAllPaymentRefundsResponse = GetAllPaymentRefundsResponses[keyof GetAllPaymentRefundsResponses];
 
-export type CreateRefundData = {
-    body: RefundCreateRequest;
+export type CreatePaymentRefundData = {
+    body: PaymentRefundCreateRequest;
     path?: never;
     query?: never;
-    url: '/v2/refunds';
+    url: '/v2/payment_refunds';
 };
 
-export type CreateRefundErrors = {
+export type CreatePaymentRefundErrors = {
     /**
      * Invalid Status<br>Already Refunded<br>Refund Exceeds Payment
      */
@@ -4800,54 +4746,16 @@ export type CreateRefundErrors = {
     422: ErrorResponse;
 };
 
-export type CreateRefundError = CreateRefundErrors[keyof CreateRefundErrors];
+export type CreatePaymentRefundError = CreatePaymentRefundErrors[keyof CreatePaymentRefundErrors];
 
-export type CreateRefundResponses = {
+export type CreatePaymentRefundResponses = {
     /**
      * Successful Response
      */
-    200: RefundResponse;
+    200: PaymentRefundResponse;
 };
 
-export type CreateRefundResponse = CreateRefundResponses[keyof CreateRefundResponses];
-
-export type CancelRefundData = {
-    body?: never;
-    path: {
-        /**
-         * Refund Id
-         */
-        refund_id: string;
-    };
-    query?: never;
-    url: '/v2/refunds/{refund_id}/cancel';
-};
-
-export type CancelRefundErrors = {
-    /**
-     * Invalid Status
-     */
-    400: ErrorResponse;
-    /**
-     * Not Found
-     */
-    404: ErrorResponse;
-    /**
-     * Validation Error
-     */
-    422: ErrorResponse;
-};
-
-export type CancelRefundError = CancelRefundErrors[keyof CancelRefundErrors];
-
-export type CancelRefundResponses = {
-    /**
-     * Successful Response
-     */
-    200: RefundResponse;
-};
-
-export type CancelRefundResponse = CancelRefundResponses[keyof CancelRefundResponses];
+export type CreatePaymentRefundResponse = CreatePaymentRefundResponses[keyof CreatePaymentRefundResponses];
 
 export type RetrieveSetupFlowData = {
     body?: never;
@@ -4896,6 +4804,10 @@ export type UpdateSetupFlowData = {
 };
 
 export type UpdateSetupFlowErrors = {
+    /**
+     * Detached Payment Method Not Usable
+     */
+    400: ErrorResponse;
     /**
      * Not Found
      */
@@ -4972,6 +4884,10 @@ export type CreateSetupFlowData = {
 };
 
 export type CreateSetupFlowErrors = {
+    /**
+     * Detached Payment Method Not Usable<br>Unsupported Payment Method Type
+     */
+    400: ErrorResponse;
     /**
      * Not Found
      */
@@ -5051,7 +4967,7 @@ export type ConfirmSetupFlowData = {
 
 export type ConfirmSetupFlowErrors = {
     /**
-     * Invalid Status<br>Missing Payment Method
+     * Invalid Status<br>Missing Payment Method<br>Detached Payment Method Not Usable<br>Unsupported Payment Method Type
      */
     400: ErrorResponse;
     /**
@@ -5476,7 +5392,7 @@ export type GetCheckoutSessionData = {
          *
          * レスポンス返却時に展開したいオブジェクト名。指定したオブジェクトを同時に取得し、レスポンスに乗せて返却します。
          */
-        expand?: Array<'line_items' | 'customer'> | null;
+        expand?: Array<'line_items' | 'customer' | 'payment_flow' | 'setup_flow'> | null;
     };
     url: '/v2/checkout/sessions/{checkout_session_id}';
 };
