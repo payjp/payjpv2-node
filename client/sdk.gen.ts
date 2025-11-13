@@ -2,7 +2,7 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { AttachPaymentMethodData, AttachPaymentMethodErrors, AttachPaymentMethodResponses, CancelPaymentFlowData, CancelPaymentFlowErrors, CancelPaymentFlowResponses, CancelRefundData, CancelRefundErrors, CancelRefundResponses, CancelSetupFlowData, CancelSetupFlowErrors, CancelSetupFlowResponses, CapturePaymentFlowData, CapturePaymentFlowErrors, CapturePaymentFlowResponses, ConfirmPaymentFlowData, ConfirmPaymentFlowErrors, ConfirmPaymentFlowResponses, ConfirmSetupFlowData, ConfirmSetupFlowErrors, ConfirmSetupFlowResponses, CreateBalanceUrlData, CreateBalanceUrlErrors, CreateBalanceUrlResponses, CreateCheckoutSessionData, CreateCheckoutSessionErrors, CreateCheckoutSessionResponses, CreateCustomerData, CreateCustomerErrors, CreateCustomerResponses, CreatePaymentFlowData, CreatePaymentFlowErrors, CreatePaymentFlowResponses, CreatePaymentMethodData, CreatePaymentMethodErrors, CreatePaymentMethodResponses, CreatePriceData, CreatePriceErrors, CreatePriceResponses, CreateProductData, CreateProductErrors, CreateProductResponses, CreateRefundData, CreateRefundErrors, CreateRefundResponses, CreateSetupFlowData, CreateSetupFlowErrors, CreateSetupFlowResponses, CreateStatementUrlData, CreateStatementUrlErrors, CreateStatementUrlResponses, CreateTaxRateData, CreateTaxRateErrors, CreateTaxRateResponses, DeleteCustomerData, DeleteCustomerErrors, DeleteCustomerResponses, DeleteProductData, DeleteProductErrors, DeleteProductResponses, DetachPaymentMethodData, DetachPaymentMethodErrors, DetachPaymentMethodResponses, GetAllBalancesData, GetAllBalancesErrors, GetAllBalancesResponses, GetAllCheckoutSessionsData, GetAllCheckoutSessionsErrors, GetAllCheckoutSessionsResponses, GetAllCustomersData, GetAllCustomersErrors, GetAllCustomersResponses, GetAllEventsData, GetAllEventsErrors, GetAllEventsResponses, GetAllPaymentFlowData, GetAllPaymentFlowErrors, GetAllPaymentFlowResponses, GetAllPaymentMethodConfigurationsData, GetAllPaymentMethodConfigurationsErrors, GetAllPaymentMethodConfigurationsResponses, GetAllPaymentMethodsData, GetAllPaymentMethodsErrors, GetAllPaymentMethodsResponses, GetAllPaymentTransactionData, GetAllPaymentTransactionErrors, GetAllPaymentTransactionResponses, GetAllPricesData, GetAllPricesErrors, GetAllPricesResponses, GetAllProductsData, GetAllProductsErrors, GetAllProductsResponses, GetAllRefundsData, GetAllRefundsErrors, GetAllRefundsResponses, GetAllSetupFlowData, GetAllSetupFlowErrors, GetAllSetupFlowResponses, GetAllStatementsData, GetAllStatementsErrors, GetAllStatementsResponses, GetAllTaxRatesData, GetAllTaxRatesErrors, GetAllTaxRatesResponses, GetAllTermData, GetAllTermErrors, GetAllTermResponses, GetCheckoutSessionData, GetCheckoutSessionErrors, GetCheckoutSessionResponses, GetCustomerData, GetCustomerErrors, GetCustomerPaymentMethodsData, GetCustomerPaymentMethodsErrors, GetCustomerPaymentMethodsResponses, GetCustomerResponses, GetEventData, GetEventErrors, GetEventResponses, GetPaymentMethodConfigurationData, GetPaymentMethodConfigurationErrors, GetPaymentMethodConfigurationResponses, GetPaymentMethodData, GetPaymentMethodErrors, GetPaymentMethodResponses, GetPriceData, GetPriceErrors, GetPriceResponses, GetProductData, GetProductErrors, GetProductResponses, GetTaxRateData, GetTaxRateErrors, GetTaxRateResponses, IncrementAuthorizationPaymentFlowData, IncrementAuthorizationPaymentFlowErrors, IncrementAuthorizationPaymentFlowResponses, RetrieveBalanceData, RetrieveBalanceErrors, RetrieveBalanceResponses, RetrievePaymentFlowData, RetrievePaymentFlowErrors, RetrievePaymentFlowResponses, RetrievePaymentTransactionData, RetrievePaymentTransactionErrors, RetrievePaymentTransactionResponses, RetrieveRefundData, RetrieveRefundErrors, RetrieveRefundResponses, RetrieveSetupFlowData, RetrieveSetupFlowErrors, RetrieveSetupFlowResponses, RetrieveStatementData, RetrieveStatementErrors, RetrieveStatementResponses, RetrieveTermData, RetrieveTermErrors, RetrieveTermResponses, UpdateCheckoutSessionData, UpdateCheckoutSessionErrors, UpdateCheckoutSessionResponses, UpdateCustomerData, UpdateCustomerErrors, UpdateCustomerResponses, UpdatePaymentFlowData, UpdatePaymentFlowErrors, UpdatePaymentFlowResponses, UpdatePaymentMethodConfigurationData, UpdatePaymentMethodConfigurationErrors, UpdatePaymentMethodConfigurationResponses, UpdatePaymentMethodData, UpdatePaymentMethodErrors, UpdatePaymentMethodResponses, UpdatePriceData, UpdatePriceErrors, UpdatePriceResponses, UpdateProductData, UpdateProductErrors, UpdateProductResponses, UpdateRefundData, UpdateRefundErrors, UpdateRefundResponses, UpdateSetupFlowData, UpdateSetupFlowErrors, UpdateSetupFlowResponses, UpdateTaxRateData, UpdateTaxRateErrors, UpdateTaxRateResponses } from './types.gen';
+import type { AttachPaymentMethodData, AttachPaymentMethodErrors, AttachPaymentMethodResponses, CancelPaymentFlowData, CancelPaymentFlowErrors, CancelPaymentFlowResponses, CancelSetupFlowData, CancelSetupFlowErrors, CancelSetupFlowResponses, CapturePaymentFlowData, CapturePaymentFlowErrors, CapturePaymentFlowResponses, ConfirmPaymentFlowData, ConfirmPaymentFlowErrors, ConfirmPaymentFlowResponses, ConfirmSetupFlowData, ConfirmSetupFlowErrors, ConfirmSetupFlowResponses, CreateBalanceUrlData, CreateBalanceUrlErrors, CreateBalanceUrlResponses, CreateCheckoutSessionData, CreateCheckoutSessionErrors, CreateCheckoutSessionResponses, CreateCustomerData, CreateCustomerErrors, CreateCustomerResponses, CreatePaymentFlowData, CreatePaymentFlowErrors, CreatePaymentFlowResponses, CreatePaymentMethodData, CreatePaymentMethodErrors, CreatePaymentMethodResponses, CreatePaymentRefundData, CreatePaymentRefundErrors, CreatePaymentRefundResponses, CreatePriceData, CreatePriceErrors, CreatePriceResponses, CreateProductData, CreateProductErrors, CreateProductResponses, CreateSetupFlowData, CreateSetupFlowErrors, CreateSetupFlowResponses, CreateStatementUrlData, CreateStatementUrlErrors, CreateStatementUrlResponses, CreateTaxRateData, CreateTaxRateErrors, CreateTaxRateResponses, DeleteCustomerData, DeleteCustomerErrors, DeleteCustomerResponses, DeleteProductData, DeleteProductErrors, DeleteProductResponses, DetachPaymentMethodData, DetachPaymentMethodErrors, DetachPaymentMethodResponses, GetAllBalancesData, GetAllBalancesErrors, GetAllBalancesResponses, GetAllCheckoutSessionsData, GetAllCheckoutSessionsErrors, GetAllCheckoutSessionsResponses, GetAllCustomersData, GetAllCustomersErrors, GetAllCustomersResponses, GetAllEventsData, GetAllEventsErrors, GetAllEventsResponses, GetAllPaymentFlowData, GetAllPaymentFlowErrors, GetAllPaymentFlowResponses, GetAllPaymentMethodConfigurationsData, GetAllPaymentMethodConfigurationsErrors, GetAllPaymentMethodConfigurationsResponses, GetAllPaymentMethodsData, GetAllPaymentMethodsErrors, GetAllPaymentMethodsResponses, GetAllPaymentRefundsData, GetAllPaymentRefundsErrors, GetAllPaymentRefundsResponses, GetAllPaymentTransactionData, GetAllPaymentTransactionErrors, GetAllPaymentTransactionResponses, GetAllPricesData, GetAllPricesErrors, GetAllPricesResponses, GetAllProductsData, GetAllProductsErrors, GetAllProductsResponses, GetAllSetupFlowData, GetAllSetupFlowErrors, GetAllSetupFlowResponses, GetAllStatementsData, GetAllStatementsErrors, GetAllStatementsResponses, GetAllTaxRatesData, GetAllTaxRatesErrors, GetAllTaxRatesResponses, GetAllTermData, GetAllTermErrors, GetAllTermResponses, GetCheckoutSessionData, GetCheckoutSessionErrors, GetCheckoutSessionResponses, GetCustomerData, GetCustomerErrors, GetCustomerPaymentMethodsData, GetCustomerPaymentMethodsErrors, GetCustomerPaymentMethodsResponses, GetCustomerResponses, GetEventData, GetEventErrors, GetEventResponses, GetPaymentMethodConfigurationData, GetPaymentMethodConfigurationErrors, GetPaymentMethodConfigurationResponses, GetPaymentMethodData, GetPaymentMethodErrors, GetPaymentMethodResponses, GetPriceData, GetPriceErrors, GetPriceResponses, GetProductData, GetProductErrors, GetProductResponses, GetTaxRateData, GetTaxRateErrors, GetTaxRateResponses, RetrieveBalanceData, RetrieveBalanceErrors, RetrieveBalanceResponses, RetrievePaymentFlowData, RetrievePaymentFlowErrors, RetrievePaymentFlowResponses, RetrievePaymentRefundData, RetrievePaymentRefundErrors, RetrievePaymentRefundResponses, RetrievePaymentTransactionData, RetrievePaymentTransactionErrors, RetrievePaymentTransactionResponses, RetrieveSetupFlowData, RetrieveSetupFlowErrors, RetrieveSetupFlowResponses, RetrieveStatementData, RetrieveStatementErrors, RetrieveStatementResponses, RetrieveTermData, RetrieveTermErrors, RetrieveTermResponses, UpdateCheckoutSessionData, UpdateCheckoutSessionErrors, UpdateCheckoutSessionResponses, UpdateCustomerData, UpdateCustomerErrors, UpdateCustomerResponses, UpdatePaymentFlowData, UpdatePaymentFlowErrors, UpdatePaymentFlowResponses, UpdatePaymentMethodConfigurationData, UpdatePaymentMethodConfigurationErrors, UpdatePaymentMethodConfigurationResponses, UpdatePaymentMethodData, UpdatePaymentMethodErrors, UpdatePaymentMethodResponses, UpdatePaymentRefundData, UpdatePaymentRefundErrors, UpdatePaymentRefundResponses, UpdatePriceData, UpdatePriceErrors, UpdatePriceResponses, UpdateProductData, UpdateProductErrors, UpdateProductResponses, UpdateSetupFlowData, UpdateSetupFlowErrors, UpdateSetupFlowResponses, UpdateTaxRateData, UpdateTaxRateErrors, UpdateTaxRateResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -571,10 +571,10 @@ export const confirmPaymentFlow = <ThrowOnError extends boolean = false>(options
 };
 
 /**
- * Increment Authorization Payment Flow
+ * Retrieve Payment Refund
  */
-export const incrementAuthorizationPaymentFlow = <ThrowOnError extends boolean = false>(options: Options<IncrementAuthorizationPaymentFlowData, ThrowOnError>) => {
-    return (options.client ?? client).post<IncrementAuthorizationPaymentFlowResponses, IncrementAuthorizationPaymentFlowErrors, ThrowOnError>({
+export const retrievePaymentRefund = <ThrowOnError extends boolean = false>(options: Options<RetrievePaymentRefundData, ThrowOnError>) => {
+    return (options.client ?? client).get<RetrievePaymentRefundResponses, RetrievePaymentRefundErrors, ThrowOnError>({
         security: [
             {
                 scheme: 'basic',
@@ -585,7 +585,27 @@ export const incrementAuthorizationPaymentFlow = <ThrowOnError extends boolean =
                 type: 'http'
             }
         ],
-        url: '/v2/payment_flows/{payment_flow_id}/increment_authorization',
+        url: '/v2/payment_refunds/{payment_refund_id}',
+        ...options
+    });
+};
+
+/**
+ * Update Payment Refund
+ */
+export const updatePaymentRefund = <ThrowOnError extends boolean = false>(options: Options<UpdatePaymentRefundData, ThrowOnError>) => {
+    return (options.client ?? client).post<UpdatePaymentRefundResponses, UpdatePaymentRefundErrors, ThrowOnError>({
+        security: [
+            {
+                scheme: 'basic',
+                type: 'http'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
+            }
+        ],
+        url: '/v2/payment_refunds/{payment_refund_id}',
         ...options,
         headers: {
             'Content-Type': 'application/json',
@@ -595,10 +615,10 @@ export const incrementAuthorizationPaymentFlow = <ThrowOnError extends boolean =
 };
 
 /**
- * Retrieve Refund
+ * Get All Payment Refunds
  */
-export const retrieveRefund = <ThrowOnError extends boolean = false>(options: Options<RetrieveRefundData, ThrowOnError>) => {
-    return (options.client ?? client).get<RetrieveRefundResponses, RetrieveRefundErrors, ThrowOnError>({
+export const getAllPaymentRefunds = <ThrowOnError extends boolean = false>(options?: Options<GetAllPaymentRefundsData, ThrowOnError>) => {
+    return (options?.client ?? client).get<GetAllPaymentRefundsResponses, GetAllPaymentRefundsErrors, ThrowOnError>({
         security: [
             {
                 scheme: 'basic',
@@ -609,16 +629,16 @@ export const retrieveRefund = <ThrowOnError extends boolean = false>(options: Op
                 type: 'http'
             }
         ],
-        url: '/v2/refunds/{refund_id}',
+        url: '/v2/payment_refunds',
         ...options
     });
 };
 
 /**
- * Update Refund
+ * Create Payment Refund
  */
-export const updateRefund = <ThrowOnError extends boolean = false>(options: Options<UpdateRefundData, ThrowOnError>) => {
-    return (options.client ?? client).post<UpdateRefundResponses, UpdateRefundErrors, ThrowOnError>({
+export const createPaymentRefund = <ThrowOnError extends boolean = false>(options: Options<CreatePaymentRefundData, ThrowOnError>) => {
+    return (options.client ?? client).post<CreatePaymentRefundResponses, CreatePaymentRefundErrors, ThrowOnError>({
         security: [
             {
                 scheme: 'basic',
@@ -629,76 +649,12 @@ export const updateRefund = <ThrowOnError extends boolean = false>(options: Opti
                 type: 'http'
             }
         ],
-        url: '/v2/refunds/{refund_id}',
+        url: '/v2/payment_refunds',
         ...options,
         headers: {
             'Content-Type': 'application/json',
             ...options.headers
         }
-    });
-};
-
-/**
- * Get All Refunds
- */
-export const getAllRefunds = <ThrowOnError extends boolean = false>(options?: Options<GetAllRefundsData, ThrowOnError>) => {
-    return (options?.client ?? client).get<GetAllRefundsResponses, GetAllRefundsErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/refunds',
-        ...options
-    });
-};
-
-/**
- * Create Refund
- */
-export const createRefund = <ThrowOnError extends boolean = false>(options: Options<CreateRefundData, ThrowOnError>) => {
-    return (options.client ?? client).post<CreateRefundResponses, CreateRefundErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/refunds',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options.headers
-        }
-    });
-};
-
-/**
- * Cancel Refund
- */
-export const cancelRefund = <ThrowOnError extends boolean = false>(options: Options<CancelRefundData, ThrowOnError>) => {
-    return (options.client ?? client).post<CancelRefundResponses, CancelRefundErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/refunds/{refund_id}/cancel',
-        ...options
     });
 };
 
