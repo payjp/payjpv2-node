@@ -1,5 +1,7 @@
-import { describe, expect, jest, test } from "@jest/globals";
-import { createClient } from "../payjpv2";
+import { describe, expect, test } from "@jest/globals";
+import {
+  createClient,
+} from "../payjpv2";
 
 describe("payjpv2.ts", () => {
   test("createClient creates a client with correct configuration", () => {

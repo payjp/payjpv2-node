@@ -2,9 +2,10 @@ import os from "node:os";
 import {
   createConfig,
   createClient as createHeyClient,
+  type Client,
 } from "./client/client";
 
-const BINDINGS_VERSION = '2.0.0';
+const BINDINGS_VERSION = '0.0.1';
 const DEFAULT_BASE_URL = "https://api.pay.jp";
 
 export interface ClientConfig {
@@ -12,7 +13,7 @@ export interface ClientConfig {
   baseUrl?: string;
 }
 
-export function createClient(config: ClientConfig) {
+export function createClient(config: ClientConfig): Client {
   const langVersion = process.version;
   const unameParts = [os.platform(), os.release(), os.arch()];
   const uname = unameParts.join(" ");
@@ -34,8 +35,8 @@ export function createClient(config: ClientConfig) {
         "User-Agent": `payjp/payjpv2 NodeBindings/${BINDINGS_VERSION}`,
         "X-Payjp-Client-User-Agent": JSON.stringify(ua),
       },
-    }),
+    })
   );
 }
 
-export * from "./client/sdk.gen"; // Export all functions from sdk.gen
+export type { Client };

@@ -2,7 +2,7 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { AttachPaymentMethodData, AttachPaymentMethodErrors, AttachPaymentMethodResponses, CancelPaymentFlowData, CancelPaymentFlowErrors, CancelPaymentFlowResponses, CancelSetupFlowData, CancelSetupFlowErrors, CancelSetupFlowResponses, CapturePaymentFlowData, CapturePaymentFlowErrors, CapturePaymentFlowResponses, ConfirmPaymentFlowData, ConfirmPaymentFlowErrors, ConfirmPaymentFlowResponses, ConfirmSetupFlowData, ConfirmSetupFlowErrors, ConfirmSetupFlowResponses, CreateBalanceUrlData, CreateBalanceUrlErrors, CreateBalanceUrlResponses, CreateCheckoutSessionData, CreateCheckoutSessionErrors, CreateCheckoutSessionResponses, CreateCustomerData, CreateCustomerErrors, CreateCustomerResponses, CreatePaymentFlowData, CreatePaymentFlowErrors, CreatePaymentFlowResponses, CreatePaymentMethodData, CreatePaymentMethodErrors, CreatePaymentMethodResponses, CreatePaymentRefundData, CreatePaymentRefundErrors, CreatePaymentRefundResponses, CreatePriceData, CreatePriceErrors, CreatePriceResponses, CreateProductData, CreateProductErrors, CreateProductResponses, CreateSetupFlowData, CreateSetupFlowErrors, CreateSetupFlowResponses, CreateStatementUrlData, CreateStatementUrlErrors, CreateStatementUrlResponses, CreateTaxRateData, CreateTaxRateErrors, CreateTaxRateResponses, DeleteCustomerData, DeleteCustomerErrors, DeleteCustomerResponses, DeleteProductData, DeleteProductErrors, DeleteProductResponses, DetachPaymentMethodData, DetachPaymentMethodErrors, DetachPaymentMethodResponses, GetAllBalancesData, GetAllBalancesErrors, GetAllBalancesResponses, GetAllCheckoutSessionsData, GetAllCheckoutSessionsErrors, GetAllCheckoutSessionsResponses, GetAllCustomersData, GetAllCustomersErrors, GetAllCustomersResponses, GetAllEventsData, GetAllEventsErrors, GetAllEventsResponses, GetAllPaymentFlowData, GetAllPaymentFlowErrors, GetAllPaymentFlowResponses, GetAllPaymentMethodConfigurationsData, GetAllPaymentMethodConfigurationsErrors, GetAllPaymentMethodConfigurationsResponses, GetAllPaymentMethodsData, GetAllPaymentMethodsErrors, GetAllPaymentMethodsResponses, GetAllPaymentRefundsData, GetAllPaymentRefundsErrors, GetAllPaymentRefundsResponses, GetAllPaymentTransactionData, GetAllPaymentTransactionErrors, GetAllPaymentTransactionResponses, GetAllPricesData, GetAllPricesErrors, GetAllPricesResponses, GetAllProductsData, GetAllProductsErrors, GetAllProductsResponses, GetAllSetupFlowData, GetAllSetupFlowErrors, GetAllSetupFlowResponses, GetAllStatementsData, GetAllStatementsErrors, GetAllStatementsResponses, GetAllTaxRatesData, GetAllTaxRatesErrors, GetAllTaxRatesResponses, GetAllTermData, GetAllTermErrors, GetAllTermResponses, GetCheckoutSessionData, GetCheckoutSessionErrors, GetCheckoutSessionResponses, GetCustomerData, GetCustomerErrors, GetCustomerPaymentMethodsData, GetCustomerPaymentMethodsErrors, GetCustomerPaymentMethodsResponses, GetCustomerResponses, GetEventData, GetEventErrors, GetEventResponses, GetPaymentMethodConfigurationData, GetPaymentMethodConfigurationErrors, GetPaymentMethodConfigurationResponses, GetPaymentMethodData, GetPaymentMethodErrors, GetPaymentMethodResponses, GetPriceData, GetPriceErrors, GetPriceResponses, GetProductData, GetProductErrors, GetProductResponses, GetTaxRateData, GetTaxRateErrors, GetTaxRateResponses, RetrieveBalanceData, RetrieveBalanceErrors, RetrieveBalanceResponses, RetrievePaymentFlowData, RetrievePaymentFlowErrors, RetrievePaymentFlowResponses, RetrievePaymentRefundData, RetrievePaymentRefundErrors, RetrievePaymentRefundResponses, RetrievePaymentTransactionData, RetrievePaymentTransactionErrors, RetrievePaymentTransactionResponses, RetrieveSetupFlowData, RetrieveSetupFlowErrors, RetrieveSetupFlowResponses, RetrieveStatementData, RetrieveStatementErrors, RetrieveStatementResponses, RetrieveTermData, RetrieveTermErrors, RetrieveTermResponses, UpdateCheckoutSessionData, UpdateCheckoutSessionErrors, UpdateCheckoutSessionResponses, UpdateCustomerData, UpdateCustomerErrors, UpdateCustomerResponses, UpdatePaymentFlowData, UpdatePaymentFlowErrors, UpdatePaymentFlowResponses, UpdatePaymentMethodConfigurationData, UpdatePaymentMethodConfigurationErrors, UpdatePaymentMethodConfigurationResponses, UpdatePaymentMethodData, UpdatePaymentMethodErrors, UpdatePaymentMethodResponses, UpdatePaymentRefundData, UpdatePaymentRefundErrors, UpdatePaymentRefundResponses, UpdatePriceData, UpdatePriceErrors, UpdatePriceResponses, UpdateProductData, UpdateProductErrors, UpdateProductResponses, UpdateSetupFlowData, UpdateSetupFlowErrors, UpdateSetupFlowResponses, UpdateTaxRateData, UpdateTaxRateErrors, UpdateTaxRateResponses } from './types.gen';
+import type { AttachPaymentMethodData, AttachPaymentMethodErrors, AttachPaymentMethodResponses, CancelPaymentFlowData, CancelPaymentFlowErrors, CancelPaymentFlowResponses, CancelSetupFlowData, CancelSetupFlowErrors, CancelSetupFlowResponses, CapturePaymentFlowData, CapturePaymentFlowErrors, CapturePaymentFlowResponses, ConfirmPaymentFlowData, ConfirmPaymentFlowErrors, ConfirmPaymentFlowResponses, ConfirmSetupFlowData, ConfirmSetupFlowErrors, ConfirmSetupFlowResponses, CreateBalanceUrlData, CreateBalanceUrlErrors, CreateBalanceUrlResponses, CreateCheckoutSessionData, CreateCheckoutSessionErrors, CreateCheckoutSessionResponses, CreateCustomerData, CreateCustomerErrors, CreateCustomerResponses, CreatePaymentFlowData, CreatePaymentFlowErrors, CreatePaymentFlowResponses, CreatePaymentMethodData, CreatePaymentMethodErrors, CreatePaymentMethodResponses, CreatePaymentRefundData, CreatePaymentRefundErrors, CreatePaymentRefundResponses, CreatePriceData, CreatePriceErrors, CreatePriceResponses, CreateProductData, CreateProductErrors, CreateProductResponses, CreateSetupFlowData, CreateSetupFlowErrors, CreateSetupFlowResponses, CreateStatementUrlData, CreateStatementUrlErrors, CreateStatementUrlResponses, CreateTaxRateData, CreateTaxRateErrors, CreateTaxRateResponses, DeleteCustomerData, DeleteCustomerErrors, DeleteCustomerResponses, DeleteProductData, DeleteProductErrors, DeleteProductResponses, DetachPaymentMethodData, DetachPaymentMethodErrors, DetachPaymentMethodResponses, GetAllBalancesData, GetAllBalancesErrors, GetAllBalancesResponses, GetAllCheckoutSessionsData, GetAllCheckoutSessionsErrors, GetAllCheckoutSessionsResponses, GetAllCustomersData, GetAllCustomersErrors, GetAllCustomersResponses, GetAllEventsData, GetAllEventsErrors, GetAllEventsResponses, GetAllPaymentFlowsData, GetAllPaymentFlowsErrors, GetAllPaymentFlowsResponses, GetAllPaymentMethodConfigurationsData, GetAllPaymentMethodConfigurationsErrors, GetAllPaymentMethodConfigurationsResponses, GetAllPaymentMethodsData, GetAllPaymentMethodsErrors, GetAllPaymentMethodsResponses, GetAllPaymentRefundsData, GetAllPaymentRefundsErrors, GetAllPaymentRefundsResponses, GetAllPaymentTransactionsData, GetAllPaymentTransactionsErrors, GetAllPaymentTransactionsResponses, GetAllPricesData, GetAllPricesErrors, GetAllPricesResponses, GetAllProductsData, GetAllProductsErrors, GetAllProductsResponses, GetAllSetupFlowsData, GetAllSetupFlowsErrors, GetAllSetupFlowsResponses, GetAllStatementsData, GetAllStatementsErrors, GetAllStatementsResponses, GetAllTaxRatesData, GetAllTaxRatesErrors, GetAllTaxRatesResponses, GetAllTermsData, GetAllTermsErrors, GetAllTermsResponses, GetBalanceData, GetBalanceErrors, GetBalanceResponses, GetCheckoutSessionData, GetCheckoutSessionErrors, GetCheckoutSessionResponses, GetCustomerData, GetCustomerErrors, GetCustomerPaymentMethodsData, GetCustomerPaymentMethodsErrors, GetCustomerPaymentMethodsResponses, GetCustomerResponses, GetEventData, GetEventErrors, GetEventResponses, GetPaymentFlowData, GetPaymentFlowErrors, GetPaymentFlowRefundsData, GetPaymentFlowRefundsErrors, GetPaymentFlowRefundsResponses, GetPaymentFlowResponses, GetPaymentMethodByCardData, GetPaymentMethodByCardErrors, GetPaymentMethodByCardResponses, GetPaymentMethodConfigurationData, GetPaymentMethodConfigurationErrors, GetPaymentMethodConfigurationResponses, GetPaymentMethodData, GetPaymentMethodErrors, GetPaymentMethodResponses, GetPaymentRefundData, GetPaymentRefundErrors, GetPaymentRefundResponses, GetPaymentTransactionData, GetPaymentTransactionErrors, GetPaymentTransactionResponses, GetPriceData, GetPriceErrors, GetPriceResponses, GetProductData, GetProductErrors, GetProductResponses, GetSetupFlowData, GetSetupFlowErrors, GetSetupFlowResponses, GetStatementData, GetStatementErrors, GetStatementResponses, GetTaxRateData, GetTaxRateErrors, GetTaxRateResponses, GetTermData, GetTermErrors, GetTermResponses, UpdateCheckoutSessionData, UpdateCheckoutSessionErrors, UpdateCheckoutSessionResponses, UpdateCustomerData, UpdateCustomerErrors, UpdateCustomerResponses, UpdatePaymentFlowData, UpdatePaymentFlowErrors, UpdatePaymentFlowResponses, UpdatePaymentMethodConfigurationData, UpdatePaymentMethodConfigurationErrors, UpdatePaymentMethodConfigurationResponses, UpdatePaymentMethodData, UpdatePaymentMethodErrors, UpdatePaymentMethodResponses, UpdatePaymentRefundData, UpdatePaymentRefundErrors, UpdatePaymentRefundResponses, UpdatePriceData, UpdatePriceErrors, UpdatePriceResponses, UpdateProductData, UpdateProductErrors, UpdateProductResponses, UpdateSetupFlowData, UpdateSetupFlowErrors, UpdateSetupFlowResponses, UpdateTaxRateData, UpdateTaxRateErrors, UpdateTaxRateResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -21,1319 +21,668 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
 /**
  * Get All Payment Methods
  */
-export const getAllPaymentMethods = <ThrowOnError extends boolean = false>(options?: Options<GetAllPaymentMethodsData, ThrowOnError>) => {
-    return (options?.client ?? client).get<GetAllPaymentMethodsResponses, GetAllPaymentMethodsErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/payment_methods',
-        ...options
-    });
-};
+export const getAllPaymentMethods = <ThrowOnError extends boolean = false>(options?: Options<GetAllPaymentMethodsData, ThrowOnError>) => (options?.client ?? client).get<GetAllPaymentMethodsResponses, GetAllPaymentMethodsErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/payment_methods',
+    ...options
+});
 
 /**
  * Create Payment Method
  */
-export const createPaymentMethod = <ThrowOnError extends boolean = false>(options: Options<CreatePaymentMethodData, ThrowOnError>) => {
-    return (options.client ?? client).post<CreatePaymentMethodResponses, CreatePaymentMethodErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/payment_methods',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options.headers
-        }
-    });
-};
+export const createPaymentMethod = <ThrowOnError extends boolean = false>(options: Options<CreatePaymentMethodData, ThrowOnError>) => (options.client ?? client).post<CreatePaymentMethodResponses, CreatePaymentMethodErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/payment_methods',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
 
 /**
  * Get Payment Method
  */
-export const getPaymentMethod = <ThrowOnError extends boolean = false>(options: Options<GetPaymentMethodData, ThrowOnError>) => {
-    return (options.client ?? client).get<GetPaymentMethodResponses, GetPaymentMethodErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/payment_methods/{payment_method_id}',
-        ...options
-    });
-};
+export const getPaymentMethod = <ThrowOnError extends boolean = false>(options: Options<GetPaymentMethodData, ThrowOnError>) => (options.client ?? client).get<GetPaymentMethodResponses, GetPaymentMethodErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/payment_methods/{payment_method_id}',
+    ...options
+});
 
 /**
  * Update Payment Method
  */
-export const updatePaymentMethod = <ThrowOnError extends boolean = false>(options: Options<UpdatePaymentMethodData, ThrowOnError>) => {
-    return (options.client ?? client).post<UpdatePaymentMethodResponses, UpdatePaymentMethodErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/payment_methods/{payment_method_id}',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options.headers
-        }
-    });
-};
+export const updatePaymentMethod = <ThrowOnError extends boolean = false>(options: Options<UpdatePaymentMethodData, ThrowOnError>) => (options.client ?? client).post<UpdatePaymentMethodResponses, UpdatePaymentMethodErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/payment_methods/{payment_method_id}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Get Payment Method By Card
+ */
+export const getPaymentMethodByCard = <ThrowOnError extends boolean = false>(options: Options<GetPaymentMethodByCardData, ThrowOnError>) => (options.client ?? client).get<GetPaymentMethodByCardResponses, GetPaymentMethodByCardErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/payment_methods/cards/{card_id}',
+    ...options
+});
 
 /**
  * Attach Payment Method
  */
-export const attachPaymentMethod = <ThrowOnError extends boolean = false>(options: Options<AttachPaymentMethodData, ThrowOnError>) => {
-    return (options.client ?? client).post<AttachPaymentMethodResponses, AttachPaymentMethodErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/payment_methods/{payment_method_id}/attach',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options.headers
-        }
-    });
-};
+export const attachPaymentMethod = <ThrowOnError extends boolean = false>(options: Options<AttachPaymentMethodData, ThrowOnError>) => (options.client ?? client).post<AttachPaymentMethodResponses, AttachPaymentMethodErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/payment_methods/{payment_method_id}/attach',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
 
 /**
  * Detach Payment Method
  */
-export const detachPaymentMethod = <ThrowOnError extends boolean = false>(options: Options<DetachPaymentMethodData, ThrowOnError>) => {
-    return (options.client ?? client).post<DetachPaymentMethodResponses, DetachPaymentMethodErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/payment_methods/{payment_method_id}/detach',
-        ...options
-    });
-};
+export const detachPaymentMethod = <ThrowOnError extends boolean = false>(options: Options<DetachPaymentMethodData, ThrowOnError>) => (options.client ?? client).post<DetachPaymentMethodResponses, DetachPaymentMethodErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/payment_methods/{payment_method_id}/detach',
+    ...options
+});
 
 /**
  * Get Payment Method Configuration
  */
-export const getPaymentMethodConfiguration = <ThrowOnError extends boolean = false>(options: Options<GetPaymentMethodConfigurationData, ThrowOnError>) => {
-    return (options.client ?? client).get<GetPaymentMethodConfigurationResponses, GetPaymentMethodConfigurationErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/payment_method_configurations/{payment_method_configuration_id}',
-        ...options
-    });
-};
+export const getPaymentMethodConfiguration = <ThrowOnError extends boolean = false>(options: Options<GetPaymentMethodConfigurationData, ThrowOnError>) => (options.client ?? client).get<GetPaymentMethodConfigurationResponses, GetPaymentMethodConfigurationErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/payment_method_configurations/{payment_method_configuration_id}',
+    ...options
+});
 
 /**
  * Update Payment Method Configuration
  */
-export const updatePaymentMethodConfiguration = <ThrowOnError extends boolean = false>(options: Options<UpdatePaymentMethodConfigurationData, ThrowOnError>) => {
-    return (options.client ?? client).post<UpdatePaymentMethodConfigurationResponses, UpdatePaymentMethodConfigurationErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/payment_method_configurations/{payment_method_configuration_id}',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options.headers
-        }
-    });
-};
+export const updatePaymentMethodConfiguration = <ThrowOnError extends boolean = false>(options: Options<UpdatePaymentMethodConfigurationData, ThrowOnError>) => (options.client ?? client).post<UpdatePaymentMethodConfigurationResponses, UpdatePaymentMethodConfigurationErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/payment_method_configurations/{payment_method_configuration_id}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
 
 /**
  * Get All Payment Method Configurations
  */
-export const getAllPaymentMethodConfigurations = <ThrowOnError extends boolean = false>(options?: Options<GetAllPaymentMethodConfigurationsData, ThrowOnError>) => {
-    return (options?.client ?? client).get<GetAllPaymentMethodConfigurationsResponses, GetAllPaymentMethodConfigurationsErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/payment_method_configurations',
-        ...options
-    });
-};
+export const getAllPaymentMethodConfigurations = <ThrowOnError extends boolean = false>(options?: Options<GetAllPaymentMethodConfigurationsData, ThrowOnError>) => (options?.client ?? client).get<GetAllPaymentMethodConfigurationsResponses, GetAllPaymentMethodConfigurationsErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/payment_method_configurations',
+    ...options
+});
 
 /**
  * Get All Products
  */
-export const getAllProducts = <ThrowOnError extends boolean = false>(options?: Options<GetAllProductsData, ThrowOnError>) => {
-    return (options?.client ?? client).get<GetAllProductsResponses, GetAllProductsErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/products',
-        ...options
-    });
-};
+export const getAllProducts = <ThrowOnError extends boolean = false>(options?: Options<GetAllProductsData, ThrowOnError>) => (options?.client ?? client).get<GetAllProductsResponses, GetAllProductsErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/products',
+    ...options
+});
 
 /**
  * Create Product
  */
-export const createProduct = <ThrowOnError extends boolean = false>(options: Options<CreateProductData, ThrowOnError>) => {
-    return (options.client ?? client).post<CreateProductResponses, CreateProductErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/products',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options.headers
-        }
-    });
-};
+export const createProduct = <ThrowOnError extends boolean = false>(options: Options<CreateProductData, ThrowOnError>) => (options.client ?? client).post<CreateProductResponses, CreateProductErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/products',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
 
 /**
  * Delete Product
  */
-export const deleteProduct = <ThrowOnError extends boolean = false>(options: Options<DeleteProductData, ThrowOnError>) => {
-    return (options.client ?? client).delete<DeleteProductResponses, DeleteProductErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/products/{product_id}',
-        ...options
-    });
-};
+export const deleteProduct = <ThrowOnError extends boolean = false>(options: Options<DeleteProductData, ThrowOnError>) => (options.client ?? client).delete<DeleteProductResponses, DeleteProductErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/products/{product_id}',
+    ...options
+});
 
 /**
  * Get Product
  */
-export const getProduct = <ThrowOnError extends boolean = false>(options: Options<GetProductData, ThrowOnError>) => {
-    return (options.client ?? client).get<GetProductResponses, GetProductErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/products/{product_id}',
-        ...options
-    });
-};
+export const getProduct = <ThrowOnError extends boolean = false>(options: Options<GetProductData, ThrowOnError>) => (options.client ?? client).get<GetProductResponses, GetProductErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/products/{product_id}',
+    ...options
+});
 
 /**
  * Update Product
  */
-export const updateProduct = <ThrowOnError extends boolean = false>(options: Options<UpdateProductData, ThrowOnError>) => {
-    return (options.client ?? client).post<UpdateProductResponses, UpdateProductErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/products/{product_id}',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options.headers
-        }
-    });
-};
+export const updateProduct = <ThrowOnError extends boolean = false>(options: Options<UpdateProductData, ThrowOnError>) => (options.client ?? client).post<UpdateProductResponses, UpdateProductErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/products/{product_id}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
 
 /**
  * Get All Prices
  */
-export const getAllPrices = <ThrowOnError extends boolean = false>(options?: Options<GetAllPricesData, ThrowOnError>) => {
-    return (options?.client ?? client).get<GetAllPricesResponses, GetAllPricesErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/prices',
-        ...options
-    });
-};
+export const getAllPrices = <ThrowOnError extends boolean = false>(options?: Options<GetAllPricesData, ThrowOnError>) => (options?.client ?? client).get<GetAllPricesResponses, GetAllPricesErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/prices',
+    ...options
+});
 
 /**
  * Create Price
  */
-export const createPrice = <ThrowOnError extends boolean = false>(options: Options<CreatePriceData, ThrowOnError>) => {
-    return (options.client ?? client).post<CreatePriceResponses, CreatePriceErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/prices',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options.headers
-        }
-    });
-};
+export const createPrice = <ThrowOnError extends boolean = false>(options: Options<CreatePriceData, ThrowOnError>) => (options.client ?? client).post<CreatePriceResponses, CreatePriceErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/prices',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
 
 /**
  * Get Price
  */
-export const getPrice = <ThrowOnError extends boolean = false>(options: Options<GetPriceData, ThrowOnError>) => {
-    return (options.client ?? client).get<GetPriceResponses, GetPriceErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/prices/{price_id}',
-        ...options
-    });
-};
+export const getPrice = <ThrowOnError extends boolean = false>(options: Options<GetPriceData, ThrowOnError>) => (options.client ?? client).get<GetPriceResponses, GetPriceErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/prices/{price_id}',
+    ...options
+});
 
 /**
  * Update Price
  */
-export const updatePrice = <ThrowOnError extends boolean = false>(options: Options<UpdatePriceData, ThrowOnError>) => {
-    return (options.client ?? client).post<UpdatePriceResponses, UpdatePriceErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/prices/{price_id}',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options.headers
-        }
-    });
-};
+export const updatePrice = <ThrowOnError extends boolean = false>(options: Options<UpdatePriceData, ThrowOnError>) => (options.client ?? client).post<UpdatePriceResponses, UpdatePriceErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/prices/{price_id}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
 
 /**
- * Retrieve Payment Flow
+ * Get Payment Flow
  */
-export const retrievePaymentFlow = <ThrowOnError extends boolean = false>(options: Options<RetrievePaymentFlowData, ThrowOnError>) => {
-    return (options.client ?? client).get<RetrievePaymentFlowResponses, RetrievePaymentFlowErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/payment_flows/{payment_flow_id}',
-        ...options
-    });
-};
+export const getPaymentFlow = <ThrowOnError extends boolean = false>(options: Options<GetPaymentFlowData, ThrowOnError>) => (options.client ?? client).get<GetPaymentFlowResponses, GetPaymentFlowErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/payment_flows/{payment_flow_id}',
+    ...options
+});
 
 /**
  * Update Payment Flow
  */
-export const updatePaymentFlow = <ThrowOnError extends boolean = false>(options: Options<UpdatePaymentFlowData, ThrowOnError>) => {
-    return (options.client ?? client).post<UpdatePaymentFlowResponses, UpdatePaymentFlowErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/payment_flows/{payment_flow_id}',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options.headers
-        }
-    });
-};
+export const updatePaymentFlow = <ThrowOnError extends boolean = false>(options: Options<UpdatePaymentFlowData, ThrowOnError>) => (options.client ?? client).post<UpdatePaymentFlowResponses, UpdatePaymentFlowErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/payment_flows/{payment_flow_id}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
 
 /**
- * Get All Payment Flow
+ * Get All Payment Flows
  */
-export const getAllPaymentFlow = <ThrowOnError extends boolean = false>(options?: Options<GetAllPaymentFlowData, ThrowOnError>) => {
-    return (options?.client ?? client).get<GetAllPaymentFlowResponses, GetAllPaymentFlowErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/payment_flows',
-        ...options
-    });
-};
+export const getAllPaymentFlows = <ThrowOnError extends boolean = false>(options?: Options<GetAllPaymentFlowsData, ThrowOnError>) => (options?.client ?? client).get<GetAllPaymentFlowsResponses, GetAllPaymentFlowsErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/payment_flows',
+    ...options
+});
 
 /**
  * Create Payment Flow
  */
-export const createPaymentFlow = <ThrowOnError extends boolean = false>(options: Options<CreatePaymentFlowData, ThrowOnError>) => {
-    return (options.client ?? client).post<CreatePaymentFlowResponses, CreatePaymentFlowErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/payment_flows',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options.headers
-        }
-    });
-};
+export const createPaymentFlow = <ThrowOnError extends boolean = false>(options: Options<CreatePaymentFlowData, ThrowOnError>) => (options.client ?? client).post<CreatePaymentFlowResponses, CreatePaymentFlowErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/payment_flows',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
 
 /**
  * Cancel Payment Flow
  */
-export const cancelPaymentFlow = <ThrowOnError extends boolean = false>(options: Options<CancelPaymentFlowData, ThrowOnError>) => {
-    return (options.client ?? client).post<CancelPaymentFlowResponses, CancelPaymentFlowErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/payment_flows/{payment_flow_id}/cancel',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options.headers
-        }
-    });
-};
+export const cancelPaymentFlow = <ThrowOnError extends boolean = false>(options: Options<CancelPaymentFlowData, ThrowOnError>) => (options.client ?? client).post<CancelPaymentFlowResponses, CancelPaymentFlowErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/payment_flows/{payment_flow_id}/cancel',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
 
 /**
  * Capture Payment Flow
  */
-export const capturePaymentFlow = <ThrowOnError extends boolean = false>(options: Options<CapturePaymentFlowData, ThrowOnError>) => {
-    return (options.client ?? client).post<CapturePaymentFlowResponses, CapturePaymentFlowErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/payment_flows/{payment_flow_id}/capture',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options.headers
-        }
-    });
-};
+export const capturePaymentFlow = <ThrowOnError extends boolean = false>(options: Options<CapturePaymentFlowData, ThrowOnError>) => (options.client ?? client).post<CapturePaymentFlowResponses, CapturePaymentFlowErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/payment_flows/{payment_flow_id}/capture',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
 
 /**
  * Confirm Payment Flow
  */
-export const confirmPaymentFlow = <ThrowOnError extends boolean = false>(options: Options<ConfirmPaymentFlowData, ThrowOnError>) => {
-    return (options.client ?? client).post<ConfirmPaymentFlowResponses, ConfirmPaymentFlowErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/payment_flows/{payment_flow_id}/confirm',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options.headers
-        }
-    });
-};
+export const confirmPaymentFlow = <ThrowOnError extends boolean = false>(options: Options<ConfirmPaymentFlowData, ThrowOnError>) => (options.client ?? client).post<ConfirmPaymentFlowResponses, ConfirmPaymentFlowErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/payment_flows/{payment_flow_id}/confirm',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
 
 /**
- * Retrieve Payment Refund
+ * Get Payment Flow Refunds
+ *
+ * Payment Flowに紐づくRefundsをリスト取得する
  */
-export const retrievePaymentRefund = <ThrowOnError extends boolean = false>(options: Options<RetrievePaymentRefundData, ThrowOnError>) => {
-    return (options.client ?? client).get<RetrievePaymentRefundResponses, RetrievePaymentRefundErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/payment_refunds/{payment_refund_id}',
-        ...options
-    });
-};
+export const getPaymentFlowRefunds = <ThrowOnError extends boolean = false>(options: Options<GetPaymentFlowRefundsData, ThrowOnError>) => (options.client ?? client).get<GetPaymentFlowRefundsResponses, GetPaymentFlowRefundsErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/payment_flows/{payment_flow_id}/refunds',
+    ...options
+});
+
+/**
+ * Get Payment Refund
+ */
+export const getPaymentRefund = <ThrowOnError extends boolean = false>(options: Options<GetPaymentRefundData, ThrowOnError>) => (options.client ?? client).get<GetPaymentRefundResponses, GetPaymentRefundErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/payment_refunds/{payment_refund_id}',
+    ...options
+});
 
 /**
  * Update Payment Refund
  */
-export const updatePaymentRefund = <ThrowOnError extends boolean = false>(options: Options<UpdatePaymentRefundData, ThrowOnError>) => {
-    return (options.client ?? client).post<UpdatePaymentRefundResponses, UpdatePaymentRefundErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/payment_refunds/{payment_refund_id}',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options.headers
-        }
-    });
-};
+export const updatePaymentRefund = <ThrowOnError extends boolean = false>(options: Options<UpdatePaymentRefundData, ThrowOnError>) => (options.client ?? client).post<UpdatePaymentRefundResponses, UpdatePaymentRefundErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/payment_refunds/{payment_refund_id}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
 
 /**
  * Get All Payment Refunds
  */
-export const getAllPaymentRefunds = <ThrowOnError extends boolean = false>(options?: Options<GetAllPaymentRefundsData, ThrowOnError>) => {
-    return (options?.client ?? client).get<GetAllPaymentRefundsResponses, GetAllPaymentRefundsErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/payment_refunds',
-        ...options
-    });
-};
+export const getAllPaymentRefunds = <ThrowOnError extends boolean = false>(options?: Options<GetAllPaymentRefundsData, ThrowOnError>) => (options?.client ?? client).get<GetAllPaymentRefundsResponses, GetAllPaymentRefundsErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/payment_refunds',
+    ...options
+});
 
 /**
  * Create Payment Refund
  */
-export const createPaymentRefund = <ThrowOnError extends boolean = false>(options: Options<CreatePaymentRefundData, ThrowOnError>) => {
-    return (options.client ?? client).post<CreatePaymentRefundResponses, CreatePaymentRefundErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/payment_refunds',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options.headers
-        }
-    });
-};
+export const createPaymentRefund = <ThrowOnError extends boolean = false>(options: Options<CreatePaymentRefundData, ThrowOnError>) => (options.client ?? client).post<CreatePaymentRefundResponses, CreatePaymentRefundErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/payment_refunds',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
 
 /**
- * Retrieve Setup Flow
+ * Get Setup Flow
  */
-export const retrieveSetupFlow = <ThrowOnError extends boolean = false>(options: Options<RetrieveSetupFlowData, ThrowOnError>) => {
-    return (options.client ?? client).get<RetrieveSetupFlowResponses, RetrieveSetupFlowErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/setup_flows/{setup_flow_id}',
-        ...options
-    });
-};
+export const getSetupFlow = <ThrowOnError extends boolean = false>(options: Options<GetSetupFlowData, ThrowOnError>) => (options.client ?? client).get<GetSetupFlowResponses, GetSetupFlowErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/setup_flows/{setup_flow_id}',
+    ...options
+});
 
 /**
  * Update Setup Flow
  */
-export const updateSetupFlow = <ThrowOnError extends boolean = false>(options: Options<UpdateSetupFlowData, ThrowOnError>) => {
-    return (options.client ?? client).post<UpdateSetupFlowResponses, UpdateSetupFlowErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/setup_flows/{setup_flow_id}',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options.headers
-        }
-    });
-};
+export const updateSetupFlow = <ThrowOnError extends boolean = false>(options: Options<UpdateSetupFlowData, ThrowOnError>) => (options.client ?? client).post<UpdateSetupFlowResponses, UpdateSetupFlowErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/setup_flows/{setup_flow_id}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
 
 /**
- * Get All Setup Flow
+ * Get All Setup Flows
  */
-export const getAllSetupFlow = <ThrowOnError extends boolean = false>(options?: Options<GetAllSetupFlowData, ThrowOnError>) => {
-    return (options?.client ?? client).get<GetAllSetupFlowResponses, GetAllSetupFlowErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/setup_flows',
-        ...options
-    });
-};
+export const getAllSetupFlows = <ThrowOnError extends boolean = false>(options?: Options<GetAllSetupFlowsData, ThrowOnError>) => (options?.client ?? client).get<GetAllSetupFlowsResponses, GetAllSetupFlowsErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/setup_flows',
+    ...options
+});
 
 /**
  * Create Setup Flow
  */
-export const createSetupFlow = <ThrowOnError extends boolean = false>(options?: Options<CreateSetupFlowData, ThrowOnError>) => {
-    return (options?.client ?? client).post<CreateSetupFlowResponses, CreateSetupFlowErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/setup_flows',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options?.headers
-        }
-    });
-};
+export const createSetupFlow = <ThrowOnError extends boolean = false>(options?: Options<CreateSetupFlowData, ThrowOnError>) => (options?.client ?? client).post<CreateSetupFlowResponses, CreateSetupFlowErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/setup_flows',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
 
 /**
  * Cancel Setup Flow
  */
-export const cancelSetupFlow = <ThrowOnError extends boolean = false>(options: Options<CancelSetupFlowData, ThrowOnError>) => {
-    return (options.client ?? client).post<CancelSetupFlowResponses, CancelSetupFlowErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/setup_flows/{setup_flow_id}/cancel',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options.headers
-        }
-    });
-};
+export const cancelSetupFlow = <ThrowOnError extends boolean = false>(options: Options<CancelSetupFlowData, ThrowOnError>) => (options.client ?? client).post<CancelSetupFlowResponses, CancelSetupFlowErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/setup_flows/{setup_flow_id}/cancel',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
 
 /**
  * Confirm Setup Flow
  */
-export const confirmSetupFlow = <ThrowOnError extends boolean = false>(options: Options<ConfirmSetupFlowData, ThrowOnError>) => {
-    return (options.client ?? client).post<ConfirmSetupFlowResponses, ConfirmSetupFlowErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/setup_flows/{setup_flow_id}/confirm',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options.headers
-        }
-    });
-};
+export const confirmSetupFlow = <ThrowOnError extends boolean = false>(options: Options<ConfirmSetupFlowData, ThrowOnError>) => (options.client ?? client).post<ConfirmSetupFlowResponses, ConfirmSetupFlowErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/setup_flows/{setup_flow_id}/confirm',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
 
 /**
- * Retrieve Statement
+ * Get Statement
  */
-export const retrieveStatement = <ThrowOnError extends boolean = false>(options: Options<RetrieveStatementData, ThrowOnError>) => {
-    return (options.client ?? client).get<RetrieveStatementResponses, RetrieveStatementErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/statements/{statement_id}',
-        ...options
-    });
-};
+export const getStatement = <ThrowOnError extends boolean = false>(options: Options<GetStatementData, ThrowOnError>) => (options.client ?? client).get<GetStatementResponses, GetStatementErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/statements/{statement_id}',
+    ...options
+});
 
 /**
  * Get All Statements
  */
-export const getAllStatements = <ThrowOnError extends boolean = false>(options?: Options<GetAllStatementsData, ThrowOnError>) => {
-    return (options?.client ?? client).get<GetAllStatementsResponses, GetAllStatementsErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/statements',
-        ...options
-    });
-};
+export const getAllStatements = <ThrowOnError extends boolean = false>(options?: Options<GetAllStatementsData, ThrowOnError>) => (options?.client ?? client).get<GetAllStatementsResponses, GetAllStatementsErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/statements',
+    ...options
+});
 
 /**
  * Create Statement Url
  */
-export const createStatementUrl = <ThrowOnError extends boolean = false>(options: Options<CreateStatementUrlData, ThrowOnError>) => {
-    return (options.client ?? client).post<CreateStatementUrlResponses, CreateStatementUrlErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/statements/{statement_id}/statement_urls',
-        ...options
-    });
-};
+export const createStatementUrl = <ThrowOnError extends boolean = false>(options: Options<CreateStatementUrlData, ThrowOnError>) => (options.client ?? client).post<CreateStatementUrlResponses, CreateStatementUrlErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/statements/{statement_id}/statement_urls',
+    ...options
+});
 
 /**
- * Retrieve Balance
+ * Get Balance
  */
-export const retrieveBalance = <ThrowOnError extends boolean = false>(options: Options<RetrieveBalanceData, ThrowOnError>) => {
-    return (options.client ?? client).get<RetrieveBalanceResponses, RetrieveBalanceErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/balances/{balance_id}',
-        ...options
-    });
-};
+export const getBalance = <ThrowOnError extends boolean = false>(options: Options<GetBalanceData, ThrowOnError>) => (options.client ?? client).get<GetBalanceResponses, GetBalanceErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/balances/{balance_id}',
+    ...options
+});
 
 /**
  * Get All Balances
  */
-export const getAllBalances = <ThrowOnError extends boolean = false>(options?: Options<GetAllBalancesData, ThrowOnError>) => {
-    return (options?.client ?? client).get<GetAllBalancesResponses, GetAllBalancesErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/balances',
-        ...options
-    });
-};
+export const getAllBalances = <ThrowOnError extends boolean = false>(options?: Options<GetAllBalancesData, ThrowOnError>) => (options?.client ?? client).get<GetAllBalancesResponses, GetAllBalancesErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/balances',
+    ...options
+});
 
 /**
  * Create Balance Url
  */
-export const createBalanceUrl = <ThrowOnError extends boolean = false>(options: Options<CreateBalanceUrlData, ThrowOnError>) => {
-    return (options.client ?? client).post<CreateBalanceUrlResponses, CreateBalanceUrlErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/balances/{balance_id}/balance_urls',
-        ...options
-    });
-};
+export const createBalanceUrl = <ThrowOnError extends boolean = false>(options: Options<CreateBalanceUrlData, ThrowOnError>) => (options.client ?? client).post<CreateBalanceUrlResponses, CreateBalanceUrlErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/balances/{balance_id}/balance_urls',
+    ...options
+});
 
 /**
  * Get All Checkout Sessions
  */
-export const getAllCheckoutSessions = <ThrowOnError extends boolean = false>(options?: Options<GetAllCheckoutSessionsData, ThrowOnError>) => {
-    return (options?.client ?? client).get<GetAllCheckoutSessionsResponses, GetAllCheckoutSessionsErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/checkout/sessions',
-        ...options
-    });
-};
+export const getAllCheckoutSessions = <ThrowOnError extends boolean = false>(options?: Options<GetAllCheckoutSessionsData, ThrowOnError>) => (options?.client ?? client).get<GetAllCheckoutSessionsResponses, GetAllCheckoutSessionsErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/checkout/sessions',
+    ...options
+});
 
 /**
  * Create Checkout Session
  */
-export const createCheckoutSession = <ThrowOnError extends boolean = false>(options: Options<CreateCheckoutSessionData, ThrowOnError>) => {
-    return (options.client ?? client).post<CreateCheckoutSessionResponses, CreateCheckoutSessionErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/checkout/sessions',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options.headers
-        }
-    });
-};
+export const createCheckoutSession = <ThrowOnError extends boolean = false>(options: Options<CreateCheckoutSessionData, ThrowOnError>) => (options.client ?? client).post<CreateCheckoutSessionResponses, CreateCheckoutSessionErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/checkout/sessions',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
 
 /**
  * Get Checkout Session
  */
-export const getCheckoutSession = <ThrowOnError extends boolean = false>(options: Options<GetCheckoutSessionData, ThrowOnError>) => {
-    return (options.client ?? client).get<GetCheckoutSessionResponses, GetCheckoutSessionErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/checkout/sessions/{checkout_session_id}',
-        ...options
-    });
-};
+export const getCheckoutSession = <ThrowOnError extends boolean = false>(options: Options<GetCheckoutSessionData, ThrowOnError>) => (options.client ?? client).get<GetCheckoutSessionResponses, GetCheckoutSessionErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/checkout/sessions/{checkout_session_id}',
+    ...options
+});
 
 /**
  * Update Checkout Session
  */
-export const updateCheckoutSession = <ThrowOnError extends boolean = false>(options: Options<UpdateCheckoutSessionData, ThrowOnError>) => {
-    return (options.client ?? client).post<UpdateCheckoutSessionResponses, UpdateCheckoutSessionErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/checkout/sessions/{checkout_session_id}',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options.headers
-        }
-    });
-};
+export const updateCheckoutSession = <ThrowOnError extends boolean = false>(options: Options<UpdateCheckoutSessionData, ThrowOnError>) => (options.client ?? client).post<UpdateCheckoutSessionResponses, UpdateCheckoutSessionErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/checkout/sessions/{checkout_session_id}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
 
 /**
  * Get All Tax Rates
  */
-export const getAllTaxRates = <ThrowOnError extends boolean = false>(options?: Options<GetAllTaxRatesData, ThrowOnError>) => {
-    return (options?.client ?? client).get<GetAllTaxRatesResponses, GetAllTaxRatesErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/tax_rates',
-        ...options
-    });
-};
+export const getAllTaxRates = <ThrowOnError extends boolean = false>(options?: Options<GetAllTaxRatesData, ThrowOnError>) => (options?.client ?? client).get<GetAllTaxRatesResponses, GetAllTaxRatesErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/tax_rates',
+    ...options
+});
 
 /**
  * Create Tax Rate
  */
-export const createTaxRate = <ThrowOnError extends boolean = false>(options: Options<CreateTaxRateData, ThrowOnError>) => {
-    return (options.client ?? client).post<CreateTaxRateResponses, CreateTaxRateErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/tax_rates',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options.headers
-        }
-    });
-};
+export const createTaxRate = <ThrowOnError extends boolean = false>(options: Options<CreateTaxRateData, ThrowOnError>) => (options.client ?? client).post<CreateTaxRateResponses, CreateTaxRateErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/tax_rates',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
 
 /**
  * Get Tax Rate
  */
-export const getTaxRate = <ThrowOnError extends boolean = false>(options: Options<GetTaxRateData, ThrowOnError>) => {
-    return (options.client ?? client).get<GetTaxRateResponses, GetTaxRateErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/tax_rates/{tax_rate_id}',
-        ...options
-    });
-};
+export const getTaxRate = <ThrowOnError extends boolean = false>(options: Options<GetTaxRateData, ThrowOnError>) => (options.client ?? client).get<GetTaxRateResponses, GetTaxRateErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/tax_rates/{tax_rate_id}',
+    ...options
+});
 
 /**
  * Update Tax Rate
  */
-export const updateTaxRate = <ThrowOnError extends boolean = false>(options: Options<UpdateTaxRateData, ThrowOnError>) => {
-    return (options.client ?? client).post<UpdateTaxRateResponses, UpdateTaxRateErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/tax_rates/{tax_rate_id}',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options.headers
-        }
-    });
-};
+export const updateTaxRate = <ThrowOnError extends boolean = false>(options: Options<UpdateTaxRateData, ThrowOnError>) => (options.client ?? client).post<UpdateTaxRateResponses, UpdateTaxRateErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/tax_rates/{tax_rate_id}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
 
 /**
  * Get All Customers
  */
-export const getAllCustomers = <ThrowOnError extends boolean = false>(options?: Options<GetAllCustomersData, ThrowOnError>) => {
-    return (options?.client ?? client).get<GetAllCustomersResponses, GetAllCustomersErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/customers',
-        ...options
-    });
-};
+export const getAllCustomers = <ThrowOnError extends boolean = false>(options?: Options<GetAllCustomersData, ThrowOnError>) => (options?.client ?? client).get<GetAllCustomersResponses, GetAllCustomersErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/customers',
+    ...options
+});
 
 /**
  * Create Customer
  */
-export const createCustomer = <ThrowOnError extends boolean = false>(options: Options<CreateCustomerData, ThrowOnError>) => {
-    return (options.client ?? client).post<CreateCustomerResponses, CreateCustomerErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/customers',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options.headers
-        }
-    });
-};
+export const createCustomer = <ThrowOnError extends boolean = false>(options: Options<CreateCustomerData, ThrowOnError>) => (options.client ?? client).post<CreateCustomerResponses, CreateCustomerErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/customers',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
 
 /**
  * Delete Customer
  */
-export const deleteCustomer = <ThrowOnError extends boolean = false>(options: Options<DeleteCustomerData, ThrowOnError>) => {
-    return (options.client ?? client).delete<DeleteCustomerResponses, DeleteCustomerErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/customers/{customer_id}',
-        ...options
-    });
-};
+export const deleteCustomer = <ThrowOnError extends boolean = false>(options: Options<DeleteCustomerData, ThrowOnError>) => (options.client ?? client).delete<DeleteCustomerResponses, DeleteCustomerErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/customers/{customer_id}',
+    ...options
+});
 
 /**
  * Get Customer
  */
-export const getCustomer = <ThrowOnError extends boolean = false>(options: Options<GetCustomerData, ThrowOnError>) => {
-    return (options.client ?? client).get<GetCustomerResponses, GetCustomerErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/customers/{customer_id}',
-        ...options
-    });
-};
+export const getCustomer = <ThrowOnError extends boolean = false>(options: Options<GetCustomerData, ThrowOnError>) => (options.client ?? client).get<GetCustomerResponses, GetCustomerErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/customers/{customer_id}',
+    ...options
+});
 
 /**
  * Update Customer
  */
-export const updateCustomer = <ThrowOnError extends boolean = false>(options: Options<UpdateCustomerData, ThrowOnError>) => {
-    return (options.client ?? client).post<UpdateCustomerResponses, UpdateCustomerErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/customers/{customer_id}',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options.headers
-        }
-    });
-};
+export const updateCustomer = <ThrowOnError extends boolean = false>(options: Options<UpdateCustomerData, ThrowOnError>) => (options.client ?? client).post<UpdateCustomerResponses, UpdateCustomerErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/customers/{customer_id}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
 
 /**
  * Get Customer Payment Methods
  */
-export const getCustomerPaymentMethods = <ThrowOnError extends boolean = false>(options: Options<GetCustomerPaymentMethodsData, ThrowOnError>) => {
-    return (options.client ?? client).get<GetCustomerPaymentMethodsResponses, GetCustomerPaymentMethodsErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/customers/{customer_id}/payment_methods',
-        ...options
-    });
-};
+export const getCustomerPaymentMethods = <ThrowOnError extends boolean = false>(options: Options<GetCustomerPaymentMethodsData, ThrowOnError>) => (options.client ?? client).get<GetCustomerPaymentMethodsResponses, GetCustomerPaymentMethodsErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/customers/{customer_id}/payment_methods',
+    ...options
+});
 
 /**
  * Get All Events
  */
-export const getAllEvents = <ThrowOnError extends boolean = false>(options?: Options<GetAllEventsData, ThrowOnError>) => {
-    return (options?.client ?? client).get<GetAllEventsResponses, GetAllEventsErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/events',
-        ...options
-    });
-};
+export const getAllEvents = <ThrowOnError extends boolean = false>(options?: Options<GetAllEventsData, ThrowOnError>) => (options?.client ?? client).get<GetAllEventsResponses, GetAllEventsErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/events',
+    ...options
+});
 
 /**
  * Get Event
  */
-export const getEvent = <ThrowOnError extends boolean = false>(options: Options<GetEventData, ThrowOnError>) => {
-    return (options.client ?? client).get<GetEventResponses, GetEventErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/events/{event_id}',
-        ...options
-    });
-};
+export const getEvent = <ThrowOnError extends boolean = false>(options: Options<GetEventData, ThrowOnError>) => (options.client ?? client).get<GetEventResponses, GetEventErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/events/{event_id}',
+    ...options
+});
 
 /**
- * Retrieve Payment Transaction
+ * Get Payment Transaction
  */
-export const retrievePaymentTransaction = <ThrowOnError extends boolean = false>(options: Options<RetrievePaymentTransactionData, ThrowOnError>) => {
-    return (options.client ?? client).get<RetrievePaymentTransactionResponses, RetrievePaymentTransactionErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/payment_transactions/{payment_transaction_id}',
-        ...options
-    });
-};
+export const getPaymentTransaction = <ThrowOnError extends boolean = false>(options: Options<GetPaymentTransactionData, ThrowOnError>) => (options.client ?? client).get<GetPaymentTransactionResponses, GetPaymentTransactionErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/payment_transactions/{payment_transaction_id}',
+    ...options
+});
 
 /**
- * Get All Payment Transaction
+ * Get All Payment Transactions
  */
-export const getAllPaymentTransaction = <ThrowOnError extends boolean = false>(options?: Options<GetAllPaymentTransactionData, ThrowOnError>) => {
-    return (options?.client ?? client).get<GetAllPaymentTransactionResponses, GetAllPaymentTransactionErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/payment_transactions',
-        ...options
-    });
-};
+export const getAllPaymentTransactions = <ThrowOnError extends boolean = false>(options?: Options<GetAllPaymentTransactionsData, ThrowOnError>) => (options?.client ?? client).get<GetAllPaymentTransactionsResponses, GetAllPaymentTransactionsErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/payment_transactions',
+    ...options
+});
 
 /**
- * Retrieve Term
+ * Get Term
  */
-export const retrieveTerm = <ThrowOnError extends boolean = false>(options: Options<RetrieveTermData, ThrowOnError>) => {
-    return (options.client ?? client).get<RetrieveTermResponses, RetrieveTermErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/terms/{term_id}',
-        ...options
-    });
-};
+export const getTerm = <ThrowOnError extends boolean = false>(options: Options<GetTermData, ThrowOnError>) => (options.client ?? client).get<GetTermResponses, GetTermErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/terms/{term_id}',
+    ...options
+});
 
 /**
- * Get All Term
+ * Get All Terms
  */
-export const getAllTerm = <ThrowOnError extends boolean = false>(options?: Options<GetAllTermData, ThrowOnError>) => {
-    return (options?.client ?? client).get<GetAllTermResponses, GetAllTermErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'basic',
-                type: 'http'
-            },
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/v2/terms',
-        ...options
-    });
-};
+export const getAllTerms = <ThrowOnError extends boolean = false>(options?: Options<GetAllTermsData, ThrowOnError>) => (options?.client ?? client).get<GetAllTermsResponses, GetAllTermsErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],
+    url: '/v2/terms',
+    ...options
+});
