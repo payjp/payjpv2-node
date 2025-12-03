@@ -1,11 +1,11 @@
 import { describe, expect, test } from "@jest/globals";
 import { createClient } from "../payjpv2";
-import { 
-  createCustomer, 
-  getCustomer, 
-  createPaymentIntent, 
+import {
+  createCustomer,
+  getCustomer,
+  createPaymentFlow,
   createProduct,
-  createPrice 
+  createPrice
 } from "../index";
 
 describe("Integration Tests", () => {
@@ -44,9 +44,9 @@ describe("Integration Tests", () => {
       expect(typeof getCustomer).toBe("function");
     });
 
-    test("payment intent functions are exported and callable", () => {
-      expect(createPaymentIntent).toBeDefined();
-      expect(typeof createPaymentIntent).toBe("function");
+    test("payment flow functions are exported and callable", () => {
+      expect(createPaymentFlow).toBeDefined();
+      expect(typeof createPaymentFlow).toBe("function");
     });
 
     test("product and price functions are exported and callable", () => {
@@ -101,18 +101,18 @@ describe("Integration Tests", () => {
       }).not.toThrow();
     });
 
-    test("createPaymentIntent function signature", () => {
+    test("createPaymentFlow function signature", () => {
       const client = createClient({
         apiKey: "sk_test_dummy_key",
       });
 
       // This test verifies that the function accepts proper parameters
       expect(() => {
-        createPaymentIntent({
+        createPaymentFlow({
           client: client,
           body: {
             amount: 1000,
-            confirm: true,
+            payment_method: "pm_test_dummy",
           },
         });
       }).not.toThrow();

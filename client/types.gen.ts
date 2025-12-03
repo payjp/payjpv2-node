@@ -93,7 +93,7 @@ export type BalanceResponse = {
      *
      * state=transferであれば着金予定日、state=claimであれば振込が確認できた日時を表します。
      */
-    closed_date?: string | null;
+    closed_date: string | null;
     /**
      * Due Date
      *
@@ -111,7 +111,7 @@ export type BalanceResponse = {
     /**
      * 銀行口座情報
      */
-    bank_info?: BankInfoResponse | null;
+    bank_info: BankInfoResponse | null;
 };
 
 /**
@@ -367,7 +367,7 @@ export type CheckoutSessionDetailsResponse = {
      *
      * ID
      */
-    id?: string;
+    id: string;
     /**
      * Object
      */
@@ -377,19 +377,19 @@ export type CheckoutSessionDetailsResponse = {
      *
      * 本番環境かどうか
      */
-    livemode?: boolean;
+    livemode: boolean;
     /**
      * Amount Subtotal
      *
      * 割引や税金が適用される前のすべての商品の合計金額
      */
-    amount_subtotal?: number | null;
+    amount_subtotal: number | null;
     /**
      * Amount Total
      *
      * 割引と税金が適用された後のすべての商品の合計金額
      */
-    amount_total?: number | null;
+    amount_total: number | null;
     /**
      * Checkout で顧客の請求先住所を収集するかどうかを指定します。デフォルトは `auto` です。
      *
@@ -399,25 +399,25 @@ export type CheckoutSessionDetailsResponse = {
      * | **required**: 常に請求先住所の入力欄が表示されまうs。 |
      *
      */
-    billing_address_collection?: BillingAddressCollection | null;
+    billing_address_collection: BillingAddressCollection | null;
     /**
      * Cancel Url
      *
      * キャンセル時のリダイレクトURL
      */
-    cancel_url?: string | null;
+    cancel_url: string | null;
     /**
      * Customer
      *
      * 顧客ID
      */
-    customer?: string | CustomerResponse | null;
+    customer: string | CustomerResponse | null;
     /**
      * Customer Email
      *
      * 顧客オブジェクトを作成する時に使われます。指定されていない場合、顧客にメールアドレスの入力を求めます。すでに顧客のメールアドレスを持っている場合は、このパラメータを使ってあらかじめ情報を入力しておくことが可能です。支払いが完了した後に顧客情報を取得したい場合は、customer属性を使用します。
      */
-    customer_email?: string | null;
+    customer_email: string | null;
     /**
      * Customer Details
      *
@@ -436,11 +436,11 @@ export type CheckoutSessionDetailsResponse = {
      *
      * Checkout Session の有効期限が失効する日時。
      */
-    expires_at?: string | null;
+    expires_at: string | null;
     /**
      * 価格の通貨。現在は `jpy` のみサポートしています。
      */
-    currency?: Currency;
+    currency: Currency;
     /**
      * Checkout 画面の表示言語を指定します。
      *
@@ -449,25 +449,25 @@ export type CheckoutSessionDetailsResponse = {
      * | **ja**: 日本語で表示します。 |
      *
      */
-    locale?: Locale | null;
+    locale: Locale | null;
     /**
      * Payment Flow
      *
      * `payment` モードの Checkout Session の PaymentFlow の ID。PaymentFlow を確定 (confirm)、またはキャンセルすることはできません。キャンセルするには、代わりに Checkout Session を期限切れにしてください。
      */
-    payment_flow?: string | PaymentFlowResponse | null;
+    payment_flow: string | PaymentFlowResponse | null;
     /**
      * Payment Method Types
      *
      * この PaymentFlow で使用できる支払い方法の種類（カードなど）のリストです。 指定しない場合、ダッシュボードで利用可能な状態にしている支払い方法を自動的に表示します。
      */
-    payment_method_types?: Array<PaymentMethodTypes> | null;
+    payment_method_types: Array<PaymentMethodTypes> | null;
     /**
      * Payment Method Options
      *
      * この PaymentFlow の支払い方法の個別設定。
      */
-    payment_method_options?: {
+    payment_method_options: {
         [key: string]: unknown;
     } | null;
     /**
@@ -475,7 +475,7 @@ export type CheckoutSessionDetailsResponse = {
      *
      * `setup` モードの Checkout Session の SetupFlow の ID。Checkout Session の SetupFlow を確定 (confirm)、またはキャンセルすることはできません。キャンセルするには、代わりに Checkout Session を期限切れにしてください。
      */
-    setup_flow?: string | SetupFlowResponse | null;
+    setup_flow: string | SetupFlowResponse | null;
     /**
      * Checkout の画面上に表示される送信ボタンなど、ページ上の関連テキストをカスタマイズするために使用されます。<br>
      * `submit_type` は、`payment` モードの Checkout Session でのみ指定できます。未指定時、あるいは `auto` の場合、`pay` が使用されます。
@@ -488,7 +488,7 @@ export type CheckoutSessionDetailsResponse = {
      * | **donate**: 「寄付する」 |
      *
      */
-    submit_type?: CheckoutSessionSubmitType | null;
+    submit_type: CheckoutSessionSubmitType | null;
     /**
      * Checkout Session のモード
      *
@@ -497,7 +497,7 @@ export type CheckoutSessionDetailsResponse = {
      * | **hosted**: PAY.JPでホスティングしている画面を使用します。 |
      *
      */
-    mode?: CheckoutSessionMode;
+    mode: CheckoutSessionMode;
     /**
      * Checkout Session の UI モード。デフォルトは `hosted` です。<br>
      *
@@ -512,19 +512,19 @@ export type CheckoutSessionDetailsResponse = {
      *
      * 作成日時 (UTC, ISO 8601 形式)
      */
-    created_at?: string;
+    created_at: string;
     /**
      * Updated At
      *
      * 更新日時 (UTC, ISO 8601 形式)
      */
-    updated_at?: string;
+    updated_at: string;
     /**
      * Metadata
      *
      * メタデータ
      */
-    metadata?: {
+    metadata: {
         [key: string]: string | number | boolean;
     };
     /**
@@ -544,13 +544,13 @@ export type CheckoutSessionDetailsResponse = {
      *
      * 支払いや設定が完了した際に、PAY.JP が顧客をリダイレクトするURL。成功したCheckout Sessionからの情報をページで使用したい場合は、成功ページのカスタマイズに関するガイドをお読みください。
      */
-    success_url?: string | null;
+    success_url: string | null;
     /**
      * Url
      *
      * URL
      */
-    url?: string;
+    url: string;
 };
 
 /**
@@ -735,6 +735,12 @@ export type CustomerCreateRequest = {
      * 顧客ID。100桁までの一意な文字列を指定できます。使える文字は半角英数字、ハイフン(-)、アンダースコア(_)です。未指定時は `cus_` で始まる32桁までの一意な文字列が自動生成されます。
      */
     id?: string;
+    /**
+     * Payment Method
+     *
+     * 顧客に紐づける支払い方法ID
+     */
+    payment_method?: string;
 };
 
 /**
@@ -777,7 +783,7 @@ export type CustomerResponse = {
      *
      * 顧客ID
      */
-    id?: string;
+    id: string;
     /**
      * Object
      */
@@ -801,11 +807,17 @@ export type CustomerResponse = {
      */
     description: string | null;
     /**
+     * Default Payment Method
+     *
+     * 支払いにデフォルトで使用される支払い方法ID
+     */
+    default_payment_method: string | null;
+    /**
      * Metadata
      *
      * メタデータ
      */
-    metadata?: {
+    metadata: {
         [key: string]: string | number | boolean;
     };
     /**
@@ -846,6 +858,12 @@ export type CustomerUpdateRequest = {
     metadata?: {
         [key: string]: string | number | boolean;
     };
+    /**
+     * Default Payment Method
+     *
+     * 支払いにデフォルトで使用される支払い方法ID
+     */
+    default_payment_method?: string | null;
 };
 
 /**
@@ -1101,12 +1119,6 @@ export type PaymentFlowConfirmRequest = {
      */
     payment_method_types?: Array<PaymentMethodTypes>;
     /**
-     * Receipt Email
-     *
-     * 請求書の送信先メールアドレス。ライブモードで支払いに対して `receipt_email` を指定すると、メール設定に関係なく領収書が送信されます。
-     */
-    receipt_email?: string;
-    /**
      * Return Url
      *
      * 顧客が支払いを完了後かキャンセルした後にリダイレクトされるURL。アプリにリダイレクトしたい場合は URI Scheme を指定できます。confirm=trueの場合のみ指定できます。
@@ -1149,12 +1161,6 @@ export type PaymentFlowCreateRequest = {
      * このPaymentFlowで使用できる支払い方法の種類（カードなど）のリストです。 指定しない場合は、PAY.JPは支払い方法の設定から利用可能な支払い方法を動的に表示します。
      */
     payment_method_types?: Array<PaymentMethodTypes>;
-    /**
-     * Receipt Email
-     *
-     * 請求書の送信先メールアドレス。ライブモードで支払いに対して `receipt_email` を指定すると、メール設定に関係なく領収書が送信されます。
-     */
-    receipt_email?: string;
     /**
      * Return Url
      *
@@ -1202,10 +1208,6 @@ export type PaymentFlowCreateRequest = {
     metadata?: {
         [key: string]: string | number | boolean;
     };
-    /**
-     * このPaymentFlowの支払い方法で将来の支払いを行う意図があることを示します。<br><br>PaymentFlow に Customer を指定した場合、このパラメータを使って PaymentFlow を確定できます。その後、顧客が必要な操作を完了すると、支払い方法を Customer に紐付けることが可能です。また、Customer を指定しない場合でも、取引が完了した後に支払い方法を Customer に紐付けることはできます。
-     */
-    setup_future_usage?: Usage;
 };
 
 /**
@@ -1229,14 +1231,6 @@ export type PaymentFlowDataRequest = {
     metadata?: {
         [key: string]: string | number | boolean;
     };
-    /**
-     * Setup Future Usage
-     *
-     * この PaymentFlow に設定されている支払い方法で今後決済を行うかの設定です。<br><br>
-     * PaymentFlow に Customer を指定した場合、このパラメータを使って PaymentFlow を確定できます。
-     * その後、顧客が必要な操作を完了すると、支払い方法を Customer に紐付けることが可能です。また、Customer を指定しない場合でも、取引が完了した後に支払い方法を Customer に紐付けることはできます。
-     */
-    setup_future_usage?: 'off_session' | 'on_session';
 };
 
 /**
@@ -1262,7 +1256,7 @@ export type PaymentFlowListResponse = {
     /**
      * Data
      *
-     * 支払いインテントリスト
+     * 支払いフローリスト
      */
     data: Array<PaymentFlowResponse>;
 };
@@ -1274,7 +1268,7 @@ export type PaymentFlowResponse = {
     /**
      * Id
      *
-     * 支払いインテントID
+     * 支払いフローID
      */
     id: string;
     /**
@@ -1324,34 +1318,23 @@ export type PaymentFlowResponse = {
      */
     client_secret: string;
     /**
-     * Confirmation Method
-     *
-     * このPaymentFlowを自動的に確定できるか、あるいは支払いの確定に顧客による操作が必要かを示します。
-     *
-     * | 指定できる値 |
-     * |:---|
-     * | **automatic**: PaymentFlowは公開キーを使用して確認できます。next_actionsが処理された後は、支払いを完了するために追加の確認は必要ありません。 |
-     * <!-- | **manual**: すべての支払いの確認は秘密鍵を使用して行う必要があります。PaymentFlowは `next_actions` の処理後に `requires_confirmation` 状態に戻り、各支払いはサーバー側で明示的な確認を開始する必要があります。 | -->
-     */
-    confirmation_method: string | null;
-    /**
      * Customer
      *
      * このPaymentFlowに属する顧客のID（存在する場合）。この顧客以外にすでに紐づけられている支払い方法はこのPaymentFlowでは使用できません。
      */
-    customer?: string | null;
+    customer: string | null;
     /**
      * Description
      *
      * オブジェクトにセットする任意の文字列。ユーザーには表示されません。
      */
-    description?: string | null;
+    description: string | null;
     /**
      * Metadata
      *
      * メタデータ
      */
-    metadata?: {
+    metadata: {
         [key: string]: string | number | boolean;
     };
     /**
@@ -1359,13 +1342,13 @@ export type PaymentFlowResponse = {
      *
      * 支払い方法ID
      */
-    payment_method?: string | null;
+    payment_method: string | null;
     /**
      * Payment Method Options
      *
      * このPaymentFlowに固有の支払い方法の設定
      */
-    payment_method_options?: {
+    payment_method_options: {
         [key: string]: unknown;
     } | null;
     /**
@@ -1374,12 +1357,6 @@ export type PaymentFlowResponse = {
      * このPaymentFlowで使用できる支払い方法の種類（カードなど）のリストです。 指定しない場合は、PAY.JPは支払い方法の設定から利用可能な支払い方法を動的に表示します。
      */
     payment_method_types: Array<string>;
-    /**
-     * Receipt Email
-     *
-     * 請求書の送信先メールアドレス。ライブモードで支払いに対して `receipt_email` を指定すると、メール設定に関係なく領収書が送信されます。
-     */
-    receipt_email?: string | null;
     /**
      * このPaymentFlowのステータスです。<a href="https://docs.pay.jp/v2/payment_flows#status" target="_blank">ステータスの詳細についてはこちらをご覧ください。</a>
      *
@@ -1399,7 +1376,7 @@ export type PaymentFlowResponse = {
      *
      * プロパティが存在する場合、顧客が支払い設定を続けるために必要な対応が記載されています。
      */
-    next_action?: {
+    next_action: {
         [key: string]: unknown;
     } | null;
     /**
@@ -1407,7 +1384,7 @@ export type PaymentFlowResponse = {
      *
      * 顧客が支払いを完了後かキャンセルした後にリダイレクトされるURL。アプリにリダイレクトしたい場合は URI Scheme を指定できます。confirm=trueの場合のみ指定できます。
      */
-    return_url?: string | null;
+    return_url: string | null;
     /**
      * 支払いの確定方法を指定します。
      *
@@ -1417,10 +1394,6 @@ export type PaymentFlowResponse = {
      * | **manual**: 顧客が支払いを承認すると一旦確定を保留し、後で Capture API を使用して確定します。（すべての支払い方法がこれをサポートしているわけではありません）。 |
      */
     capture_method: CaptureMethod;
-    /**
-     * このPaymentFlowの支払い方法で将来の支払いを行う意図があることを示します。<br><br>PaymentFlow に Customer を指定した場合、このパラメータを使って PaymentFlow を確定できます。その後、顧客が必要な操作を完了すると、支払い方法を Customer に紐付けることが可能です。また、Customer を指定しない場合でも、取引が完了した後に支払い方法を Customer に紐付けることはできます。
-     */
-    setup_future_usage?: Usage | null;
     /**
      * Last Payment Error
      *
@@ -1456,12 +1429,6 @@ export type PaymentFlowUpdateRequest = {
      * このPaymentFlowで使用できる支払い方法の種類（カードなど）のリストです。 指定しない場合は、PAY.JPは支払い方法の設定から利用可能な支払い方法を動的に表示します。
      */
     payment_method_types?: Array<PaymentMethodTypes>;
-    /**
-     * Receipt Email
-     *
-     * 請求書の送信先メールアドレス。ライブモードで支払いに対して `receipt_email` を指定すると、メール設定に関係なく領収書が送信されます。
-     */
-    receipt_email?: string;
     /**
      * Return Url
      *
@@ -1831,13 +1798,19 @@ export type PaymentMethodCardResponse = {
     /**
      * Type
      */
-    type?: 'card' | 'apple_pay';
+    type: 'card' | 'apple_pay';
     /**
      * Customer
      *
      * 顧客ID
      */
-    customer?: string | null;
+    customer: string | null;
+    /**
+     * Detached At
+     *
+     * 顧客からdetachされた日時 (UTC, ISO 8601 形式)
+     */
+    detached_at: string | null;
     /**
      * Livemode
      *
@@ -1861,7 +1834,7 @@ export type PaymentMethodCardResponse = {
      *
      * メタデータ
      */
-    metadata?: {
+    metadata: {
         [key: string]: string | number | boolean;
     };
     /**
@@ -1907,7 +1880,7 @@ export type PaymentMethodConfigurationDetailsResponse = {
      *
      * ID
      */
-    id?: string;
+    id: string;
     /**
      * Object
      */
@@ -1917,27 +1890,27 @@ export type PaymentMethodConfigurationDetailsResponse = {
      *
      * 設定が有効かどうか。
      */
-    active?: boolean;
+    active: boolean;
     /**
      * Livemode
      *
      * 本番環境かどうか
      */
-    livemode?: boolean;
+    livemode: boolean;
     /**
      * Name
      *
      * 設定名
      */
-    name?: string | null;
+    name: string | null;
     /**
      * PayPayの設定
      */
-    paypay?: PaymentMethodConfigurationSettingResponse;
+    paypay: PaymentMethodConfigurationSettingResponse;
     /**
      * カードの設定
      */
-    card?: PaymentMethodConfigurationSettingResponse;
+    card: PaymentMethodConfigurationSettingResponse;
 };
 
 /**
@@ -2120,22 +2093,10 @@ export type PaymentMethodOptionsCardRequest = {
      *
      * | 指定できる値 |
      * |:---|
-     * | **any**: 基本的に3Dセキュア認証を要求します。 |
+     * | **any**: 3Dセキュア認証を要求します。 |
      * | **automatic**: 必要な場合にのみ3Dセキュア認証を要求します。 |
-     * <!-- | **challenge**: 3Dセキュア認証を手動で要求します。 | -->
      */
-    request_three_d_secure?: 'any' | 'automatic' | 'challenge';
-    /**
-     * Setup Future Usage
-     *
-     * セットアップ後の使用方法。
-     *
-     * | 指定できる値 |
-     * |:---|
-     * | **off_session**: 顧客がその場にいない状態（例：定期課金や後日請求など）でも決済したい場合に使用します。事前の同意に基づいて自動的に課金されます。 |
-     * | **on_session**: 顧客が支払い操作中（例：Web画面で「支払う」ボタンを押す）でのみ決済できればいい場合に指定します。リアルタイムに同意が得られている状態です。 |
-     */
-    setup_future_usage?: 'off_session' | 'on_session';
+    request_three_d_secure?: 'any' | 'automatic';
 };
 
 /**
@@ -2145,7 +2106,7 @@ export type PaymentMethodOptionsRequest = {
     /**
      * カード支払い方法に関するオプション
      */
-    card: PaymentMethodOptionsCardRequest;
+    card?: PaymentMethodOptionsCardRequest;
 };
 
 /**
@@ -2201,7 +2162,13 @@ export type PaymentMethodPayPayResponse = {
      *
      * 顧客ID
      */
-    customer?: string | null;
+    customer: string | null;
+    /**
+     * Detached At
+     *
+     * 顧客からdetachされた日時 (UTC, ISO 8601 形式)
+     */
+    detached_at: string | null;
     /**
      * Livemode
      *
@@ -2225,7 +2192,7 @@ export type PaymentMethodPayPayResponse = {
      *
      * メタデータ
      */
-    metadata?: {
+    metadata: {
         [key: string]: string | number | boolean;
     };
     /**
@@ -2338,7 +2305,7 @@ export type PaymentRefundListResponse = {
     /**
      * Data
      *
-     * 支払いインテントリスト
+     * 返金リスト
      */
     data: Array<PaymentRefundResponse>;
 };
@@ -2361,7 +2328,7 @@ export type PaymentRefundResponse = {
     /**
      * Object
      */
-    object?: 'refund';
+    object?: 'payment_refund';
     /**
      * Created At
      *
@@ -2420,7 +2387,7 @@ export type PaymentRefundResponse = {
      *
      * メタデータ
      */
-    metadata?: {
+    metadata: {
         [key: string]: string | number | boolean;
     };
 };
@@ -2616,7 +2583,7 @@ export type PriceDetailsResponse = {
      *
      * 料金ID
      */
-    id?: string;
+    id: string;
     /**
      * Object
      */
@@ -2626,27 +2593,27 @@ export type PriceDetailsResponse = {
      *
      * 本番環境かどうか
      */
-    livemode?: boolean;
+    livemode: boolean;
     /**
      * Active
      *
      * 価格が有効かどうか。デフォルトは `true`。
      */
-    active?: boolean;
+    active: boolean;
     /**
      * Metadata
      *
      * メタデータ
      */
-    metadata?: {
-        [key: string]: unknown;
+    metadata: {
+        [key: string]: string | number | boolean;
     };
     /**
      * Nickname
      *
      * 価格の名称。PAY.JP のダッシュボードで識別するためのもので、顧客には表示されません。
      */
-    nickname?: string | null;
+    nickname: string | null;
     /**
      * 価格が一度限りの購入か、継続的な（サブスクリプション）購入かに応じて、`one_time` または `recurring` のいずれかとなります。
      *
@@ -2655,41 +2622,41 @@ export type PriceDetailsResponse = {
      * | **one_time**: 1回限りの価格。 |
      * | **recurring**: 継続的な価格。 |
      */
-    type?: PriceType;
+    type: PriceType;
     /**
      * Lookup Key
      *
      * この価格を検索するためのキー。
      */
-    lookup_key?: string | null;
+    lookup_key: string | null;
     /**
      * 価格の通貨。現在は `jpy` のみサポートしています。
      */
-    currency?: Currency;
+    currency: Currency;
     /**
      * Product
      *
      * この価格が紐付く商品のID。
      */
-    product?: string;
+    product: string;
     /**
      * Unit Amount
      *
      * 価格の単価。0以上の整数となります。
      */
-    unit_amount?: number;
+    unit_amount: number;
     /**
      * Created At
      *
      * 支払い方法作成時の日時 (UTC, ISO 8601 形式)
      */
-    created_at?: string;
+    created_at: string;
     /**
      * Updated At
      *
      * 支払い方法更新時の日時 (UTC, ISO 8601 形式)
      */
-    updated_at?: string;
+    updated_at: string;
 };
 
 /**
@@ -3136,19 +3103,19 @@ export type SetupFlowResponse = {
      *
      * この SetupFlow が属する顧客の ID。SetupFlow に PaymentMethod が設定されている場合、SetupFlow の設定が成功するとその PaymentMethod は顧客に紐付きます。別の顧客に紐付いている PaymentMethod をこの SetupFlow で使用することはできません。
      */
-    customer?: string | null;
+    customer: string | null;
     /**
      * Description
      *
      * 説明。顧客に表示されます。
      */
-    description?: string | null;
+    description: string | null;
     /**
      * Metadata
      *
      * メタデータ
      */
-    metadata?: {
+    metadata: {
         [key: string]: string | number | boolean;
     };
     /**
@@ -3156,13 +3123,13 @@ export type SetupFlowResponse = {
      *
      * この SetupFlow に紐付ける決済方法のID
      */
-    payment_method?: string | null;
+    payment_method: string | null;
     /**
      * Payment Method Options
      *
      * この SetupFlow の支払い方法の個別設定。
      */
-    payment_method_options?: {
+    payment_method_options: {
         [key: string]: unknown;
     } | null;
     /**
@@ -3189,7 +3156,7 @@ export type SetupFlowResponse = {
      *
      * 顧客が支払い設定を続けるために必要な対応がある場合、対応方法が記載されています。
      */
-    next_action?: {
+    next_action: {
         [key: string]: unknown;
     } | null;
     /**
@@ -3197,7 +3164,7 @@ export type SetupFlowResponse = {
      *
      * 顧客が支払いを完了後、あるいはキャンセルした後にリダイレクトされるURL。アプリにリダイレクトしたい場合は URI Scheme を指定できます。`confirm=true` の場合のみ指定できます。
      */
-    return_url?: string | null;
+    return_url: string | null;
     /**
      * Last Setup Error
      *
@@ -3278,7 +3245,7 @@ export type StatementItemResponse = {
      *
      * 税率（パーセンテージ）
      */
-    tax_rate?: string | null;
+    tax_rate: string | null;
 };
 
 /**
@@ -3332,7 +3299,7 @@ export type StatementResponse = {
      *
      * 取引明細のタイトル
      */
-    title?: string | null;
+    title: string | null;
     /**
      * 取引明細の区分
      *
@@ -3358,24 +3325,18 @@ export type StatementResponse = {
      */
     updated_at: string;
     /**
-     * Tenant
-     *
-     * 該当する場合のテナントID
-     */
-    tenant?: string | null;
-    /**
      * このStatementが関連付けられているTermオブジェクト
      *
      * このStatementの生成元となったTermオブジェクト プロプラン料金や各種手数料など、Termから作られていないものではnullになります。
      *
      */
-    term?: TermResponse | null;
+    term: TermResponse | null;
     /**
      * Balance
      *
      * 該当する場合の残高ID
      */
-    balance?: string | null;
+    balance: string | null;
     /**
      * Items
      *
@@ -3504,41 +3465,41 @@ export type TaxRateDetailsResponse = {
      *
      * ID
      */
-    id?: string;
+    id: string;
     /**
      * Display Name
      *
      * 表示名。顧客に表示されます。
      */
-    display_name?: string;
+    display_name: string;
     /**
      * Inclusive
      *
      * 税込みかどうか。税込 = `true` 税抜 = `false`
      */
-    inclusive?: boolean;
+    inclusive: boolean;
     /**
      * Percentage
      *
      * 税率を % 単位で指定します（例： 10%の場合は「10」と入力）
      */
-    percentage?: number;
+    percentage: number;
     /**
      * Active
      *
      * この税率が有効であるかどうか。無効にした場合でも、すでに設定されている定期課金などでは使用可能です。
      */
-    active?: boolean;
+    active: boolean;
     /**
      * 有効な2文字の <a href="https://ja.wikipedia.org/wiki/ISO_3166-1" target="_blank">ISO 国コード</a>
      */
-    country?: Country | null;
+    country: Country | null;
     /**
      * Description
      *
      * 説明。ダッシュボード内のみで表示され、顧客には表示されません。
      */
-    description?: string | null;
+    description: string | null;
     /**
      * 税金の種類。
      *
@@ -3548,13 +3509,13 @@ export type TaxRateDetailsResponse = {
      * |:---|
      * | **jct**: JCT (Japanese Consumption Tax, 日本の消費税) |
      */
-    tax_type?: TaxType | null;
+    tax_type: TaxType | null;
     /**
      * Metadata
      *
      * メタデータ
      */
-    metadata?: {
+    metadata: {
         [key: string]: string | number | boolean;
     };
 };
@@ -3808,6 +3769,10 @@ export type GetPaymentMethodData = {
 
 export type GetPaymentMethodErrors = {
     /**
+     * Not Found
+     */
+    404: ErrorResponse;
+    /**
      * Validation Error
      */
     422: ErrorResponse;
@@ -3838,6 +3803,10 @@ export type UpdatePaymentMethodData = {
 
 export type UpdatePaymentMethodErrors = {
     /**
+     * Not Found
+     */
+    404: ErrorResponse;
+    /**
      * Validation Error
      */
     422: ErrorResponse;
@@ -3853,6 +3822,40 @@ export type UpdatePaymentMethodResponses = {
 };
 
 export type UpdatePaymentMethodResponse = UpdatePaymentMethodResponses[keyof UpdatePaymentMethodResponses];
+
+export type GetPaymentMethodByCardData = {
+    body?: never;
+    path: {
+        /**
+         * Card Id
+         */
+        card_id: string;
+    };
+    query?: never;
+    url: '/v2/payment_methods/cards/{card_id}';
+};
+
+export type GetPaymentMethodByCardErrors = {
+    /**
+     * Not Found
+     */
+    404: ErrorResponse;
+    /**
+     * Validation Error
+     */
+    422: ErrorResponse;
+};
+
+export type GetPaymentMethodByCardError = GetPaymentMethodByCardErrors[keyof GetPaymentMethodByCardErrors];
+
+export type GetPaymentMethodByCardResponses = {
+    /**
+     * Successful Response
+     */
+    200: PaymentMethodResponse;
+};
+
+export type GetPaymentMethodByCardResponse = GetPaymentMethodByCardResponses[keyof GetPaymentMethodByCardResponses];
 
 export type AttachPaymentMethodData = {
     body: PaymentMethodAttachRequest;
@@ -4219,6 +4222,12 @@ export type GetAllPricesData = {
          * このIDより前のデータを取得
          */
         ending_before?: string | null;
+        /**
+         * Lookup Keys
+         *
+         * 価格を動的に取得するために使用される検索キー。
+         */
+        lookup_keys?: Array<string> | null;
     };
     url: '/v2/prices';
 };
@@ -4330,7 +4339,7 @@ export type UpdatePriceResponses = {
 
 export type UpdatePriceResponse = UpdatePriceResponses[keyof UpdatePriceResponses];
 
-export type RetrievePaymentFlowData = {
+export type GetPaymentFlowData = {
     body?: never;
     path: {
         /**
@@ -4342,7 +4351,7 @@ export type RetrievePaymentFlowData = {
     url: '/v2/payment_flows/{payment_flow_id}';
 };
 
-export type RetrievePaymentFlowErrors = {
+export type GetPaymentFlowErrors = {
     /**
      * Not Found
      */
@@ -4353,16 +4362,16 @@ export type RetrievePaymentFlowErrors = {
     422: ErrorResponse;
 };
 
-export type RetrievePaymentFlowError = RetrievePaymentFlowErrors[keyof RetrievePaymentFlowErrors];
+export type GetPaymentFlowError = GetPaymentFlowErrors[keyof GetPaymentFlowErrors];
 
-export type RetrievePaymentFlowResponses = {
+export type GetPaymentFlowResponses = {
     /**
      * Successful Response
      */
     200: PaymentFlowResponse;
 };
 
-export type RetrievePaymentFlowResponse = RetrievePaymentFlowResponses[keyof RetrievePaymentFlowResponses];
+export type GetPaymentFlowResponse = GetPaymentFlowResponses[keyof GetPaymentFlowResponses];
 
 export type UpdatePaymentFlowData = {
     body: PaymentFlowUpdateRequest;
@@ -4378,7 +4387,7 @@ export type UpdatePaymentFlowData = {
 
 export type UpdatePaymentFlowErrors = {
     /**
-     * Invalid Status<br>Detached Payment Method Not Usable
+     * Invalid Status<br>Detached Payment Method Not Usable<br>Payment Method Not Owned By Customer<br>Payment Method Type Not Allowed
      */
     400: ErrorResponse;
     /**
@@ -4402,7 +4411,7 @@ export type UpdatePaymentFlowResponses = {
 
 export type UpdatePaymentFlowResponse = UpdatePaymentFlowResponses[keyof UpdatePaymentFlowResponses];
 
-export type GetAllPaymentFlowData = {
+export type GetAllPaymentFlowsData = {
     body?: never;
     path?: never;
     query?: {
@@ -4434,7 +4443,7 @@ export type GetAllPaymentFlowData = {
     url: '/v2/payment_flows';
 };
 
-export type GetAllPaymentFlowErrors = {
+export type GetAllPaymentFlowsErrors = {
     /**
      * Resource Missing
      */
@@ -4445,16 +4454,16 @@ export type GetAllPaymentFlowErrors = {
     422: ErrorResponse;
 };
 
-export type GetAllPaymentFlowError = GetAllPaymentFlowErrors[keyof GetAllPaymentFlowErrors];
+export type GetAllPaymentFlowsError = GetAllPaymentFlowsErrors[keyof GetAllPaymentFlowsErrors];
 
-export type GetAllPaymentFlowResponses = {
+export type GetAllPaymentFlowsResponses = {
     /**
      * Successful Response
      */
     200: PaymentFlowListResponse;
 };
 
-export type GetAllPaymentFlowResponse = GetAllPaymentFlowResponses[keyof GetAllPaymentFlowResponses];
+export type GetAllPaymentFlowsResponse = GetAllPaymentFlowsResponses[keyof GetAllPaymentFlowsResponses];
 
 export type CreatePaymentFlowData = {
     body: PaymentFlowCreateRequest;
@@ -4465,7 +4474,7 @@ export type CreatePaymentFlowData = {
 
 export type CreatePaymentFlowErrors = {
     /**
-     * Detached Payment Method Not Usable
+     * Detached Payment Method Not Usable<br>Payment Method Not Owned By Customer<br>Payment Method Type Not Allowed
      */
     400: ErrorResponse;
     /**
@@ -4588,7 +4597,7 @@ export type ConfirmPaymentFlowData = {
 
 export type ConfirmPaymentFlowErrors = {
     /**
-     * Invalid Status<br>Missing Payment Method<br>Detached Payment Method Not Usable
+     * Invalid Status<br>Missing Payment Method<br>Detached Payment Method Not Usable<br>Payment Method Not Owned By Customer<br>Customer Required For Payment Method<br>Payment Method Type Not Allowed
      */
     400: ErrorResponse;
     /**
@@ -4612,7 +4621,64 @@ export type ConfirmPaymentFlowResponses = {
 
 export type ConfirmPaymentFlowResponse = ConfirmPaymentFlowResponses[keyof ConfirmPaymentFlowResponses];
 
-export type RetrievePaymentRefundData = {
+export type GetPaymentFlowRefundsData = {
+    body?: never;
+    path: {
+        /**
+         * Payment Flow Id
+         */
+        payment_flow_id: string;
+    };
+    query?: {
+        /**
+         * Limit
+         *
+         * 取得するデータの最大件数
+         */
+        limit?: number;
+        /**
+         * Starting After
+         *
+         * このIDより後のデータを取得
+         */
+        starting_after?: string | null;
+        /**
+         * Ending Before
+         *
+         * このIDより前のデータを取得
+         */
+        ending_before?: string | null;
+    };
+    url: '/v2/payment_flows/{payment_flow_id}/refunds';
+};
+
+export type GetPaymentFlowRefundsErrors = {
+    /**
+     * Resource Missing
+     */
+    400: ErrorResponse;
+    /**
+     * Not Found
+     */
+    404: ErrorResponse;
+    /**
+     * Validation Error
+     */
+    422: ErrorResponse;
+};
+
+export type GetPaymentFlowRefundsError = GetPaymentFlowRefundsErrors[keyof GetPaymentFlowRefundsErrors];
+
+export type GetPaymentFlowRefundsResponses = {
+    /**
+     * Successful Response
+     */
+    200: PaymentRefundListResponse;
+};
+
+export type GetPaymentFlowRefundsResponse = GetPaymentFlowRefundsResponses[keyof GetPaymentFlowRefundsResponses];
+
+export type GetPaymentRefundData = {
     body?: never;
     path: {
         /**
@@ -4624,7 +4690,7 @@ export type RetrievePaymentRefundData = {
     url: '/v2/payment_refunds/{payment_refund_id}';
 };
 
-export type RetrievePaymentRefundErrors = {
+export type GetPaymentRefundErrors = {
     /**
      * Not Found
      */
@@ -4635,16 +4701,16 @@ export type RetrievePaymentRefundErrors = {
     422: ErrorResponse;
 };
 
-export type RetrievePaymentRefundError = RetrievePaymentRefundErrors[keyof RetrievePaymentRefundErrors];
+export type GetPaymentRefundError = GetPaymentRefundErrors[keyof GetPaymentRefundErrors];
 
-export type RetrievePaymentRefundResponses = {
+export type GetPaymentRefundResponses = {
     /**
      * Successful Response
      */
     200: PaymentRefundResponse;
 };
 
-export type RetrievePaymentRefundResponse = RetrievePaymentRefundResponses[keyof RetrievePaymentRefundResponses];
+export type GetPaymentRefundResponse = GetPaymentRefundResponses[keyof GetPaymentRefundResponses];
 
 export type UpdatePaymentRefundData = {
     body: PaymentRefundUpdateRequest;
@@ -4757,7 +4823,7 @@ export type CreatePaymentRefundResponses = {
 
 export type CreatePaymentRefundResponse = CreatePaymentRefundResponses[keyof CreatePaymentRefundResponses];
 
-export type RetrieveSetupFlowData = {
+export type GetSetupFlowData = {
     body?: never;
     path: {
         /**
@@ -4769,7 +4835,7 @@ export type RetrieveSetupFlowData = {
     url: '/v2/setup_flows/{setup_flow_id}';
 };
 
-export type RetrieveSetupFlowErrors = {
+export type GetSetupFlowErrors = {
     /**
      * Not Found
      */
@@ -4780,16 +4846,16 @@ export type RetrieveSetupFlowErrors = {
     422: ErrorResponse;
 };
 
-export type RetrieveSetupFlowError = RetrieveSetupFlowErrors[keyof RetrieveSetupFlowErrors];
+export type GetSetupFlowError = GetSetupFlowErrors[keyof GetSetupFlowErrors];
 
-export type RetrieveSetupFlowResponses = {
+export type GetSetupFlowResponses = {
     /**
      * Successful Response
      */
     200: SetupFlowResponse;
 };
 
-export type RetrieveSetupFlowResponse = RetrieveSetupFlowResponses[keyof RetrieveSetupFlowResponses];
+export type GetSetupFlowResponse = GetSetupFlowResponses[keyof GetSetupFlowResponses];
 
 export type UpdateSetupFlowData = {
     body: SetupFlowUpdateRequest;
@@ -4829,7 +4895,7 @@ export type UpdateSetupFlowResponses = {
 
 export type UpdateSetupFlowResponse = UpdateSetupFlowResponses[keyof UpdateSetupFlowResponses];
 
-export type GetAllSetupFlowData = {
+export type GetAllSetupFlowsData = {
     body?: never;
     path?: never;
     query?: {
@@ -4855,23 +4921,23 @@ export type GetAllSetupFlowData = {
     url: '/v2/setup_flows';
 };
 
-export type GetAllSetupFlowErrors = {
+export type GetAllSetupFlowsErrors = {
     /**
      * Validation Error
      */
     422: ErrorResponse;
 };
 
-export type GetAllSetupFlowError = GetAllSetupFlowErrors[keyof GetAllSetupFlowErrors];
+export type GetAllSetupFlowsError = GetAllSetupFlowsErrors[keyof GetAllSetupFlowsErrors];
 
-export type GetAllSetupFlowResponses = {
+export type GetAllSetupFlowsResponses = {
     /**
      * Successful Response
      */
     200: SetupFlowListResponse;
 };
 
-export type GetAllSetupFlowResponse = GetAllSetupFlowResponses[keyof GetAllSetupFlowResponses];
+export type GetAllSetupFlowsResponse = GetAllSetupFlowsResponses[keyof GetAllSetupFlowsResponses];
 
 export type CreateSetupFlowData = {
     /**
@@ -4991,7 +5057,7 @@ export type ConfirmSetupFlowResponses = {
 
 export type ConfirmSetupFlowResponse = ConfirmSetupFlowResponses[keyof ConfirmSetupFlowResponses];
 
-export type RetrieveStatementData = {
+export type GetStatementData = {
     body?: never;
     path: {
         /**
@@ -5003,7 +5069,7 @@ export type RetrieveStatementData = {
     url: '/v2/statements/{statement_id}';
 };
 
-export type RetrieveStatementErrors = {
+export type GetStatementErrors = {
     /**
      * Not Found
      */
@@ -5014,16 +5080,16 @@ export type RetrieveStatementErrors = {
     422: ErrorResponse;
 };
 
-export type RetrieveStatementError = RetrieveStatementErrors[keyof RetrieveStatementErrors];
+export type GetStatementError = GetStatementErrors[keyof GetStatementErrors];
 
-export type RetrieveStatementResponses = {
+export type GetStatementResponses = {
     /**
      * Successful Response
      */
     200: StatementResponse;
 };
 
-export type RetrieveStatementResponse = RetrieveStatementResponses[keyof RetrieveStatementResponses];
+export type GetStatementResponse = GetStatementResponses[keyof GetStatementResponses];
 
 export type GetAllStatementsData = {
     body?: never;
@@ -5149,7 +5215,7 @@ export type CreateStatementUrlResponses = {
 
 export type CreateStatementUrlResponse = CreateStatementUrlResponses[keyof CreateStatementUrlResponses];
 
-export type RetrieveBalanceData = {
+export type GetBalanceData = {
     body?: never;
     path: {
         /**
@@ -5161,7 +5227,7 @@ export type RetrieveBalanceData = {
     url: '/v2/balances/{balance_id}';
 };
 
-export type RetrieveBalanceErrors = {
+export type GetBalanceErrors = {
     /**
      * Not Found
      */
@@ -5172,16 +5238,16 @@ export type RetrieveBalanceErrors = {
     422: ErrorResponse;
 };
 
-export type RetrieveBalanceError = RetrieveBalanceErrors[keyof RetrieveBalanceErrors];
+export type GetBalanceError = GetBalanceErrors[keyof GetBalanceErrors];
 
-export type RetrieveBalanceResponses = {
+export type GetBalanceResponses = {
     /**
      * Successful Response
      */
     200: BalanceResponse;
 };
 
-export type RetrieveBalanceResponse = RetrieveBalanceResponses[keyof RetrieveBalanceResponses];
+export type GetBalanceResponse = GetBalanceResponses[keyof GetBalanceResponses];
 
 export type GetAllBalancesData = {
     body?: never;
@@ -5647,6 +5713,10 @@ export type CreateCustomerErrors = {
      */
     400: ErrorResponse;
     /**
+     * Not Found
+     */
+    404: ErrorResponse;
+    /**
      * Validation Error
      */
     422: ErrorResponse;
@@ -5918,7 +5988,7 @@ export type GetEventResponses = {
 
 export type GetEventResponse = GetEventResponses[keyof GetEventResponses];
 
-export type RetrievePaymentTransactionData = {
+export type GetPaymentTransactionData = {
     body?: never;
     path: {
         /**
@@ -5930,7 +6000,7 @@ export type RetrievePaymentTransactionData = {
     url: '/v2/payment_transactions/{payment_transaction_id}';
 };
 
-export type RetrievePaymentTransactionErrors = {
+export type GetPaymentTransactionErrors = {
     /**
      * Not Found
      */
@@ -5941,18 +6011,18 @@ export type RetrievePaymentTransactionErrors = {
     422: ErrorResponse;
 };
 
-export type RetrievePaymentTransactionError = RetrievePaymentTransactionErrors[keyof RetrievePaymentTransactionErrors];
+export type GetPaymentTransactionError = GetPaymentTransactionErrors[keyof GetPaymentTransactionErrors];
 
-export type RetrievePaymentTransactionResponses = {
+export type GetPaymentTransactionResponses = {
     /**
      * Successful Response
      */
     200: PaymentTransactionResponse;
 };
 
-export type RetrievePaymentTransactionResponse = RetrievePaymentTransactionResponses[keyof RetrievePaymentTransactionResponses];
+export type GetPaymentTransactionResponse = GetPaymentTransactionResponses[keyof GetPaymentTransactionResponses];
 
-export type GetAllPaymentTransactionData = {
+export type GetAllPaymentTransactionsData = {
     body?: never;
     path?: never;
     query?: {
@@ -5996,25 +6066,25 @@ export type GetAllPaymentTransactionData = {
     url: '/v2/payment_transactions';
 };
 
-export type GetAllPaymentTransactionErrors = {
+export type GetAllPaymentTransactionsErrors = {
     /**
      * Validation Error
      */
     422: ErrorResponse;
 };
 
-export type GetAllPaymentTransactionError = GetAllPaymentTransactionErrors[keyof GetAllPaymentTransactionErrors];
+export type GetAllPaymentTransactionsError = GetAllPaymentTransactionsErrors[keyof GetAllPaymentTransactionsErrors];
 
-export type GetAllPaymentTransactionResponses = {
+export type GetAllPaymentTransactionsResponses = {
     /**
      * Successful Response
      */
     200: PaymentTransactionListResponse;
 };
 
-export type GetAllPaymentTransactionResponse = GetAllPaymentTransactionResponses[keyof GetAllPaymentTransactionResponses];
+export type GetAllPaymentTransactionsResponse = GetAllPaymentTransactionsResponses[keyof GetAllPaymentTransactionsResponses];
 
-export type RetrieveTermData = {
+export type GetTermData = {
     body?: never;
     path: {
         /**
@@ -6026,7 +6096,7 @@ export type RetrieveTermData = {
     url: '/v2/terms/{term_id}';
 };
 
-export type RetrieveTermErrors = {
+export type GetTermErrors = {
     /**
      * Not Found
      */
@@ -6037,18 +6107,18 @@ export type RetrieveTermErrors = {
     422: ErrorResponse;
 };
 
-export type RetrieveTermError = RetrieveTermErrors[keyof RetrieveTermErrors];
+export type GetTermError = GetTermErrors[keyof GetTermErrors];
 
-export type RetrieveTermResponses = {
+export type GetTermResponses = {
     /**
      * Successful Response
      */
     200: TermResponse;
 };
 
-export type RetrieveTermResponse = RetrieveTermResponses[keyof RetrieveTermResponses];
+export type GetTermResponse = GetTermResponses[keyof GetTermResponses];
 
-export type GetAllTermData = {
+export type GetAllTermsData = {
     body?: never;
     path?: never;
     query?: {
@@ -6080,20 +6150,20 @@ export type GetAllTermData = {
     url: '/v2/terms';
 };
 
-export type GetAllTermErrors = {
+export type GetAllTermsErrors = {
     /**
      * Validation Error
      */
     422: ErrorResponse;
 };
 
-export type GetAllTermError = GetAllTermErrors[keyof GetAllTermErrors];
+export type GetAllTermsError = GetAllTermsErrors[keyof GetAllTermsErrors];
 
-export type GetAllTermResponses = {
+export type GetAllTermsResponses = {
     /**
      * Successful Response
      */
     200: TermListResponse;
 };
 
-export type GetAllTermResponse = GetAllTermResponses[keyof GetAllTermResponses];
+export type GetAllTermsResponse = GetAllTermsResponses[keyof GetAllTermsResponses];

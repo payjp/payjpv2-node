@@ -1,0 +1,57 @@
+# Source files
+*.ts
+!*.d.ts
+
+# Tests
+tests/
+*.test.js
+*.test.ts
+*.spec.js
+*.spec.ts
+
+# Examples
+examples/
+
+# Development files
+coverage/
+.nyc_output/
+.jest/
+
+# Configuration files
+tsconfig.json
+jest.config.js
+biome.json
+
+# Documentation (keep README.md and LICENSE)
+CLAUDE.md
+
+# Development tools
+.vscode/
+.idea/
+node_modules/
+.git/
+.github/
+.gitignore
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+*.log
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+
+# OS files
+.DS_Store
+Thumbs.db
