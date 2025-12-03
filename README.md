@@ -46,13 +46,10 @@ import { createCustomer, getCustomer, updateCustomer } from '@payjp/payjpv2';
 
 // Create a customer
 const result = await createCustomer({
-  client: client,
+  client,
   body: {
     email: 'customer@example.com',
     description: 'New Customer',
-    metadata: {
-      user_id: '12345'
-    }
   }
 });
 
@@ -63,7 +60,7 @@ if (result.error) {
 
   // Get customer details
   const customer = await getCustomer({
-    client: client,
+    client,
     path: { customer_id: result.data.id }
   });
 
@@ -71,35 +68,30 @@ if (result.error) {
 }
 ```
 
-#### Payment Intent Operations
+#### Payment Flow Operations
 
 ```typescript
 import {
-  createPaymentIntent,
-  confirmPaymentIntent,
-  capturePaymentIntent
+  createPaymentFlow,
+  confirmPaymentFlow,
+  capturePaymentFlow
 } from '@payjp/payjpv2';
 
-// Create a payment intent
-const paymentIntent = await createPaymentIntent({
-  client: client,
+// Create a payment flow
+const paymentFlow = await createPaymentFlow({
+  client,
   body: {
-    amount: 1000, // Amount in smallest currency unit (e.g., 1000 = ¥1,000)
-    currency: 'jpy',
-    payment_method_types: ['card'],
-    metadata: {
-      order_id: 'order_12345'
-    }
+    amount: 1000, // Amount in yen (e.g., 1000 = ¥1,000)
   }
 });
 
-if (paymentIntent.data) {
-  // Confirm the payment intent
-  const confirmed = await confirmPaymentIntent({
-    client: client,
-    path: { payment_intent_id: paymentIntent.data.id },
+if (paymentFlow.data) {
+  // Confirm the payment flow with a payment method
+  const confirmed = await confirmPaymentFlow({
+    client,
+    path: { payment_flow_id: paymentFlow.data.id },
     body: {
-      payment_method: 'pm_test_card'
+      payment_method: 'pm_xxxxxxxxxxxx'
     }
   });
 
@@ -114,27 +106,20 @@ import { createProduct, createPrice } from '@payjp/payjpv2';
 
 // Create a product
 const product = await createProduct({
-  client: client,
+  client,
   body: {
-    name: 'Premium Subscription',
-    description: 'Monthly premium subscription',
-    metadata: {
-      category: 'subscription'
-    }
+    name: 'Premium Plan',
   }
 });
 
 // Create a price for the product
 if (product.data) {
   const price = await createPrice({
-    client: client,
+    client,
     body: {
       unit_amount: 1500,
       currency: 'jpy',
       product: product.data.id,
-      recurring: {
-        interval: 'month'
-      }
     }
   });
 
@@ -155,13 +140,14 @@ The SDK provides functions for all PAY.JP v2 API endpoints:
 - `deleteCustomer()` - Delete a customer
 - `getAllCustomers()` - List all customers
 
-#### Payment Intents
-- `createPaymentIntent()` - Create a payment intent
-- `retrievePaymentIntent()` - Get payment intent details
-- `updatePaymentIntent()` - Update payment intent
-- `confirmPaymentIntent()` - Confirm a payment intent
-- `capturePaymentIntent()` - Capture an authorized payment
-- `cancelPaymentIntent()` - Cancel a payment intent
+#### Payment Flows
+- `createPaymentFlow()` - Create a payment flow
+- `getPaymentFlow()` - Get payment flow details
+- `updatePaymentFlow()` - Update payment flow
+- `confirmPaymentFlow()` - Confirm a payment flow
+- `capturePaymentFlow()` - Capture an authorized payment
+- `cancelPaymentFlow()` - Cancel a payment flow
+- `getAllPaymentFlows()` - List payment flows
 
 #### Payment Methods
 - `createPaymentMethod()` - Create a payment method
@@ -174,10 +160,18 @@ The SDK provides functions for all PAY.JP v2 API endpoints:
 - `createPrice()`, `getPrice()`, `updatePrice()`
 
 #### Refunds
-- `createRefund()`, `retrieveRefund()`, `updateRefund()`, `cancelRefund()`
+- `createPaymentRefund()` - Create a refund
+- `getPaymentRefund()` - Get refund details
+- `updatePaymentRefund()` - Update refund
+- `getAllPaymentRefunds()` - List refunds
 
-#### Setup Intents
-- `createSetupIntent()`, `confirmSetupIntent()`, `cancelSetupIntent()`
+#### Setup Flows
+- `createSetupFlow()` - Create a setup flow
+- `getSetupFlow()` - Get setup flow details
+- `updateSetupFlow()` - Update setup flow
+- `confirmSetupFlow()` - Confirm a setup flow
+- `cancelSetupFlow()` - Cancel a setup flow
+- `getAllSetupFlows()` - List setup flows
 
 #### Checkout Sessions
 - `createCheckoutSession()`, `getCheckoutSession()`, `updateCheckoutSession()`
@@ -190,19 +184,14 @@ The SDK returns errors in a consistent format:
 import { createCustomer } from '@payjp/payjpv2';
 
 const result = await createCustomer({
-  client: client,
+  client,
   body: {
-    email: 'invalid-email' // This will cause an error
+    email: 'customer@example.com'
   }
 });
 
 if (result.error) {
-  console.error('API Error:', {
-    type: result.error.type,
-    message: result.error.message,
-    param: result.error.param, // Field that caused the error
-    code: result.error.code
-  });
+  console.error('API Error:', result.error);
 } else {
   console.log('Success:', result.data);
 }
@@ -251,15 +240,21 @@ const client = createClient({
 The SDK is built with TypeScript and provides full type safety:
 
 ```typescript
-import type { Customer, PaymentIntent } from '@payjp/payjpv2';
+import type { CustomerResponse, PaymentFlowResponse } from '@payjp/payjpv2';
+import { createCustomer } from '@payjp/payjpv2';
 
-// Types are automatically inferred
-const customer: Customer = await createCustomer({
-  client: client,
+// Types are automatically inferred from API responses
+const result = await createCustomer({
+  client,
   body: {
-    email: 'test@example.com' // TypeScript will validate this
+    email: 'test@example.com'
   }
 });
+
+if (result.data) {
+  const customer: CustomerResponse = result.data;
+  console.log(customer.id);
+}
 ```
 
 ## Testing
@@ -276,10 +271,6 @@ npm run lint    # Type check
 
 - Node.js 20 or higher
 - TypeScript 5.0+ (for TypeScript projects)
-
-## Contributing
-
-We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
 
 ## Support
 
