@@ -112,7 +112,8 @@ describe("Integration Tests", () => {
           client: client,
           body: {
             amount: 1000,
-            payment_method: "pm_test_dummy",
+            payment_method_id: "pm_test_dummy",
+            currency: "jpy",
           },
         });
       }).not.toThrow();
