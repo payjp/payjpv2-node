@@ -119,7 +119,7 @@ export type BalanceResponse = {
  *
  * 残高の状態
  */
-export type BalanceState = '集計中' | '入金' | '請求';
+export type BalanceState = 'collecting' | 'transfer' | 'claim';
 
 /**
  * BalanceURLResponse
@@ -194,11 +194,6 @@ export type BankInfoResponse = {
 };
 
 /**
- * BillingAddressCollection
- */
-export type BillingAddressCollection = 'auto' | 'required';
-
-/**
  * CaptureMethod
  */
 export type CaptureMethod = 'automatic' | 'manual';
@@ -224,11 +219,11 @@ export type CheckoutSessionCreateRequest = {
      */
     client_reference_id?: string;
     /**
-     * Customer
+     * Customer Id
      *
      * 顧客ID
      */
-    customer?: string;
+    customer_id?: string;
     /**
      * Customer Email
      *
@@ -245,7 +240,7 @@ export type CheckoutSessionCreateRequest = {
     /**
      * Line Items
      *
-     * 顧客が購入する商品のリストです。このパラメータを使用して、1回限りまたは定期的な料金を渡します。
+     * 顧客が購入する商品のリストです。このパラメーターを使用して、1回限りまたは定期的な料金を渡します。
      *
      * `payment` モードの場合、最大100個のラインアイテムを使用できます。
      * <!-- `subscription` モードの場合、定期的な料金のラインアイテムは最大20個、1回限りの料金のラインアイテムは最大20個です。1回限りの料金のラインアイテムは、最初の請求書にのみ記載されます。 -->
@@ -257,7 +252,8 @@ export type CheckoutSessionCreateRequest = {
      *
      * | 指定できる値 |
      * |:---|
-     * | **hosted**: PAY.JPでホスティングしている画面を使用します。 |
+     * | **payment**: 支払いモードでCheckout Sessionを作成します。 |
+     * | **setup**: セットアップモードでCheckout Sessionを作成します。 |
      *
      */
     mode: CheckoutSessionMode;
@@ -270,12 +266,6 @@ export type CheckoutSessionCreateRequest = {
         [key: string]: string | number | boolean;
     };
     /**
-     * Return Url
-     *
-     * 顧客が支払いを行うか、支払いをキャンセルした後にリダイレクトする URL です。
-     */
-    return_url?: string;
-    /**
      * Success Url
      *
      * 支払いや設定が完了した際に、PAY.JP が顧客をリダイレクトするURL。成功したCheckout Sessionからの情報をページで使用したい場合は、成功ページのカスタマイズに関するガイドをお読みください。
@@ -287,16 +277,6 @@ export type CheckoutSessionCreateRequest = {
      * キャンセル時のリダイレクトURL
      */
     cancel_url?: string;
-    /**
-     * Checkout で顧客の請求先住所を収集するかどうかを指定します。デフォルトは `auto` です。
-     *
-     * | 指定できる値 |
-     * |:---|
-     * | **auto**: 請求先住所が必要と判断した場合に入力欄が表示されます。 |
-     * | **required**: 常に請求先住所の入力欄が表示されまうs。 |
-     *
-     */
-    billing_address_collection?: BillingAddressCollection;
     /**
      * 価格の通貨。現在は `jpy` のみサポートしています。
      */
@@ -323,7 +303,7 @@ export type CheckoutSessionCreateRequest = {
     /**
      * この PaymentFlow の支払い方法の個別設定。
      */
-    payment_method_options?: PaymentMethodOptionsRequest;
+    payment_method_options?: CheckoutSessionPaymentMethodOptionsRequest;
     /**
      * Payment Method Types
      *
@@ -391,46 +371,23 @@ export type CheckoutSessionDetailsResponse = {
      */
     amount_total: number | null;
     /**
-     * Checkout で顧客の請求先住所を収集するかどうかを指定します。デフォルトは `auto` です。
-     *
-     * | 指定できる値 |
-     * |:---|
-     * | **auto**: 請求先住所が必要と判断した場合に入力欄が表示されます。 |
-     * | **required**: 常に請求先住所の入力欄が表示されまうs。 |
-     *
-     */
-    billing_address_collection: BillingAddressCollection | null;
-    /**
      * Cancel Url
      *
      * キャンセル時のリダイレクトURL
      */
     cancel_url: string | null;
     /**
-     * Customer
+     * Customer Id
      *
      * 顧客ID
      */
-    customer: string | CustomerResponse | null;
+    customer_id: string | null;
     /**
      * Customer Email
      *
      * 顧客オブジェクトを作成する時に使われます。指定されていない場合、顧客にメールアドレスの入力を求めます。すでに顧客のメールアドレスを持っている場合は、このパラメータを使ってあらかじめ情報を入力しておくことが可能です。支払いが完了した後に顧客情報を取得したい場合は、customer属性を使用します。
      */
     customer_email: string | null;
-    /**
-     * Customer Details
-     *
-     * `expand` パラメーターを指定した場合、顧客の詳細情報を含んだオブジェクトが返却されます。
-     *
-     * | 説明 |
-     * |:---|
-     * | **email**: 顧客のメールアドレス |
-     *
-     */
-    customer_details?: {
-        [key: string]: unknown;
-    };
     /**
      * Expires At
      *
@@ -451,11 +408,11 @@ export type CheckoutSessionDetailsResponse = {
      */
     locale: Locale | null;
     /**
-     * Payment Flow
+     * Payment Flow Id
      *
      * `payment` モードの Checkout Session の PaymentFlow の ID。PaymentFlow を確定 (confirm)、またはキャンセルすることはできません。キャンセルするには、代わりに Checkout Session を期限切れにしてください。
      */
-    payment_flow: string | PaymentFlowResponse | null;
+    payment_flow_id?: string | null;
     /**
      * Payment Method Types
      *
@@ -471,11 +428,11 @@ export type CheckoutSessionDetailsResponse = {
         [key: string]: unknown;
     } | null;
     /**
-     * Setup Flow
+     * Setup Flow Id
      *
      * `setup` モードの Checkout Session の SetupFlow の ID。Checkout Session の SetupFlow を確定 (confirm)、またはキャンセルすることはできません。キャンセルするには、代わりに Checkout Session を期限切れにしてください。
      */
-    setup_flow: string | SetupFlowResponse | null;
+    setup_flow_id?: string | null;
     /**
      * Checkout の画面上に表示される送信ボタンなど、ページ上の関連テキストをカスタマイズするために使用されます。<br>
      * `submit_type` は、`payment` モードの Checkout Session でのみ指定できます。未指定時、あるいは `auto` の場合、`pay` が使用されます。
@@ -494,7 +451,8 @@ export type CheckoutSessionDetailsResponse = {
      *
      * | 指定できる値 |
      * |:---|
-     * | **hosted**: PAY.JPでホスティングしている画面を使用します。 |
+     * | **payment**: 支払いモードでCheckout Sessionを作成します。 |
+     * | **setup**: セットアップモードでCheckout Sessionを作成します。 |
      *
      */
     mode: CheckoutSessionMode;
@@ -506,7 +464,7 @@ export type CheckoutSessionDetailsResponse = {
      * | **hosted**: PAY.JPでホスティングしている画面を使用します。 |
      *
      */
-    ui_mode?: CheckoutSessionUiMode;
+    ui_mode: CheckoutSessionUiMode;
     /**
      * Created At
      *
@@ -530,15 +488,7 @@ export type CheckoutSessionDetailsResponse = {
     /**
      * チェックアウトセッションのステータス
      */
-    status?: CheckoutSessionStatus;
-    /**
-     * 顧客が購入する商品のリストです。このパラメータを使用して、1回限りまたは定期的な料金を渡します。
-     *
-     * `payment` モードの場合、最大100個のラインアイテムを使用できます。
-     * <!-- `subscription` モードの場合、定期的な料金のラインアイテムは最大20個、1回限りの料金のラインアイテムは最大20個です。1回限りの料金のラインアイテムは、最初の請求書にのみ記載されます。 -->
-     *
-     */
-    line_items?: CheckoutSessionLineItemsResponse | null;
+    status: CheckoutSessionStatus;
     /**
      * Success Url
      *
@@ -566,73 +516,71 @@ export type CheckoutSessionLineItemDataResponse = {
      *
      * ID
      */
-    id?: string;
+    id: string;
     /**
      * Amount Subtotal
      *
      * 割引や税金が適用される前のすべての商品の合計金額
      */
-    amount_subtotal?: number;
+    amount_subtotal: number;
     /**
      * Amount Tax
      *
      * 税額
      */
-    amount_tax?: number;
+    amount_tax: number;
     /**
      * Amount Total
      *
      * 割引と税金が適用された後のすべての商品の合計金額
      */
-    amount_total?: number;
+    amount_total: number;
     /**
      * 価格の通貨。現在は `jpy` のみサポートしています。
      */
-    currency?: Currency;
+    currency: Currency;
     /**
      * Description
      *
      * 説明
      */
-    description?: string;
+    description: string;
     /**
      * 料金情報
      */
-    price?: PriceDetailsResponse;
+    price: PriceDetailsResponse;
     /**
      * Quantity
      *
      * 数量
      */
-    quantity?: number;
+    quantity: number;
 };
 
 /**
- * CheckoutSessionLineItemsResponse
+ * CheckoutSessionLineItemListResponse
  */
-export type CheckoutSessionLineItemsResponse = {
+export type CheckoutSessionLineItemListResponse = {
     /**
      * Object
      */
     object?: 'list';
     /**
-     * Data
+     * Url
      *
-     * データ
+     * リスト取得URL
      */
-    data?: Array<CheckoutSessionLineItemDataResponse>;
+    url: string;
     /**
      * Has More
      *
      * 次のページがあるかどうか
      */
-    has_more?: boolean;
+    has_more: boolean;
     /**
-     * Url
-     *
-     * URL
+     * Data
      */
-    url?: string;
+    data: Array<CheckoutSessionLineItemDataResponse>;
 };
 
 /**
@@ -665,6 +613,44 @@ export type CheckoutSessionListResponse = {
  * CheckoutSessionMode
  */
 export type CheckoutSessionMode = 'payment' | 'setup';
+
+/**
+ * CheckoutSessionPaymentMethodOptionsCardRequest
+ */
+export type CheckoutSessionPaymentMethodOptionsCardRequest = {
+    /**
+     * Request Extended Authorization
+     *
+     * オーソリ期間の延長要求。
+     *
+     * | 指定できる値 |
+     * |:---|
+     * | **if_available**: オーソリ期間の延長が可能な場合に延長要求を行います。 |
+     * | **never**: オーソリ期間の延長要求を行いません。 |
+     */
+    request_extended_authorization?: 'if_available' | 'never';
+    /**
+     * Request Three D Secure
+     *
+     * 3Dセキュア認証の要求方法。
+     *
+     * | 指定できる値 |
+     * |:---|
+     * | **any**: 3Dセキュア認証を要求します。 |
+     * | **automatic**: 必要な場合にのみ3Dセキュア認証を要求します。 |
+     */
+    request_three_d_secure?: 'any' | 'automatic';
+};
+
+/**
+ * CheckoutSessionPaymentMethodOptionsRequest
+ */
+export type CheckoutSessionPaymentMethodOptionsRequest = {
+    /**
+     * カード支払い方法に関するオプション
+     */
+    card?: CheckoutSessionPaymentMethodOptionsCardRequest;
+};
 
 /**
  * CheckoutSessionStatus
@@ -736,11 +722,11 @@ export type CustomerCreateRequest = {
      */
     id?: string;
     /**
-     * Payment Method
+     * Payment Method Id
      *
      * 顧客に紐づける支払い方法ID
      */
-    payment_method?: string;
+    payment_method_id?: string;
 };
 
 /**
@@ -807,11 +793,11 @@ export type CustomerResponse = {
      */
     description: string | null;
     /**
-     * Default Payment Method
+     * Default Payment Method Id
      *
      * 支払いにデフォルトで使用される支払い方法ID
      */
-    default_payment_method: string | null;
+    default_payment_method_id: string | null;
     /**
      * Metadata
      *
@@ -859,11 +845,11 @@ export type CustomerUpdateRequest = {
         [key: string]: string | number | boolean;
     };
     /**
-     * Default Payment Method
+     * Default Payment Method Id
      *
      * 支払いにデフォルトで使用される支払い方法ID
      */
-    default_payment_method?: string | null;
+    default_payment_method_id?: string | null;
 };
 
 /**
@@ -999,43 +985,15 @@ export type EventResponse = {
 };
 
 /**
- * LineItemAdjustableQuantityRequest
- */
-export type LineItemAdjustableQuantityRequest = {
-    /**
-     * Enabled
-     *
-     * 数量が任意の 0 以上の整数に調整可能であれば、`true` を指定します。
-     */
-    enabled?: boolean;
-    /**
-     * Maximum
-     *
-     * 顧客が Checkout Session で購入できる最大数量です。デフォルトではこの値は 99 です。999,999 までの値を指定できます。
-     */
-    maximum?: number;
-    /**
-     * Minimum
-     *
-     * 顧客が Checkout Session で購入できる最小数量です。この値はデフォルトで 0 です。
-     */
-    minimum?: number;
-};
-
-/**
  * LineItemRequest
  */
 export type LineItemRequest = {
     /**
-     * Checkout 画面で顧客がこの商品の購入数量を変更できるようにする。
-     */
-    adjustable_quantity?: LineItemAdjustableQuantityRequest;
-    /**
-     * Price
+     * Price Id
      *
      * 料金ID
      */
-    price?: string;
+    price_id: string;
     /**
      * Quantity
      *
@@ -1074,10 +1032,10 @@ export type PaymentFlowCancelRequest = {
     /**
      * Cancellation Reason
      *
-     * この PaymentFlow のキャンセル理由。
+     * この PaymentFlow のキャンセル理由
      * | 指定できる値 |
      * |:---|
-     * | **duplicate**: 支払い方法が重複している場合。 |
+     * | **duplicate**: 重複した支払いである場合。 |
      * | **fraudulent**: 不正な利用だと考えられる場合。 |
      * | **requested_by_customer**: 顧客がキャンセルを要求した場合。 |
      * | **abandoned**: 顧客が支払いを完了しなかった場合。 |
@@ -1103,33 +1061,21 @@ export type PaymentFlowCaptureRequest = {
  */
 export type PaymentFlowConfirmRequest = {
     /**
-     * Payment Method
+     * Payment Method Id
      *
-     * 支払い方法ID
+     * 支払い方法ID。customer_idの指定が必須です。Customerが所持するPaymentMethodのみ指定できます。payment_method_idを指定せず、Customerにdefault_payment_method_idが設定されている場合はそちらが自動でセットされます。
      */
-    payment_method?: string;
+    payment_method_id?: string;
     /**
-     * このPaymentFlowに固有の支払い方法の設定
+     * このPaymentFlow固有の支払い方法の設定
      */
-    payment_method_options?: PaymentMethodOptionsRequest;
+    payment_method_options?: PaymentFlowPaymentMethodOptionsRequest;
     /**
      * Payment Method Types
      *
-     * このPaymentFlowで使用できる支払い方法の種類（カードなど）のリストです。 指定しない場合は、PAY.JPは支払い方法の設定から利用可能な支払い方法を動的に表示します。
+     * このPaymentFlowで使用できる支払い方法の種類のリスト。 指定しない場合は、PAY.JPは支払い方法の設定から利用可能な支払い方法を動的に表示します。
      */
     payment_method_types?: Array<PaymentMethodTypes>;
-    /**
-     * Return Url
-     *
-     * 顧客が支払いを完了後かキャンセルした後にリダイレクトされるURL。アプリにリダイレクトしたい場合は URI Scheme を指定できます。confirm=trueの場合のみ指定できます。
-     */
-    return_url?: string;
-    /**
-     * Description
-     *
-     * オブジェクトにセットする任意の文字列。ユーザーには表示されません。
-     */
-    description?: string;
     /**
      * 支払いの確定方法を指定します。
      *
@@ -1139,6 +1085,18 @@ export type PaymentFlowConfirmRequest = {
      * | **manual**: 顧客が支払いを承認すると一旦確定を保留し、後で Capture API を使用して確定します。（すべての支払い方法がこれをサポートしているわけではありません）。 |
      */
     capture_method?: CaptureMethod;
+    /**
+     * Return Url
+     *
+     * 顧客が支払いを完了後かキャンセルした後にリダイレクトされるURL。アプリにリダイレクトしたい場合は URI Scheme を指定できます。
+     */
+    return_url?: string;
+    /**
+     * Description
+     *
+     * オブジェクトにセットする任意の文字列。ユーザーには表示されません。
+     */
+    description?: string;
 };
 
 /**
@@ -1146,21 +1104,52 @@ export type PaymentFlowConfirmRequest = {
  */
 export type PaymentFlowCreateRequest = {
     /**
-     * Payment Method
+     * Amount
      *
-     * 支払い方法ID
+     * 支払い予定の金額。50円以上9,999,999円以下である必要があります。
      */
-    payment_method?: string;
+    amount: number;
     /**
-     * このPaymentFlowに固有の支払い方法の設定
+     * Customer Id
+     *
+     * このPaymentFlowに関連付ける顧客のID
      */
-    payment_method_options?: PaymentMethodOptionsRequest;
+    customer_id?: string;
+    /**
+     * Payment Method Id
+     *
+     * 支払い方法ID。customer_idの指定が必須です。Customerが所持するPaymentMethodのみ指定できます。payment_method_idを指定せず、Customerにdefault_payment_method_idが設定されている場合はそちらが自動でセットされます。
+     */
+    payment_method_id?: string;
+    /**
+     * このPaymentFlow固有の支払い方法の設定
+     */
+    payment_method_options?: PaymentFlowPaymentMethodOptionsRequest;
     /**
      * Payment Method Types
      *
-     * このPaymentFlowで使用できる支払い方法の種類（カードなど）のリストです。 指定しない場合は、PAY.JPは支払い方法の設定から利用可能な支払い方法を動的に表示します。
+     * このPaymentFlowで使用できる支払い方法の種類のリスト。 指定しない場合は、PAY.JPは支払い方法の設定から利用可能な支払い方法を動的に表示します。
      */
     payment_method_types?: Array<PaymentMethodTypes>;
+    /**
+     * 価格の通貨。現在は `jpy` のみサポートしています。
+     */
+    currency: Currency;
+    /**
+     * 支払いの確定方法を指定します。
+     *
+     * | 指定できる値 |
+     * |:---|
+     * | **automatic**: (デフォルト) 顧客が支払いを承認すると、自動的に確定させます。 |
+     * | **manual**: 顧客が支払いを承認すると一旦確定を保留し、後で Capture API を使用して確定します。（すべての支払い方法がこれをサポートしているわけではありません）。 |
+     */
+    capture_method?: CaptureMethod;
+    /**
+     * Confirm
+     *
+     * 「true」に設定すると、このPaymentFlowを直ちに確定しようと試みます。
+     */
+    confirm?: boolean;
     /**
      * Return Url
      *
@@ -1173,33 +1162,6 @@ export type PaymentFlowCreateRequest = {
      * オブジェクトにセットする任意の文字列。ユーザーには表示されません。
      */
     description?: string;
-    /**
-     * Amount
-     *
-     * 支払い予定の金額。50円以上9,999,999円以下である必要があります。支払い手段によって上限金額は異なります。
-     */
-    amount: number;
-    /**
-     * Customer
-     *
-     * このPaymentFlowに属する顧客のID（存在する場合）。この顧客以外にすでに紐づけられている支払い方法はこのPaymentFlowでは使用できません。
-     */
-    customer?: string;
-    /**
-     * Confirm
-     *
-     * 「true」に設定すると、このPaymentFlowを直ちに確定しようと試みます。このパラメーターのデフォルトは「false」です。
-     */
-    confirm?: boolean;
-    /**
-     * 支払いの確定方法を指定します。
-     *
-     * | 指定できる値 |
-     * |:---|
-     * | **automatic**: (デフォルト) 顧客が支払いを承認すると、自動的に確定させます。 |
-     * | **manual**: 顧客が支払いを承認すると一旦確定を保留し、後で Capture API を使用して確定します。（すべての支払い方法がこれをサポートしているわけではありません）。 |
-     */
-    capture_method?: CaptureMethod;
     /**
      * Metadata
      *
@@ -1262,6 +1224,44 @@ export type PaymentFlowListResponse = {
 };
 
 /**
+ * PaymentFlowPaymentMethodOptionsCardRequest
+ */
+export type PaymentFlowPaymentMethodOptionsCardRequest = {
+    /**
+     * Request Extended Authorization
+     *
+     * オーソリ期間の延長要求
+     *
+     * | 指定できる値 |
+     * |:---|
+     * | **if_available**: オーソリ期間の延長が可能な場合に延長要求を行います。 |
+     * | **never**: オーソリ期間の延長要求を行いません。 |
+     */
+    request_extended_authorization?: 'if_available' | 'never';
+    /**
+     * Request Three D Secure
+     *
+     * 3Dセキュア認証の要求方法。
+     *
+     * | 指定できる値 |
+     * |:---|
+     * | **any**: 3Dセキュア認証を要求します。 |
+     * | **automatic**: 必要な場合にのみ3Dセキュア認証を要求します。 |
+     */
+    request_three_d_secure?: 'any' | 'automatic';
+};
+
+/**
+ * PaymentFlowPaymentMethodOptionsRequest
+ */
+export type PaymentFlowPaymentMethodOptionsRequest = {
+    /**
+     * カード支払い方法に関するオプション
+     */
+    card?: PaymentFlowPaymentMethodOptionsCardRequest;
+};
+
+/**
  * PaymentFlowResponse
  */
 export type PaymentFlowResponse = {
@@ -1296,19 +1296,23 @@ export type PaymentFlowResponse = {
     /**
      * Amount
      *
-     * 支払い予定の金額。50円以上9,999,999円以下である必要があります。支払い手段によって上限金額は異なります。
+     * 支払い予定の金額
      */
     amount: number;
     /**
+     * 価格の通貨。現在は `jpy` のみサポートしています。
+     */
+    currency: Currency;
+    /**
      * Amount Capturable
      *
-     * このPaymentFlowの確定可能な金額。
+     * このPaymentFlowの確定可能な金額
      */
     amount_capturable: number | null;
     /**
      * Amount Received
      *
-     * このPaymentFlowの `amount` のうち、確定した金額。
+     * このPaymentFlowの `amount` のうち、確定した金額
      */
     amount_received: number | null;
     /**
@@ -1318,11 +1322,11 @@ export type PaymentFlowResponse = {
      */
     client_secret: string;
     /**
-     * Customer
+     * Customer Id
      *
-     * このPaymentFlowに属する顧客のID（存在する場合）。この顧客以外にすでに紐づけられている支払い方法はこのPaymentFlowでは使用できません。
+     * このPaymentFlowに関連付けられた顧客のID
      */
-    customer: string | null;
+    customer_id: string | null;
     /**
      * Description
      *
@@ -1338,15 +1342,15 @@ export type PaymentFlowResponse = {
         [key: string]: string | number | boolean;
     };
     /**
-     * Payment Method
+     * Payment Method Id
      *
      * 支払い方法ID
      */
-    payment_method: string | null;
+    payment_method_id: string | null;
     /**
      * Payment Method Options
      *
-     * このPaymentFlowに固有の支払い方法の設定
+     * このPaymentFlow固有の支払い方法の設定
      */
     payment_method_options: {
         [key: string]: unknown;
@@ -1354,11 +1358,11 @@ export type PaymentFlowResponse = {
     /**
      * Payment Method Types
      *
-     * このPaymentFlowで使用できる支払い方法の種類（カードなど）のリストです。 指定しない場合は、PAY.JPは支払い方法の設定から利用可能な支払い方法を動的に表示します。
+     * このPaymentFlowで使用できる支払い方法の種類のリスト
      */
-    payment_method_types: Array<string>;
+    payment_method_types: Array<PaymentMethodTypes>;
     /**
-     * このPaymentFlowのステータスです。<a href="https://docs.pay.jp/v2/payment_flows#status" target="_blank">ステータスの詳細についてはこちらをご覧ください。</a>
+     * このPaymentFlowのステータス。<a href="https://docs.pay.jp/v2/payment_flows#status" target="_blank">ステータスの詳細についてはこちらをご覧ください。</a>
      *
      * | 値 |
      * |:---|
@@ -1382,11 +1386,11 @@ export type PaymentFlowResponse = {
     /**
      * Return Url
      *
-     * 顧客が支払いを完了後かキャンセルした後にリダイレクトされるURL。アプリにリダイレクトしたい場合は URI Scheme を指定できます。confirm=trueの場合のみ指定できます。
+     * 顧客が支払いを完了後かキャンセルした後にリダイレクトされるURL
      */
     return_url: string | null;
     /**
-     * 支払いの確定方法を指定します。
+     * 支払いの確定方法
      *
      * | 指定できる値 |
      * |:---|
@@ -1397,7 +1401,7 @@ export type PaymentFlowResponse = {
     /**
      * Last Payment Error
      *
-     * このPaymentFlowで発生した最後の支払いエラーです。
+     * このPaymentFlowで発生した最後の支払いエラー
      */
     last_payment_error: {
         [key: string]: unknown;
@@ -1414,25 +1418,37 @@ export type PaymentFlowStatus = 'canceled' | 'processing' | 'requires_action' | 
  */
 export type PaymentFlowUpdateRequest = {
     /**
-     * Payment Method
+     * Amount
      *
-     * 支払い方法ID
+     * 支払い予定の金額。50円以上9,999,999円以下である必要があります。
      */
-    payment_method?: string;
+    amount?: number;
     /**
-     * このPaymentFlowに固有の支払い方法の設定
+     * Customer Id
+     *
+     * このPaymentFlowに関連付ける顧客のID
      */
-    payment_method_options?: PaymentMethodOptionsRequest;
+    customer_id?: string;
+    /**
+     * Payment Method Id
+     *
+     * 支払い方法ID。customer_idの指定が必須です。Customerが所持するPaymentMethodのみ指定できます。payment_method_idを指定せず、Customerにdefault_payment_method_idが設定されている場合はそちらが自動でセットされます。
+     */
+    payment_method_id?: string;
+    /**
+     * このPaymentFlow固有の支払い方法の設定
+     */
+    payment_method_options?: PaymentFlowPaymentMethodOptionsRequest;
     /**
      * Payment Method Types
      *
-     * このPaymentFlowで使用できる支払い方法の種類（カードなど）のリストです。 指定しない場合は、PAY.JPは支払い方法の設定から利用可能な支払い方法を動的に表示します。
+     * このPaymentFlowで使用できる支払い方法の種類のリスト。 指定しない場合は、PAY.JPは支払い方法の設定から利用可能な支払い方法を動的に表示します。
      */
     payment_method_types?: Array<PaymentMethodTypes>;
     /**
      * Return Url
      *
-     * 顧客が支払いを完了後かキャンセルした後にリダイレクトされるURL。アプリにリダイレクトしたい場合は URI Scheme を指定できます。confirm=trueの場合のみ指定できます。
+     * 顧客が支払いを完了後かキャンセルした後にリダイレクトされるURL。アプリにリダイレクトしたい場合は URI Scheme を指定できます。
      */
     return_url?: string;
     /**
@@ -1441,18 +1457,6 @@ export type PaymentFlowUpdateRequest = {
      * オブジェクトにセットする任意の文字列。ユーザーには表示されません。
      */
     description?: string;
-    /**
-     * Amount
-     *
-     * 支払い予定の金額。50円以上9,999,999円以下である必要があります。支払い手段によって上限金額は異なります。
-     */
-    amount?: number;
-    /**
-     * Customer
-     *
-     * このPaymentFlowに属する顧客のID（存在する場合）。この顧客以外にすでに紐づけられている支払い方法はこのPaymentFlowでは使用できません。
-     */
-    customer?: string;
     /**
      * Metadata
      *
@@ -1468,11 +1472,11 @@ export type PaymentFlowUpdateRequest = {
  */
 export type PaymentMethodApplePayCreateRequest = {
     /**
-     * Customer
+     * Customer Id
      *
      * 顧客ID
      */
-    customer?: string;
+    customer_id?: string;
     /**
      * 請求先情報
      */
@@ -1528,11 +1532,11 @@ export type PaymentMethodApplePayUpdateRequest = {
  */
 export type PaymentMethodAttachRequest = {
     /**
-     * Customer
+     * Customer Id
      *
      * 顧客ID
      */
-    customer: string;
+    customer_id: string;
 };
 
 /**
@@ -1710,11 +1714,11 @@ export type PaymentMethodCardBillingDetailsRequest = {
  */
 export type PaymentMethodCardCreateRequest = {
     /**
-     * Customer
+     * Customer Id
      *
      * 顧客ID
      */
-    customer?: string;
+    customer_id?: string;
     /**
      * 請求先情報
      */
@@ -1800,11 +1804,11 @@ export type PaymentMethodCardResponse = {
      */
     type: 'card' | 'apple_pay';
     /**
-     * Customer
+     * Customer Id
      *
      * 顧客ID
      */
-    customer: string | null;
+    customer_id: string | null;
     /**
      * Detached At
      *
@@ -2072,53 +2076,15 @@ export type PaymentMethodListResponse = {
 };
 
 /**
- * PaymentMethodOptionsCardRequest
- */
-export type PaymentMethodOptionsCardRequest = {
-    /**
-     * Request Extended Authorization
-     *
-     * オーソリ期間の延長要求。
-     *
-     * | 指定できる値 |
-     * |:---|
-     * | **if_available**: オーソリ期間の延長が可能な場合に延長要求を行います。 |
-     * | **never**: オーソリ期間の延長要求を行いません。 |
-     */
-    request_extended_authorization?: 'if_available' | 'never';
-    /**
-     * Request Three D Secure
-     *
-     * 3Dセキュア認証の要求方法。
-     *
-     * | 指定できる値 |
-     * |:---|
-     * | **any**: 3Dセキュア認証を要求します。 |
-     * | **automatic**: 必要な場合にのみ3Dセキュア認証を要求します。 |
-     */
-    request_three_d_secure?: 'any' | 'automatic';
-};
-
-/**
- * PaymentMethodOptionsRequest
- */
-export type PaymentMethodOptionsRequest = {
-    /**
-     * カード支払い方法に関するオプション
-     */
-    card?: PaymentMethodOptionsCardRequest;
-};
-
-/**
  * PaymentMethodPayPayCreateRequest
  */
 export type PaymentMethodPayPayCreateRequest = {
     /**
-     * Customer
+     * Customer Id
      *
      * 顧客ID
      */
-    customer?: string;
+    customer_id?: string;
     /**
      * 請求先情報
      */
@@ -2158,11 +2124,11 @@ export type PaymentMethodPayPayResponse = {
      */
     type: 'paypay';
     /**
-     * Customer
+     * Customer Id
      *
      * 顧客ID
      */
-    customer: string | null;
+    customer_id: string | null;
     /**
      * Detached At
      *
@@ -2251,11 +2217,11 @@ export type PaymentMethodUpdateRequest = ({
  */
 export type PaymentRefundCreateRequest = {
     /**
-     * Payment Flow
+     * Payment Flow Id
      *
      * 返金対象となる PaymentFlow の ID
      */
-    payment_flow: string;
+    payment_flow_id: string;
     /**
      * Amount
      *
@@ -2367,11 +2333,11 @@ export type PaymentRefundResponse = {
      */
     status: PaymentRefundStatus;
     /**
-     * Payment Flow
+     * Payment Flow Id
      *
      * 返金対象となる PaymentFlow の ID
      */
-    payment_flow: string;
+    payment_flow_id: string;
     /**
      * 返金理由
      *
@@ -2508,11 +2474,11 @@ export type PaymentTransactionResponse = {
      */
     payment_method_type: PaymentMethodTypes;
     /**
-     * Term
+     * Term Id
      *
      * 期間ID
      */
-    term: string;
+    term_id: string;
 };
 
 /**
@@ -2561,11 +2527,11 @@ export type PriceCreateRequest = {
      */
     active?: boolean;
     /**
-     * Product
+     * Product Id
      *
      * この価格が紐付く商品のID。
      */
-    product: string;
+    product_id: string;
     /**
      * Unit Amount
      *
@@ -2634,11 +2600,11 @@ export type PriceDetailsResponse = {
      */
     currency: Currency;
     /**
-     * Product
+     * Product Id
      *
      * この価格が紐付く商品のID。
      */
-    product: string;
+    product_id: string;
     /**
      * Unit Amount
      *
@@ -2727,11 +2693,11 @@ export type PriceUpdateRequest = {
  */
 export type ProductCreateRequest = {
     /**
-     * Default Price
+     * Default Price Id
      *
      * この商品のデフォルト価格である価格オブジェクトのID。
      */
-    default_price?: string;
+    default_price_id?: string;
     /**
      * Description
      *
@@ -2819,11 +2785,11 @@ export type ProductDetailsResponse = {
      */
     active: boolean;
     /**
-     * Default Price
+     * Default Price Id
      *
      * この商品のデフォルト価格である価格オブジェクトのID。
      */
-    default_price: string | null;
+    default_price_id: string | null;
     /**
      * Description
      *
@@ -2875,11 +2841,11 @@ export type ProductListResponse = {
  */
 export type ProductUpdateRequest = {
     /**
-     * Default Price
+     * Default Price Id
      *
      * この商品のデフォルト価格である価格オブジェクトのID。
      */
-    default_price?: string;
+    default_price_id?: string;
     /**
      * Description
      *
@@ -2934,47 +2900,15 @@ export type SetupFlowCancelRequest = {
 export type SetupFlowCancellationReason = 'abondoned' | 'duplicate' | 'requested_by_customer';
 
 /**
- * SetupFlowConfirmRequest
- */
-export type SetupFlowConfirmRequest = {
-    /**
-     * Payment Method Options
-     *
-     * この SetupFlow の支払い方法の個別設定。
-     */
-    payment_method_options?: {
-        [key: string]: unknown;
-    };
-    /**
-     * Return Url
-     *
-     * 顧客が支払いを完了後、あるいはキャンセルした後にリダイレクトされるURL。アプリにリダイレクトしたい場合は URI Scheme を指定できます。`confirm=true` の場合のみ指定できます。
-     */
-    return_url?: string;
-    /**
-     * Use Payjp Sdk
-     *
-     * PAY.JP SDK を使用するかどうか
-     */
-    use_payjp_sdk?: boolean;
-};
-
-/**
  * SetupFlowCreateRequest
  */
 export type SetupFlowCreateRequest = {
     /**
-     * Confirm
-     *
-     * SetupFlow をすぐに確定しようとする場合に `true` を設定します。このパラメーターのデフォルト値は `false` です。カードが登録済みの支払い方法である場合は、追加の認証が必要な場合に備えて `return_url` を指定できます。
-     */
-    confirm?: boolean;
-    /**
-     * Customer
+     * Customer Id
      *
      * この SetupFlow が属する顧客の ID。SetupFlow に PaymentMethod が設定されている場合、SetupFlow の設定が成功するとその PaymentMethod は顧客に紐付きます。別の顧客に紐付いている PaymentMethod をこの SetupFlow で使用することはできません。
      */
-    customer?: string;
+    customer_id?: string;
     /**
      * Description
      *
@@ -2990,25 +2924,15 @@ export type SetupFlowCreateRequest = {
         [key: string]: string | number | boolean;
     };
     /**
-     * Payment Method Options
-     *
      * この SetupFlow の支払い方法の個別設定。
      */
-    payment_method_options?: {
-        [key: string]: unknown;
-    };
+    payment_method_options?: SetupFlowPaymentMethodOptionsRequest;
     /**
      * Payment Method Types
      *
      * この SetupFlow で使用できる支払い方法の種類（カードなど）のリストです。 指定しない場合、ダッシュボードで利用可能な状態にしている支払い方法が自動的に設定されます。
      */
-    payment_method_types?: Array<'card' | 'apple_pay'> | null;
-    /**
-     * Return Url
-     *
-     * 顧客が支払いを完了後、あるいはキャンセルした後にリダイレクトされるURL。アプリにリダイレクトしたい場合は URI Scheme を指定できます。`confirm=true` の場合のみ指定できます。
-     */
-    return_url?: string;
+    payment_method_types?: Array<'card' | 'apple_pay'>;
     /**
      * 支払い方法が今後どのように使用されるかを指定します。指定されていない場合、この値はデフォルトで `off_session` になります。
      *
@@ -3061,6 +2985,33 @@ export type SetupFlowListResponse = {
 };
 
 /**
+ * SetupFlowPaymentMethodOptionsCardRequest
+ */
+export type SetupFlowPaymentMethodOptionsCardRequest = {
+    /**
+     * Request Three D Secure
+     *
+     * 3Dセキュア認証の要求方法。
+     *
+     * | 指定できる値 |
+     * |:---|
+     * | **any**: 3Dセキュア認証を要求します。 |
+     * | **automatic**: 必要な場合にのみ3Dセキュア認証を要求します。 |
+     */
+    request_three_d_secure?: 'automatic' | 'any';
+};
+
+/**
+ * SetupFlowPaymentMethodOptionsRequest
+ */
+export type SetupFlowPaymentMethodOptionsRequest = {
+    /**
+     * カード支払い方法に関するオプション
+     */
+    card?: SetupFlowPaymentMethodOptionsCardRequest;
+};
+
+/**
  * SetupFlowResponse
  */
 export type SetupFlowResponse = {
@@ -3099,11 +3050,11 @@ export type SetupFlowResponse = {
      */
     client_secret: string;
     /**
-     * Customer
+     * Customer Id
      *
      * この SetupFlow が属する顧客の ID。SetupFlow に PaymentMethod が設定されている場合、SetupFlow の設定が成功するとその PaymentMethod は顧客に紐付きます。別の顧客に紐付いている PaymentMethod をこの SetupFlow で使用することはできません。
      */
-    customer: string | null;
+    customer_id: string | null;
     /**
      * Description
      *
@@ -3119,11 +3070,11 @@ export type SetupFlowResponse = {
         [key: string]: string | number | boolean;
     };
     /**
-     * Payment Method
+     * Payment Method Id
      *
      * この SetupFlow に紐付ける決済方法のID
      */
-    payment_method: string | null;
+    payment_method_id: string | null;
     /**
      * Payment Method Options
      *
@@ -3137,7 +3088,7 @@ export type SetupFlowResponse = {
      *
      * この SetupFlow で使用できる支払い方法の種類（カードなど）のリストです。 指定しない場合、ダッシュボードで利用可能な状態にしている支払い方法が自動的に設定されます。
      */
-    payment_method_types: Array<string>;
+    payment_method_types: Array<PaymentMethodTypes>;
     /**
      * この SetupFlow のステータスです。<a href="https://docs.pay.jp/v2/setup_flows#status" target="_blank">ステータスの詳細についてはこちらをご覧ください。</a>
      *
@@ -3185,25 +3136,21 @@ export type SetupFlowStatus = 'canceled' | 'processing' | 'requires_action' | 'r
  */
 export type SetupFlowUpdateRequest = {
     /**
-     * Customer
+     * Customer Id
      *
      * この SetupFlow が属する顧客の ID。SetupFlow に PaymentMethod が設定されている場合、SetupFlow の設定が成功するとその PaymentMethod は顧客に紐付きます。別の顧客に紐付いている PaymentMethod をこの SetupFlow で使用することはできません。
      */
-    customer?: string;
+    customer_id?: string;
     /**
-     * Payment Method Options
-     *
      * この SetupFlow の支払い方法の個別設定。
      */
-    payment_method_options?: {
-        [key: string]: unknown;
-    };
+    payment_method_options?: SetupFlowPaymentMethodOptionsRequest;
     /**
      * Payment Method Types
      *
      * この SetupFlow で使用できる支払い方法の種類（カードなど）のリストです。 指定しない場合、ダッシュボードで利用可能な状態にしている支払い方法が自動的に設定されます。
      */
-    payment_method_types?: Array<'card' | 'apple_pay'> | null;
+    payment_method_types?: Array<'card' | 'apple_pay'>;
     /**
      * Description
      *
@@ -3332,11 +3279,11 @@ export type StatementResponse = {
      */
     term: TermResponse | null;
     /**
-     * Balance
+     * Balance Id
      *
      * 該当する場合の残高ID
      */
-    balance: string | null;
+    balance_id: string | null;
     /**
      * Items
      *
@@ -3359,7 +3306,7 @@ export type StatementResponse = {
  * 分類の増減は会計・経理の目線で行われる。
  * 経理上取り扱いが違う数字は別のsubjectになる、もしくはその他の情報を組み合わせて区別できる必要がある。
  */
-export type StatementSubject = '売上' | '決済手数料' | 'プラットフォーム利用料' | '返金' | '返金による手数料返還' | '返金によるプラットフォーム利用料返還' | 'チャージバック' | 'チャージバックによる手数料返還' | 'チャージバックによるプラットフォーム利用料返還' | 'プロプラン利用料' | '有料プラン料金' | '残高失効' | 'テナント失効金額の割当て' | 'YELL BANKお支払い' | '早期入金サービス利用料' | '振込手数料' | 'その他';
+export type StatementSubject = 'gross_sales' | 'fee' | 'platform_fee' | 'gross_refund' | 'refund_fee_offset' | 'refund_platform_fee_offset' | 'chargeback' | 'chargeback_fee_offset' | 'chargeback_platform_fee_offset' | 'proplan' | 'plan_fee' | 'forfeit' | 'reallocation' | 'yell_bank_collection' | 'pyb_early_deposit_service_fee' | 'transfer_fee' | 'other';
 
 /**
  * StatementType
@@ -3413,19 +3360,19 @@ export type TaxRateCreateRequest = {
      *
      * 表示名。顧客に表示されます。
      */
-    display_name?: string;
+    display_name: string;
     /**
      * Inclusive
      *
      * 税込みかどうか。税込 = `true` 税抜 = `false`
      */
-    inclusive?: boolean;
+    inclusive: boolean;
     /**
      * Percentage
      *
      * 税率を % 単位で指定します（例： 10%の場合は「10」と入力）
      */
-    percentage?: number;
+    percentage: number;
     /**
      * Active
      *
@@ -3501,16 +3448,6 @@ export type TaxRateDetailsResponse = {
      */
     description: string | null;
     /**
-     * 税金の種類。
-     *
-     * 現在は JCT のみ指定できます。
-     *
-     * | 指定できる値 |
-     * |:---|
-     * | **jct**: JCT (Japanese Consumption Tax, 日本の消費税) |
-     */
-    tax_type: TaxType | null;
-    /**
      * Metadata
      *
      * メタデータ
@@ -3581,11 +3518,6 @@ export type TaxRateUpdateRequest = {
         [key: string]: string | number | boolean;
     };
 };
-
-/**
- * TaxType
- */
-export type TaxType = 'jct';
 
 /**
  * TermListResponse
@@ -3693,13 +3625,13 @@ export type GetAllPaymentMethodsData = {
          *
          * このIDより後のデータを取得
          */
-        starting_after?: string | null;
+        starting_after?: string;
         /**
          * Ending Before
          *
          * このIDより前のデータを取得
          */
-        ending_before?: string | null;
+        ending_before?: string;
     };
     url: '/v2/payment_methods';
 };
@@ -4004,13 +3936,13 @@ export type GetAllPaymentMethodConfigurationsData = {
          *
          * このIDより後のデータを取得
          */
-        starting_after?: string | null;
+        starting_after?: string;
         /**
          * Ending Before
          *
          * このIDより前のデータを取得
          */
-        ending_before?: string | null;
+        ending_before?: string;
     };
     url: '/v2/payment_method_configurations';
 };
@@ -4052,13 +3984,13 @@ export type GetAllProductsData = {
          *
          * このIDより後のデータを取得
          */
-        starting_after?: string | null;
+        starting_after?: string;
         /**
          * Ending Before
          *
          * このIDより前のデータを取得
          */
-        ending_before?: string | null;
+        ending_before?: string;
     };
     url: '/v2/products';
 };
@@ -4215,19 +4147,19 @@ export type GetAllPricesData = {
          *
          * このIDより後のデータを取得
          */
-        starting_after?: string | null;
+        starting_after?: string;
         /**
          * Ending Before
          *
          * このIDより前のデータを取得
          */
-        ending_before?: string | null;
+        ending_before?: string;
         /**
          * Lookup Keys
          *
          * 価格を動的に取得するために使用される検索キー。
          */
-        lookup_keys?: Array<string> | null;
+        lookup_keys?: Array<string>;
     };
     url: '/v2/prices';
 };
@@ -4426,19 +4358,19 @@ export type GetAllPaymentFlowsData = {
          *
          * このIDより後のデータを取得
          */
-        starting_after?: string | null;
+        starting_after?: string;
         /**
          * Ending Before
          *
          * このIDより前のデータを取得
          */
-        ending_before?: string | null;
+        ending_before?: string;
         /**
          * Customer Id
          *
          * 指定した顧客のデータのみを取得
          */
-        customer_id?: string | null;
+        customer_id?: string;
     };
     url: '/v2/payment_flows';
 };
@@ -4641,13 +4573,13 @@ export type GetPaymentFlowRefundsData = {
          *
          * このIDより後のデータを取得
          */
-        starting_after?: string | null;
+        starting_after?: string;
         /**
          * Ending Before
          *
          * このIDより前のデータを取得
          */
-        ending_before?: string | null;
+        ending_before?: string;
     };
     url: '/v2/payment_flows/{payment_flow_id}/refunds';
 };
@@ -4761,18 +4693,22 @@ export type GetAllPaymentRefundsData = {
          *
          * このIDより後のデータを取得
          */
-        starting_after?: string | null;
+        starting_after?: string;
         /**
          * Ending Before
          *
          * このIDより前のデータを取得
          */
-        ending_before?: string | null;
+        ending_before?: string;
     };
     url: '/v2/payment_refunds';
 };
 
 export type GetAllPaymentRefundsErrors = {
+    /**
+     * Resource Missing
+     */
+    400: ErrorResponse;
     /**
      * Validation Error
      */
@@ -4910,18 +4846,22 @@ export type GetAllSetupFlowsData = {
          *
          * このIDより後のデータを取得
          */
-        starting_after?: string | null;
+        starting_after?: string;
         /**
          * Ending Before
          *
          * このIDより前のデータを取得
          */
-        ending_before?: string | null;
+        ending_before?: string;
     };
     url: '/v2/setup_flows';
 };
 
 export type GetAllSetupFlowsErrors = {
+    /**
+     * Resource Missing
+     */
+    400: ErrorResponse;
     /**
      * Validation Error
      */
@@ -5016,47 +4956,6 @@ export type CancelSetupFlowResponses = {
 
 export type CancelSetupFlowResponse = CancelSetupFlowResponses[keyof CancelSetupFlowResponses];
 
-export type ConfirmSetupFlowData = {
-    /**
-     * Params
-     */
-    body?: SetupFlowConfirmRequest | null;
-    path: {
-        /**
-         * Setup Flow Id
-         */
-        setup_flow_id: string;
-    };
-    query?: never;
-    url: '/v2/setup_flows/{setup_flow_id}/confirm';
-};
-
-export type ConfirmSetupFlowErrors = {
-    /**
-     * Invalid Status<br>Missing Payment Method<br>Detached Payment Method Not Usable<br>Unsupported Payment Method Type
-     */
-    400: ErrorResponse;
-    /**
-     * Not Found
-     */
-    404: ErrorResponse;
-    /**
-     * Validation Error
-     */
-    422: ErrorResponse;
-};
-
-export type ConfirmSetupFlowError = ConfirmSetupFlowErrors[keyof ConfirmSetupFlowErrors];
-
-export type ConfirmSetupFlowResponses = {
-    /**
-     * Successful Response
-     */
-    200: SetupFlowResponse;
-};
-
-export type ConfirmSetupFlowResponse = ConfirmSetupFlowResponses[keyof ConfirmSetupFlowResponses];
-
 export type GetStatementData = {
     body?: never;
     path: {
@@ -5100,13 +4999,13 @@ export type GetAllStatementsData = {
          *
          * 指定した日付以降のデータを取得
          */
-        since?: string | null;
+        since?: string;
         /**
          * Until
          *
          * 指定した日付以前のデータを取得
          */
-        until?: string | null;
+        until?: string;
         /**
          * Limit
          *
@@ -5118,43 +5017,23 @@ export type GetAllStatementsData = {
          *
          * このIDより後のデータを取得
          */
-        starting_after?: string | null;
+        starting_after?: string;
         /**
          * Ending Before
          *
          * このIDより前のデータを取得
          */
-        ending_before?: string | null;
+        ending_before?: string;
         /**
-         * Owner
-         *
-         * オーナータイプでフィルタ (merchant または tenant)
-         */
-        owner?: string | null;
-        /**
-         * Source Transfer
-         *
-         * 送金元IDでフィルタ
-         */
-        source_transfer?: string | null;
-        /**
-         * Tenant
-         *
-         * テナントIDでフィルタ
-         */
-        tenant?: string | null;
-        /**
-         * Type
-         *
          * 明細タイプでフィルタ
          */
-        type?: StatementType | null;
+        type?: StatementType;
         /**
-         * Term
+         * Term Id
          *
          * 期間IDでフィルタ
          */
-        term?: string | null;
+        term_id?: string;
     };
     url: '/v2/statements';
 };
@@ -5258,13 +5137,13 @@ export type GetAllBalancesData = {
          *
          * 指定した日付以降のデータを取得
          */
-        since?: string | null;
+        since?: string;
         /**
          * Until
          *
          * 指定した日付以前のデータを取得
          */
-        until?: string | null;
+        until?: string;
         /**
          * Limit
          *
@@ -5276,13 +5155,13 @@ export type GetAllBalancesData = {
          *
          * このIDより後のデータを取得
          */
-        starting_after?: string | null;
+        starting_after?: string;
         /**
          * Ending Before
          *
          * このIDより前のデータを取得
          */
-        ending_before?: string | null;
+        ending_before?: string;
         /**
          * State
          *
@@ -5382,13 +5261,13 @@ export type GetAllCheckoutSessionsData = {
          *
          * このIDより後のデータを取得
          */
-        starting_after?: string | null;
+        starting_after?: string;
         /**
          * Ending Before
          *
          * このIDより前のデータを取得
          */
-        ending_before?: string | null;
+        ending_before?: string;
     };
     url: '/v2/checkout/sessions';
 };
@@ -5452,14 +5331,7 @@ export type GetCheckoutSessionData = {
          */
         checkout_session_id: string;
     };
-    query?: {
-        /**
-         * Expand
-         *
-         * レスポンス返却時に展開したいオブジェクト名。指定したオブジェクトを同時に取得し、レスポンスに乗せて返却します。
-         */
-        expand?: Array<'line_items' | 'customer' | 'payment_flow' | 'setup_flow'> | null;
-    };
+    query?: never;
     url: '/v2/checkout/sessions/{checkout_session_id}';
 };
 
@@ -5519,6 +5391,63 @@ export type UpdateCheckoutSessionResponses = {
 
 export type UpdateCheckoutSessionResponse = UpdateCheckoutSessionResponses[keyof UpdateCheckoutSessionResponses];
 
+export type GetAllCheckoutSessionLineItemsData = {
+    body?: never;
+    path: {
+        /**
+         * Checkout Session Id
+         */
+        checkout_session_id: string;
+    };
+    query?: {
+        /**
+         * Limit
+         *
+         * 取得するデータの最大件数
+         */
+        limit?: number;
+        /**
+         * Starting After
+         *
+         * このIDより後のデータを取得
+         */
+        starting_after?: string;
+        /**
+         * Ending Before
+         *
+         * このIDより前のデータを取得
+         */
+        ending_before?: string;
+    };
+    url: '/v2/checkout/sessions/{checkout_session_id}/line_items';
+};
+
+export type GetAllCheckoutSessionLineItemsErrors = {
+    /**
+     * Resource Missing
+     */
+    400: ErrorResponse;
+    /**
+     * Not Found
+     */
+    404: ErrorResponse;
+    /**
+     * Validation Error
+     */
+    422: ErrorResponse;
+};
+
+export type GetAllCheckoutSessionLineItemsError = GetAllCheckoutSessionLineItemsErrors[keyof GetAllCheckoutSessionLineItemsErrors];
+
+export type GetAllCheckoutSessionLineItemsResponses = {
+    /**
+     * Successful Response
+     */
+    200: CheckoutSessionLineItemListResponse;
+};
+
+export type GetAllCheckoutSessionLineItemsResponse = GetAllCheckoutSessionLineItemsResponses[keyof GetAllCheckoutSessionLineItemsResponses];
+
 export type GetAllTaxRatesData = {
     body?: never;
     path?: never;
@@ -5534,13 +5463,13 @@ export type GetAllTaxRatesData = {
          *
          * このIDより後のデータを取得
          */
-        starting_after?: string | null;
+        starting_after?: string;
         /**
          * Ending Before
          *
          * このIDより前のデータを取得
          */
-        ending_before?: string | null;
+        ending_before?: string;
     };
     url: '/v2/tax_rates';
 };
@@ -5667,13 +5596,13 @@ export type GetAllCustomersData = {
          *
          * このIDより後のデータを取得
          */
-        starting_after?: string | null;
+        starting_after?: string;
         /**
          * Ending Before
          *
          * このIDより前のデータを取得
          */
-        ending_before?: string | null;
+        ending_before?: string;
     };
     url: '/v2/customers';
 };
@@ -5855,13 +5784,13 @@ export type GetCustomerPaymentMethodsData = {
          *
          * このIDより後のデータを取得
          */
-        starting_after?: string | null;
+        starting_after?: string;
         /**
          * Ending Before
          *
          * このIDより前のデータを取得
          */
-        ending_before?: string | null;
+        ending_before?: string;
     };
     url: '/v2/customers/{customer_id}/payment_methods';
 };
@@ -5907,36 +5836,40 @@ export type GetAllEventsData = {
          *
          * このIDより後のデータを取得
          */
-        starting_after?: string | null;
+        starting_after?: string;
         /**
          * Ending Before
          *
          * このIDより前のデータを取得
          */
-        ending_before?: string | null;
+        ending_before?: string;
         /**
          * Resource Id
          *
          * 取得するeventに紐づくAPIリソースのID (e.g. customer.id)
          */
-        resource_id?: string | null;
+        resource_id?: string;
         /**
          * Object
          *
          * 取得するeventに紐づくAPIリソースのobject。値はリソース名(e.g. customer, payment_flow)
          */
-        object?: string | null;
+        object?: string;
         /**
          * Type
          *
          * 取得するeventのtype
          */
-        type?: string | null;
+        type?: string;
     };
     url: '/v2/events';
 };
 
 export type GetAllEventsErrors = {
+    /**
+     * Resource Missing
+     */
+    400: ErrorResponse;
     /**
      * Validation Error
      */
@@ -6037,36 +5970,40 @@ export type GetAllPaymentTransactionsData = {
          *
          * このIDより後のデータを取得
          */
-        starting_after?: string | null;
+        starting_after?: string;
         /**
          * Ending Before
          *
          * このIDより前のデータを取得
          */
-        ending_before?: string | null;
+        ending_before?: string;
         /**
          * Term Id
          *
          * term ID
          */
-        term_id?: string | null;
+        term_id?: string;
         /**
          * Type
          *
          * 取引タイプ
          */
-        type?: string | null;
+        type?: string;
         /**
          * Payment Method Type
          *
          * 支払い方法タイプ
          */
-        payment_method_type?: string | null;
+        payment_method_type?: string;
     };
     url: '/v2/payment_transactions';
 };
 
 export type GetAllPaymentTransactionsErrors = {
+    /**
+     * Resource Missing
+     */
+    400: ErrorResponse;
     /**
      * Validation Error
      */
@@ -6129,28 +6066,38 @@ export type GetAllTermsData = {
          */
         limit?: number;
         /**
-         * Offset
+         * Starting After
          *
-         * データ取得を行う開始位置
+         * このIDより後のデータを取得
          */
-        offset?: number;
+        starting_after?: string;
+        /**
+         * Ending Before
+         *
+         * このIDより前のデータを取得
+         */
+        ending_before?: string;
         /**
          * Since Start At
          *
          * start_atが指定した日付以降のデータを取得
          */
-        since_start_at?: string | null;
+        since_start_at?: string;
         /**
          * Until Start At
          *
          * start_atが指定した日付以前のデータを取得
          */
-        until_start_at?: string | null;
+        until_start_at?: string;
     };
     url: '/v2/terms';
 };
 
 export type GetAllTermsErrors = {
+    /**
+     * Resource Missing
+     */
+    400: ErrorResponse;
     /**
      * Validation Error
      */
