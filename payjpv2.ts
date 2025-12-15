@@ -5,7 +5,7 @@ import {
   type Client,
 } from "./client/client";
 
-const BINDINGS_VERSION = '0.0.1';
+const BINDINGS_VERSION = '1.0.0';
 const DEFAULT_BASE_URL = "https://api.pay.jp";
 
 export interface ClientConfig {
