@@ -23,7 +23,6 @@ async function run() {
   });
 
   console.log("Client initialized");
-  console.log();
 
   try {
     // 1. Create Customer
