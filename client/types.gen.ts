@@ -1041,7 +1041,7 @@ export type PaymentFlowCancelRequest = {
      * | **abandoned**: 顧客が支払いを完了しなかった場合。 |
      *
      */
-    cancellation_reason?: 'duplicate' | 'fraudulent' | 'requested_by_customer' | 'abondoned';
+    cancellation_reason?: 'duplicate' | 'fraudulent' | 'requested_by_customer' | 'abandoned';
 };
 
 /**
@@ -2897,7 +2897,7 @@ export type SetupFlowCancelRequest = {
 /**
  * SetupFlowCancellationReason
  */
-export type SetupFlowCancellationReason = 'abondoned' | 'duplicate' | 'requested_by_customer';
+export type SetupFlowCancellationReason = 'abandoned' | 'duplicate' | 'requested_by_customer';
 
 /**
  * SetupFlowCreateRequest
