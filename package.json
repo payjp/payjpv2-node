@@ -49,7 +49,7 @@
   },
   "homepage": "https://github.com/payjp/payjpv2-node#readme",
   "dependencies": {
-    "@hey-api/client-fetch": "^0.10.1"
+    "@hey-api/client-fetch": "^0.13.1"
   },
   "devDependencies": {
     "@types/jest": "29.5.14",
