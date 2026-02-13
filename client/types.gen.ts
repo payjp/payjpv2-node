@@ -609,7 +609,7 @@ export type CheckoutSessionLineItemDataResponse = {
      *
      * 説明
      */
-    description: string;
+    description: string | null;
     /**
      * 料金情報
      */
@@ -1091,6 +1091,149 @@ export type PayPayConfigRequest = {
 };
 
 /**
+ * PaymentDisputeListResponse
+ */
+export type PaymentDisputeListResponse = {
+    /**
+     * Object
+     */
+    object?: 'list';
+    /**
+     * Url
+     *
+     * リスト取得URL
+     */
+    url: string;
+    /**
+     * Has More
+     *
+     * 次のページがあるかどうか
+     */
+    has_more: boolean;
+    /**
+     * Data
+     *
+     * PaymentDispute リスト
+     */
+    data: Array<PaymentDisputeResponse>;
+};
+
+/**
+ * PaymentDisputeReason
+ */
+export type PaymentDisputeReason = 'researching' | 'researching_fraudulent' | 'warned_fraudulent' | 'confirmed_fraudulent' | 'unrecognized' | 'fraudulent' | 'product_not_received' | 'online_fraudulent' | 'incorrect_account_details' | 'receiving_chargeback' | 'duplicate' | 'not_authorized' | 'subscription_canceled' | 'check_returned' | 'other';
+
+/**
+ * PaymentDisputeResponse
+ */
+export type PaymentDisputeResponse = {
+    /**
+     * Object
+     */
+    object?: 'payment_dispute';
+    /**
+     * Id
+     *
+     * PaymentDispute ID
+     */
+    id: string;
+    /**
+     * Livemode
+     *
+     * 本番環境かどうか
+     */
+    livemode: boolean;
+    /**
+     * Payment Flow Id
+     *
+     * 関連する PaymentFlow の ID
+     */
+    payment_flow_id: string;
+    /**
+     * Amount
+     *
+     * 金額
+     */
+    amount: number;
+    /**
+     * 通貨コード (ISO 4217)
+     */
+    currency: Currency;
+    /**
+     * disputeのステータス
+     *
+     * | 値 |
+     * |:---|
+     * | **pre_warning_needs_response**: 利用照会 |
+     * | **warning_needs_response**: 配送保留 |
+     * | **warning_needs_refund**: 配送停止 |
+     * | **warning_under_review**: 加盟店回答済 |
+     * | **needs_response**: チャージバック |
+     * | **under_review**: 反証済 |
+     * | **lost**: チャージバック受入 |
+     * | **cancel**: 取下げ |
+     */
+    status: PaymentDisputeStatus;
+    /**
+     * disputeの理由
+     *
+     * | 値 |
+     * |:---|
+     * | **researching**: 利用内容確認 |
+     * | **researching_fraudulent**: 悪用調査 |
+     * | **warned_fraudulent**: 悪用懸念 |
+     * | **confirmed_fraudulent**: 悪用確定 |
+     * | **unrecognized**: 利用覚えなし |
+     * | **fraudulent**: 不正利用 |
+     * | **product_not_received**: サービスまたは商品未提供 |
+     * | **online_fraudulent**: 非対面不正 |
+     * | **incorrect_account_details**: 第三者利用 |
+     * | **receiving_chargeback**: チャージバック受信 |
+     * | **duplicate**: 重複決済 |
+     * | **not_authorized**: オーソリ未取得 |
+     * | **subscription_canceled**: 取消済リカーリング |
+     * | **check_returned**: 返品未処理 |
+     * | **other**: その他 |
+     */
+    reason: PaymentDisputeReason | null;
+    /**
+     * Due By
+     *
+     * 回答期限
+     */
+    due_by: string | null;
+    /**
+     * 支払い方法の種類
+     */
+    payment_method_type: PaymentMethodTypes;
+    /**
+     * Metadata
+     *
+     * メタデータ
+     */
+    metadata: {
+        [key: string]: string | number | boolean;
+    };
+    /**
+     * Created At
+     *
+     * 作成日時 (UTC, ISO 8601 形式)
+     */
+    created_at: string;
+    /**
+     * Updated At
+     *
+     * 更新日時 (UTC, ISO 8601 形式)
+     */
+    updated_at: string;
+};
+
+/**
+ * PaymentDisputeStatus
+ */
+export type PaymentDisputeStatus = 'pre_warning_needs_response' | 'warning_needs_response' | 'warning_needs_refund' | 'warning_under_review' | 'needs_response' | 'under_review' | 'lost' | 'cancel';
+
+/**
  * PaymentFlowCancelRequest
  */
 export type PaymentFlowCancelRequest = {
@@ -1152,7 +1295,7 @@ export type PaymentFlowConfirmRequest = {
      * | 値 |
      * |:---|
      * | **automatic**: (デフォルト) 顧客が支払いを承認すると、自動的に確定させます。 |
-     * | **manual**: 顧客が支払いを承認すると一旦確定を保留し、後で Capture API を使用して確定します。（すべての支払い方法がこれをサポートしているわけではありません）。 |
+     * | **manual**: 顧客が支払いを承認すると一旦確定を保留し、後で Payment Flow の Capture API を使用して確定します。（すべての支払い方法がこれをサポートしているわけではありません）。 |
      */
     capture_method?: CaptureMethod;
     /**
@@ -1211,7 +1354,7 @@ export type PaymentFlowCreateRequest = {
      * | 値 |
      * |:---|
      * | **automatic**: (デフォルト) 顧客が支払いを承認すると、自動的に確定させます。 |
-     * | **manual**: 顧客が支払いを承認すると一旦確定を保留し、後で Capture API を使用して確定します。（すべての支払い方法がこれをサポートしているわけではありません）。 |
+     * | **manual**: 顧客が支払いを承認すると一旦確定を保留し、後で Payment Flow の Capture API を使用して確定します。（すべての支払い方法がこれをサポートしているわけではありません）。 |
      */
     capture_method?: CaptureMethod;
     /**
@@ -1252,7 +1395,7 @@ export type PaymentFlowDataRequest = {
      * | 指定できる値 |
      * |:---|
      * | **automatic**: 顧客が支払いを承認すると自動的に確定します。 |
-     * | **manual**: 顧客が支払いを承認すると一旦確定を保留し、後で Capture API を使用して確定します。（すべての支払い方法がこれをサポートしているわけではありません）。 |
+     * | **manual**: 顧客が支払いを承認すると一旦確定を保留し、後で Payment Flow の Capture API を使用して確定します。（すべての支払い方法がこれをサポートしているわけではありません）。 |
      */
     capture_method?: CaptureMethod;
     /**
@@ -3007,7 +3150,7 @@ export type SetupFlowCreateRequest = {
      *
      * この SetupFlow で使用できる支払い方法の種類のリスト。 指定しない場合は、PAY.JP は支払い方法の設定から利用可能な支払い方法を動的に表示します。
      */
-    payment_method_types?: Array<'card' | 'apple_pay'>;
+    payment_method_types?: Array<'card'>;
     /**
      * 支払い方法が今後どのように使用されるかを指定します。指定されていない場合、この値はデフォルトで `off_session` になります。
      *
@@ -3249,7 +3392,7 @@ export type SetupFlowUpdateRequest = {
      *
      * この SetupFlow で使用できる支払い方法の種類のリスト。 指定しない場合は、PAY.JP は支払い方法の設定から利用可能な支払い方法を動的に表示します。
      */
-    payment_method_types?: Array<'card' | 'apple_pay'>;
+    payment_method_types?: Array<'card'>;
     /**
      * Description
      *
@@ -4881,6 +5024,100 @@ export type CreatePaymentRefundResponses = {
 };
 
 export type CreatePaymentRefundResponse = CreatePaymentRefundResponses[keyof CreatePaymentRefundResponses];
+
+export type GetPaymentDisputeData = {
+    body?: never;
+    path: {
+        /**
+         * Payment Dispute Id
+         */
+        payment_dispute_id: string;
+    };
+    query?: never;
+    url: '/v2/payment_disputes/{payment_dispute_id}';
+};
+
+export type GetPaymentDisputeErrors = {
+    /**
+     * Not Found
+     */
+    404: ErrorResponse;
+    /**
+     * Validation Error
+     */
+    422: ErrorResponse;
+};
+
+export type GetPaymentDisputeError = GetPaymentDisputeErrors[keyof GetPaymentDisputeErrors];
+
+export type GetPaymentDisputeResponses = {
+    /**
+     * Successful Response
+     */
+    200: PaymentDisputeResponse;
+};
+
+export type GetPaymentDisputeResponse = GetPaymentDisputeResponses[keyof GetPaymentDisputeResponses];
+
+export type GetAllPaymentDisputesData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Limit
+         *
+         * 取得するデータの最大件数
+         */
+        limit?: number;
+        /**
+         * Starting After
+         *
+         * このIDより後のデータを取得
+         */
+        starting_after?: string;
+        /**
+         * Ending Before
+         *
+         * このIDより前のデータを取得
+         */
+        ending_before?: string;
+        /**
+         * Payment Flow Id
+         *
+         * 取得する payment_dispute に紐づく payment_flow の ID
+         */
+        payment_flow_id?: string | null;
+        /**
+         * Status
+         *
+         * 取得する payment_dispute のステータス。複数指定可能
+         */
+        status?: Array<PaymentDisputeStatus> | null;
+    };
+    url: '/v2/payment_disputes';
+};
+
+export type GetAllPaymentDisputesErrors = {
+    /**
+     * Resource Missing
+     */
+    400: ErrorResponse;
+    /**
+     * Validation Error
+     */
+    422: ErrorResponse;
+};
+
+export type GetAllPaymentDisputesError = GetAllPaymentDisputesErrors[keyof GetAllPaymentDisputesErrors];
+
+export type GetAllPaymentDisputesResponses = {
+    /**
+     * Successful Response
+     */
+    200: PaymentDisputeListResponse;
+};
+
+export type GetAllPaymentDisputesResponse = GetAllPaymentDisputesResponses[keyof GetAllPaymentDisputesResponses];
 
 export type GetSetupFlowData = {
     body?: never;
