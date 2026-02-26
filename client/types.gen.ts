@@ -5,6 +5,16 @@ export type ClientOptions = {
 };
 
 /**
+ * ApplePayConfigRequest
+ */
+export type ApplePayConfigRequest = {
+    /**
+     * 支払い方法の表示設定
+     */
+    display_preference?: DisplayPreferenceRequest | null;
+};
+
+/**
  * BalanceListResponse
  */
 export type BalanceListResponse = {
@@ -1246,7 +1256,7 @@ export type PaymentFlowCancelRequest = {
      * | **duplicate**: 重複した支払いである場合。 |
      * | **fraudulent**: 不正な利用だと考えられる場合。 |
      * | **requested_by_customer**: 顧客がキャンセルを要求した場合。 |
-     * | **abondoned**: 顧客が支払いを完了しなかった場合。 |
+     * | **abandoned**: 顧客が支払いを完了しなかった場合。 |
      *
      */
     cancellation_reason?: 'duplicate' | 'fraudulent' | 'requested_by_customer' | 'abandoned';
@@ -1290,14 +1300,14 @@ export type PaymentFlowConfirmRequest = {
      */
     payment_method_types?: Array<PaymentMethodTypes>;
     /**
-     * 支払いの確定方法を指定します。
+     * 支払いの確定方法を指定します。未指定の場合は PaymentFlow 作成時に設定された値を使用します。
      *
      * | 値 |
      * |:---|
-     * | **automatic**: (デフォルト) 顧客が支払いを承認すると、自動的に確定させます。 |
+     * | **automatic**: 顧客が支払いを承認すると、自動的に確定させます。 |
      * | **manual**: 顧客が支払いを承認すると一旦確定を保留し、後で Payment Flow の Capture API を使用して確定します。（すべての支払い方法がこれをサポートしているわけではありません）。 |
      */
-    capture_method?: CaptureMethod;
+    capture_method?: CaptureMethod | null;
     /**
      * Return Url
      *
@@ -1307,7 +1317,7 @@ export type PaymentFlowConfirmRequest = {
     /**
      * Description
      *
-     * オブジェクトにセットする任意の文字列。ユーザーには表示されません。
+     * オブジェクトにセットする任意の文字列。
      */
     description?: string;
 };
@@ -1372,7 +1382,7 @@ export type PaymentFlowCreateRequest = {
     /**
      * Description
      *
-     * オブジェクトにセットする任意の文字列。ユーザーには表示されません。
+     * オブジェクトにセットする任意の文字列。
      */
     description?: string;
     /**
@@ -1398,6 +1408,12 @@ export type PaymentFlowDataRequest = {
      * | **manual**: 顧客が支払いを承認すると一旦確定を保留し、後で Payment Flow の Capture API を使用して確定します。（すべての支払い方法がこれをサポートしているわけではありません）。 |
      */
     capture_method?: CaptureMethod;
+    /**
+     * Description
+     *
+     * オブジェクトにセットする任意の文字列。
+     */
+    description?: string | null;
     /**
      * Metadata
      *
@@ -1531,7 +1547,7 @@ export type PaymentFlowResponse = {
     /**
      * Description
      *
-     * オブジェクトにセットする任意の文字列。ユーザーには表示されません。
+     * オブジェクトにセットされた任意の文字列。
      */
     description: string | null;
     /**
@@ -1688,7 +1704,7 @@ export type PaymentFlowUpdateRequest = {
     /**
      * Description
      *
-     * オブジェクトにセットする任意の文字列。ユーザーには表示されません。
+     * オブジェクトにセットする任意の文字列。
      */
     description?: string;
     /**
@@ -2149,6 +2165,10 @@ export type PaymentMethodConfigurationDetailsResponse = {
      * カードの設定
      */
     card: PaymentMethodConfigurationSettingResponse;
+    /**
+     * Apple Pay の設定
+     */
+    apple_pay: PaymentMethodConfigurationSettingResponse;
 };
 
 /**
@@ -2240,6 +2260,7 @@ export type PaymentMethodConfigurationUpdateRequest = {
     name?: string | null;
     card?: CardConfigRequest | null;
     paypay?: PayPayConfigRequest | null;
+    apple_pay?: ApplePayConfigRequest | null;
 };
 
 /**
@@ -3163,7 +3184,7 @@ export type SetupFlowCreateRequest = {
     /**
      * Description
      *
-     * 説明。顧客に表示されます。
+     * 説明。
      */
     description?: string;
     /**
@@ -3180,6 +3201,12 @@ export type SetupFlowCreateRequest = {
  * SetupFlowDataRequest
  */
 export type SetupFlowDataRequest = {
+    /**
+     * Description
+     *
+     * 説明。
+     */
+    description?: string | null;
     /**
      * Metadata
      *
@@ -3278,7 +3305,7 @@ export type SetupFlowResponse = {
     /**
      * Description
      *
-     * 説明。顧客に表示されます。
+     * 説明。
      */
     description: string | null;
     /**
@@ -3396,7 +3423,7 @@ export type SetupFlowUpdateRequest = {
     /**
      * Description
      *
-     * 説明。顧客に表示されます。
+     * 説明。
      */
     description?: string;
     /**
@@ -4067,6 +4094,10 @@ export type DetachPaymentMethodData = {
 
 export type DetachPaymentMethodErrors = {
     /**
+     * Payment Method Unattached<br>Payment Method Already Detached
+     */
+    400: ErrorResponse;
+    /**
      * Not Found
      */
     404: ErrorResponse;
@@ -4101,6 +4132,10 @@ export type GetPaymentMethodConfigurationData = {
 
 export type GetPaymentMethodConfigurationErrors = {
     /**
+     * Not Found
+     */
+    404: ErrorResponse;
+    /**
      * Validation Error
      */
     422: ErrorResponse;
@@ -4130,6 +4165,10 @@ export type UpdatePaymentMethodConfigurationData = {
 };
 
 export type UpdatePaymentMethodConfigurationErrors = {
+    /**
+     * Not Found
+     */
+    404: ErrorResponse;
     /**
      * Validation Error
      */
@@ -4479,6 +4518,10 @@ export type GetPriceData = {
 
 export type GetPriceErrors = {
     /**
+     * Not Found
+     */
+    404: ErrorResponse;
+    /**
      * Validation Error
      */
     422: ErrorResponse;
@@ -4672,6 +4715,10 @@ export type CreatePaymentFlowErrors = {
      */
     400: ErrorResponse;
     /**
+     * Payment Failed
+     */
+    402: ErrorResponse;
+    /**
      * Not Found
      */
     404: ErrorResponse;
@@ -4754,6 +4801,10 @@ export type CapturePaymentFlowErrors = {
      */
     400: ErrorResponse;
     /**
+     * Payment Failed
+     */
+    402: ErrorResponse;
+    /**
      * Not Found
      */
     404: ErrorResponse;
@@ -4794,6 +4845,10 @@ export type ConfirmPaymentFlowErrors = {
      * Invalid Status<br>Missing Payment Method<br>Detached Payment Method Not Usable<br>Payment Method Not Owned By Customer<br>Customer Required For Payment Method<br>Payment Method Type Not Allowed
      */
     400: ErrorResponse;
+    /**
+     * Payment Failed
+     */
+    402: ErrorResponse;
     /**
      * Not Found
      */
@@ -5167,7 +5222,7 @@ export type UpdateSetupFlowData = {
 
 export type UpdateSetupFlowErrors = {
     /**
-     * Detached Payment Method Not Usable<br>Metadata Limit Exceeded
+     * Invalid Status<br>Detached Payment Method Not Usable<br>Metadata Limit Exceeded
      */
     400: ErrorResponse;
     /**
@@ -5251,7 +5306,7 @@ export type CreateSetupFlowData = {
 
 export type CreateSetupFlowErrors = {
     /**
-     * Detached Payment Method Not Usable<br>Unsupported Payment Method Type
+     * Detached Payment Method Not Usable<br>Unsupported Payment Method Type<br>Invalid Request
      */
     400: ErrorResponse;
     /**
@@ -5897,6 +5952,10 @@ export type GetTaxRateData = {
 
 export type GetTaxRateErrors = {
     /**
+     * Not Found
+     */
+    404: ErrorResponse;
+    /**
      * Validation Error
      */
     422: ErrorResponse;
@@ -6008,7 +6067,7 @@ export type CreateCustomerData = {
 
 export type CreateCustomerErrors = {
     /**
-     * Already Exists ID
+     * Already Exists ID<br>Unsupported Payment Method Type
      */
     400: ErrorResponse;
     /**
