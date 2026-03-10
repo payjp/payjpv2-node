@@ -29,6 +29,8 @@ export const getAllPaymentMethods = <ThrowOnError extends boolean = false>(optio
 
 /**
  * Create Payment Method
+ *
+ * **このエンドポイントはテストモードでのみ使用できます。**
  */
 export const createPaymentMethod = <ThrowOnError extends boolean = false>(options: Options<CreatePaymentMethodData, ThrowOnError>) => (options.client ?? client).post<CreatePaymentMethodResponses, CreatePaymentMethodErrors, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }, { scheme: 'bearer', type: 'http' }],

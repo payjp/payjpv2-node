@@ -3026,6 +3026,12 @@ export type ProductDetailsResponse = {
      */
     id: string;
     /**
+     * Livemode
+     *
+     * 本番環境かどうか
+     */
+    livemode: boolean;
+    /**
      * Name
      *
      * Checkout などで顧客に表示される商品名
@@ -3061,6 +3067,18 @@ export type ProductDetailsResponse = {
      * この製品の公開されているウェブページの URL
      */
     url: string | null;
+    /**
+     * Created At
+     *
+     * 作成日時 (UTC, ISO 8601 形式)
+     */
+    created_at: string;
+    /**
+     * Updated At
+     *
+     * 更新日時 (UTC, ISO 8601 形式)
+     */
+    updated_at: string;
 };
 
 /**
@@ -3680,6 +3698,12 @@ export type TaxRateDetailsResponse = {
      */
     id: string;
     /**
+     * Livemode
+     *
+     * 本番環境かどうか
+     */
+    livemode: boolean;
+    /**
      * Display Name
      *
      * 表示名。顧客に表示されます。
@@ -3713,6 +3737,18 @@ export type TaxRateDetailsResponse = {
      * 説明。管理画面内のみで表示され、顧客には表示されません。
      */
     description: string | null;
+    /**
+     * Created At
+     *
+     * 作成日時 (UTC, ISO 8601 形式)
+     */
+    created_at: string;
+    /**
+     * Updated At
+     *
+     * 更新日時 (UTC, ISO 8601 形式)
+     */
+    updated_at: string;
     /**
      * Metadata
      *
@@ -5887,6 +5923,18 @@ export type GetAllTaxRatesData = {
          * このIDより前のデータを取得
          */
         ending_before?: string;
+        /**
+         * Active
+         *
+         * この税率が有効であるかどうか。無効にした場合でも、すでに設定されている定期課金などでは使用可能です。
+         */
+        active?: boolean | null;
+        /**
+         * Inclusive
+         *
+         * 税込みかどうか。税込 = `true` 税抜 = `false`
+         */
+        inclusive?: boolean | null;
     };
     url: '/v2/tax_rates';
 };
