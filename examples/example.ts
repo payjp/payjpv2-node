@@ -36,6 +36,7 @@ async function run() {
       body: {
         email: "test@example.com",
         description: "Test customer from Node.js SDK",
+        metadata: { key1: "value1", key2: 123, key3: true },
       },
       headers: {
         "Idempotency-Key": idempotencyKey,
@@ -50,6 +51,7 @@ async function run() {
     const customerId = createResult.data!.id!;
     console.log("Created customer:", customerId);
     console.log("Email:", createResult.data!.email);
+    console.log("Metadata:", JSON.stringify(createResult.data!.metadata));
     console.log();
 
     // 2. Get Customer
@@ -69,6 +71,7 @@ async function run() {
     console.log("Retrieved customer:", getResult.data!.id);
     console.log("Email:", getResult.data!.email);
     console.log("Description:", getResult.data!.description ?? "(none)");
+    console.log("Metadata:", JSON.stringify(getResult.data!.metadata));
     console.log();
 
     // 3. Update Customer
@@ -81,6 +84,7 @@ async function run() {
       body: {
         email: "updated@example.com",
         description: "Updated description from Node.js SDK",
+        metadata: { key1: "updated_value", key4: 456 },
       },
     });
 
@@ -92,6 +96,7 @@ async function run() {
     console.log("Updated customer:", updateResult.data!.id);
     console.log("New email:", updateResult.data!.email);
     console.log("New description:", updateResult.data!.description ?? "(none)");
+    console.log("Metadata:", JSON.stringify(updateResult.data!.metadata));
     console.log();
 
     // 4. List Customers
