@@ -1571,7 +1571,7 @@ export type PaymentFlowResponse = {
      */
     payment_method_types: Array<PaymentMethodTypes>;
     /**
-     * この PaymentFlow のステータス。<a href="https://docs.pay.jp/v2/payment_flows#status" target="_blank">ステータスの詳細についてはこちらをご覧ください。</a>
+     * この PaymentFlow のステータス。
      *
      * | 値 |
      * |:---|
@@ -3952,6 +3952,10 @@ export type CreatePaymentMethodData = {
 
 export type CreatePaymentMethodErrors = {
     /**
+     * Invalid Apple Pay Token<br>Unacceptable Brand On Apple Pay
+     */
+    400: ErrorResponse;
+    /**
      * Not Found
      */
     404: ErrorResponse;
@@ -4747,7 +4751,7 @@ export type CreatePaymentFlowData = {
 
 export type CreatePaymentFlowErrors = {
     /**
-     * Detached Payment Method Not Usable<br>Payment Method Not Owned By Customer<br>Payment Method Type Not Allowed
+     * Missing Payment Method<br>Detached Payment Method Not Usable<br>Payment Method Not Owned By Customer<br>Payment Method Type Not Allowed<br>Apple Pay Disabled In Livemode<br>Invalid Apple Pay Token<br>Unacceptable Brand On Apple Pay
      */
     400: ErrorResponse;
     /**
@@ -4878,7 +4882,7 @@ export type ConfirmPaymentFlowData = {
 
 export type ConfirmPaymentFlowErrors = {
     /**
-     * Invalid Status<br>Missing Payment Method<br>Detached Payment Method Not Usable<br>Payment Method Not Owned By Customer<br>Customer Required For Payment Method<br>Payment Method Type Not Allowed
+     * Invalid Status<br>Missing Payment Method<br>Detached Payment Method Not Usable<br>Payment Method Not Owned By Customer<br>Customer Required For Payment Method<br>Payment Method Type Not Allowed<br>Apple Pay Disabled In Livemode<br>Invalid Apple Pay Token<br>Unacceptable Brand On Apple Pay
      */
     400: ErrorResponse;
     /**
@@ -5342,7 +5346,7 @@ export type CreateSetupFlowData = {
 
 export type CreateSetupFlowErrors = {
     /**
-     * Detached Payment Method Not Usable<br>Unsupported Payment Method Type<br>Invalid Request
+     * Invalid Request
      */
     400: ErrorResponse;
     /**
@@ -6115,7 +6119,7 @@ export type CreateCustomerData = {
 
 export type CreateCustomerErrors = {
     /**
-     * Already Exists ID<br>Unsupported Payment Method Type
+     * Already Exists ID<br>Unsupported Payment Method Type<br>Payment Method Already Attached<br>Payment Method Customer Mismatch
      */
     400: ErrorResponse;
     /**
@@ -6485,6 +6489,10 @@ export type GetAllPaymentTransactionsErrors = {
      * Resource Missing
      */
     400: ErrorResponse;
+    /**
+     * Not Found
+     */
+    404: ErrorResponse;
     /**
      * Validation Error
      */
