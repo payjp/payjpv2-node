@@ -5756,7 +5756,7 @@ export type CreateCheckoutSessionData = {
 
 export type CreateCheckoutSessionErrors = {
     /**
-     * Not Found
+     * Not Found<br>Price Not Found Or Inactive<br>Tax Rate Not Found Or Inactive
      */
     404: ErrorResponse;
     /**
