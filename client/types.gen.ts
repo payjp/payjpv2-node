@@ -701,9 +701,10 @@ export type CheckoutSessionPaymentMethodOptionsCardRequest = {
      * | 指定できる値 |
      * |:---|
      * | **if_available**: オーソリ期間の延長が可能な場合に延長要求を行います。 |
+     * | **must_extend**: オーソリ期間の延長を必須とします。延長できない場合はエラーを返します。 |
      * | **never**: オーソリ期間の延長要求を行いません。 |
      */
-    request_extended_authorization?: 'if_available' | 'never';
+    request_extended_authorization?: 'if_available' | 'must_extend' | 'never';
     /**
      * Request Three D Secure
      *
@@ -1464,9 +1465,10 @@ export type PaymentFlowPaymentMethodOptionsCardRequest = {
      * | 値 |
      * |:---|
      * | **if_available**: オーソリ期間の延長が可能な場合に延長要求を行います。 |
+     * | **must_extend**: オーソリ期間の延長を必須とします。延長できない場合はエラーを返します。 |
      * | **never**: オーソリ期間の延長要求を行いません。 |
      */
-    request_extended_authorization?: 'if_available' | 'never';
+    request_extended_authorization?: 'if_available' | 'must_extend' | 'never';
     /**
      * Request Three D Secure
      *
@@ -1636,6 +1638,12 @@ export type PaymentFlowResponse = {
      * キャンセル日時 (UTC, ISO 8601 形式)
      */
     canceled_at: string | null;
+    /**
+     * Expired At
+     *
+     * オーソリの有効期限 (UTC, ISO 8601 形式)
+     */
+    expired_at?: string | null;
     /**
      * Metadata
      *
@@ -4751,7 +4759,7 @@ export type CreatePaymentFlowData = {
 
 export type CreatePaymentFlowErrors = {
     /**
-     * Missing Payment Method<br>Detached Payment Method Not Usable<br>Payment Method Not Owned By Customer<br>Payment Method Type Not Allowed<br>Apple Pay Disabled In Livemode<br>Invalid Apple Pay Token<br>Unacceptable Brand On Apple Pay
+     * Missing Payment Method<br>Detached Payment Method Not Usable<br>Payment Method Not Owned By Customer<br>Payment Method Type Not Allowed<br>Extended Authorization Not Available<br>Apple Pay Disabled In Livemode<br>Invalid Apple Pay Token<br>Unacceptable Brand On Apple Pay
      */
     400: ErrorResponse;
     /**
@@ -4837,7 +4845,7 @@ export type CapturePaymentFlowData = {
 
 export type CapturePaymentFlowErrors = {
     /**
-     * Invalid Status
+     * Invalid Status<br>Payment Flow Expired
      */
     400: ErrorResponse;
     /**
@@ -4882,7 +4890,7 @@ export type ConfirmPaymentFlowData = {
 
 export type ConfirmPaymentFlowErrors = {
     /**
-     * Invalid Status<br>Missing Payment Method<br>Detached Payment Method Not Usable<br>Payment Method Not Owned By Customer<br>Customer Required For Payment Method<br>Payment Method Type Not Allowed<br>Apple Pay Disabled In Livemode<br>Invalid Apple Pay Token<br>Unacceptable Brand On Apple Pay
+     * Invalid Status<br>Missing Payment Method<br>Detached Payment Method Not Usable<br>Payment Method Not Owned By Customer<br>Customer Required For Payment Method<br>Payment Method Type Not Allowed<br>Extended Authorization Not Available<br>Apple Pay Disabled In Livemode<br>Invalid Apple Pay Token<br>Unacceptable Brand On Apple Pay
      */
     400: ErrorResponse;
     /**
@@ -5346,7 +5354,7 @@ export type CreateSetupFlowData = {
 
 export type CreateSetupFlowErrors = {
     /**
-     * Invalid Request
+     * Invalid Payment Method Types
      */
     400: ErrorResponse;
     /**
