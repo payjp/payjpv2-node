@@ -905,7 +905,7 @@ export type CustomerUpdateRequest = {
      *
      * 支払いにデフォルトで使用される支払い方法 ID
      */
-    default_payment_method_id?: string | null;
+    default_payment_method_id?: string;
     /**
      * Email
      *
@@ -1069,7 +1069,13 @@ export type LineItemRequest = {
      *
      * 料金 ID
      */
-    price_id: string;
+    price_id?: string | null;
+    /**
+     * 料金データ。料金を動的に作成できます。商品データを指定した場合は商品も動的に作成されます。
+     *
+     * `price_id` と `price_data` のどちらか一方を指定してください。
+     */
+    price_data?: PriceDataRequest | null;
     /**
      * Quantity
      *
@@ -2813,6 +2819,32 @@ export type PriceCreateRequest = {
 };
 
 /**
+ * PriceDataRequest
+ */
+export type PriceDataRequest = {
+    /**
+     * 通貨。現在は `jpy` のみサポートしています。
+     */
+    currency: Currency;
+    /**
+     * Unit Amount
+     *
+     * 単価（0以上の整数）
+     */
+    unit_amount: number;
+    /**
+     * Product Id
+     *
+     * 既存の商品 ID。`product_id` と `product_data` のどちらか一方を指定してください。
+     */
+    product_id?: string | null;
+    /**
+     * 新規商品データ。`product_id` と `product_data` のどちらか一方を指定してください。
+     */
+    product_data?: ProductDataRequest | null;
+};
+
+/**
  * PriceDetailsResponse
  */
 export type PriceDetailsResponse = {
@@ -2995,6 +3027,24 @@ export type ProductCreateRequest = {
      * この製品の公開されているウェブページの URL
      */
     url?: string;
+};
+
+/**
+ * ProductDataRequest
+ */
+export type ProductDataRequest = {
+    /**
+     * Name
+     *
+     * Checkout などで顧客に表示される商品名
+     */
+    name: string;
+    /**
+     * Description
+     *
+     * Checkout などで顧客に表示される商品説明
+     */
+    description?: string | null;
 };
 
 /**
@@ -4600,7 +4650,7 @@ export type UpdatePriceData = {
 
 export type UpdatePriceErrors = {
     /**
-     * Metadata Limit Exceeded
+     * Metadata Limit Exceeded<br>Inline Price Update Not Allowed
      */
     400: ErrorResponse;
     /**
@@ -5107,6 +5157,10 @@ export type CreatePaymentRefundErrors = {
      * Invalid Status<br>Already Refunded<br>Refund Exceeds Payment
      */
     400: ErrorResponse;
+    /**
+     * Payment Failed
+     */
+    402: ErrorResponse;
     /**
      * Not Found
      */
