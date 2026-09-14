@@ -3219,6 +3219,8 @@ export type SetupFlowCancelRequest = {
      * | **abandoned**: 顧客が SetupFlow を完了しなかった場合。 |
      * | **requested_by_customer**: 顧客がキャンセルを要求した場合。 |
      * | **duplicate**: 支払い方法が重複している場合。 |
+     *
+     * `expired` はシステムが自動的に設定する値のため、リクエストでは指定できません。
      */
     cancellation_reason?: SetupFlowCancellationReason;
 };
@@ -3226,7 +3228,7 @@ export type SetupFlowCancelRequest = {
 /**
  * SetupFlowCancellationReason
  */
-export type SetupFlowCancellationReason = 'abandoned' | 'duplicate' | 'requested_by_customer';
+export type SetupFlowCancellationReason = 'abandoned' | 'duplicate' | 'expired' | 'requested_by_customer';
 
 /**
  * SetupFlowCreateRequest
@@ -3454,6 +3456,7 @@ export type SetupFlowResponse = {
      * |:---|
      * | **abandoned**: 放棄、中断 |
      * | **duplicate**: 重複 |
+     * | **expired**: 期限切れ（CheckoutSession の期限切れによるキャンセル） |
      * | **requested_by_customer**: 顧客からの要請 |
      */
     cancellation_reason: SetupFlowCancellationReason | null;
@@ -4940,7 +4943,7 @@ export type ConfirmPaymentFlowData = {
 
 export type ConfirmPaymentFlowErrors = {
     /**
-     * Invalid Status<br>Missing Payment Method<br>Detached Payment Method Not Usable<br>Payment Method Not Owned By Customer<br>Customer Required For Payment Method<br>Payment Method Type Not Allowed<br>Extended Authorization Not Available<br>Apple Pay Disabled In Livemode<br>Invalid Apple Pay Token<br>Unacceptable Brand On Apple Pay
+     * Invalid Status<br>Checkout Session Expired<br>Missing Payment Method<br>Detached Payment Method Not Usable<br>Payment Method Not Owned By Customer<br>Customer Required For Payment Method<br>Payment Method Type Not Allowed<br>Extended Authorization Not Available<br>Apple Pay Disabled In Livemode<br>Invalid Apple Pay Token<br>Unacceptable Brand On Apple Pay
      */
     400: ErrorResponse;
     /**
@@ -5909,6 +5912,44 @@ export type UpdateCheckoutSessionResponses = {
 };
 
 export type UpdateCheckoutSessionResponse = UpdateCheckoutSessionResponses[keyof UpdateCheckoutSessionResponses];
+
+export type ExpireCheckoutSessionData = {
+    body?: never;
+    path: {
+        /**
+         * Checkout Session Id
+         */
+        checkout_session_id: string;
+    };
+    query?: never;
+    url: '/v2/checkout/sessions/{checkout_session_id}/expire';
+};
+
+export type ExpireCheckoutSessionErrors = {
+    /**
+     * Checkout Session Not Expirable
+     */
+    400: ErrorResponse;
+    /**
+     * Not Found
+     */
+    404: ErrorResponse;
+    /**
+     * Validation Error
+     */
+    422: ErrorResponse;
+};
+
+export type ExpireCheckoutSessionError = ExpireCheckoutSessionErrors[keyof ExpireCheckoutSessionErrors];
+
+export type ExpireCheckoutSessionResponses = {
+    /**
+     * Successful Response
+     */
+    200: CheckoutSessionDetailsResponse;
+};
+
+export type ExpireCheckoutSessionResponse = ExpireCheckoutSessionResponses[keyof ExpireCheckoutSessionResponses];
 
 export type GetAllCheckoutSessionLineItemsData = {
     body?: never;
