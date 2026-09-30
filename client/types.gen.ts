@@ -3212,6 +3212,8 @@ export type ProductUpdateRequest = {
  */
 export type SetupFlowCancelRequest = {
     /**
+     * Cancellation Reason
+     *
      * この SetupFlow のキャンセル理由。
      *
      * | 値 |
@@ -3222,7 +3224,7 @@ export type SetupFlowCancelRequest = {
      *
      * `expired` はシステムが自動的に設定する値のため、リクエストでは指定できません。
      */
-    cancellation_reason?: SetupFlowCancellationReason;
+    cancellation_reason?: 'abandoned' | 'duplicate' | 'requested_by_customer';
 };
 
 /**
