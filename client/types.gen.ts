@@ -283,6 +283,10 @@ export type CheckoutSessionCreateRequest = {
      */
     cancel_url?: string;
     /**
+     * Checkout から success_url へリダイレクトする際のオプション。Checkout が作成する PaymentFlow / SetupFlow に引き継がれます。
+     */
+    redirect_options?: RedirectOptionsRequest;
+    /**
      * 価格の通貨。現在は `jpy` のみサポートしています。
      */
     currency?: Currency;
@@ -550,6 +554,10 @@ export type CheckoutSessionDetailsResponse = {
      * キャンセル時のリダイレクト URL
      */
     cancel_url: string | null;
+    /**
+     * success_url へリダイレクトする際のオプション
+     */
+    redirect_options: RedirectOptionsResponse;
     /**
      * Url
      *
@@ -1387,6 +1395,10 @@ export type PaymentFlowCreateRequest = {
      */
     return_url?: string;
     /**
+     * return_url へリダイレクトする際のオプション
+     */
+    redirect_options?: RedirectOptionsRequest;
+    /**
      * Description
      *
      * オブジェクトにセットする任意の文字列。
@@ -1607,6 +1619,10 @@ export type PaymentFlowResponse = {
      */
     return_url: string | null;
     /**
+     * return_url へリダイレクトする際のオプション
+     */
+    redirect_options: RedirectOptionsResponse;
+    /**
      * 支払いの確定方法
      *
      * | 値 |
@@ -1715,6 +1731,10 @@ export type PaymentFlowUpdateRequest = {
      * 顧客が支払いを完了後かキャンセルした後にリダイレクトされる URL。アプリにリダイレクトしたい場合は URI Scheme を指定できます。
      */
     return_url?: string;
+    /**
+     * return_url へリダイレクトする際のオプション
+     */
+    redirect_options?: RedirectOptionsRequest;
     /**
      * Description
      *
@@ -3208,6 +3228,30 @@ export type ProductUpdateRequest = {
 };
 
 /**
+ * RedirectOptionsRequest
+ */
+export type RedirectOptionsRequest = {
+    /**
+     * Include Client Secret
+     *
+     * return_url へリダイレクトする際、クエリパラメーターに client_secret を付与するかどうか。デフォルトは `true` です。
+     */
+    include_client_secret?: boolean;
+};
+
+/**
+ * RedirectOptionsResponse
+ */
+export type RedirectOptionsResponse = {
+    /**
+     * Include Client Secret
+     *
+     * return_url へリダイレクトする際、クエリパラメーターに client_secret を付与するかどうか。デフォルトは `true` です。
+     */
+    include_client_secret?: boolean;
+};
+
+/**
  * SetupFlowCancelRequest
  */
 export type SetupFlowCancelRequest = {
@@ -3259,6 +3303,10 @@ export type SetupFlowCreateRequest = {
      * | **on_session**: 顧客がカートなどの決済フローにいる場合にのみ支払い方法を利用する場合は `on_session` を使用してください。 |
      */
     usage?: Usage;
+    /**
+     * return_url へリダイレクトする際のオプション
+     */
+    redirect_options?: RedirectOptionsRequest;
     /**
      * Description
      *
@@ -3442,6 +3490,10 @@ export type SetupFlowResponse = {
      */
     return_url: string | null;
     /**
+     * return_url へリダイレクトする際のオプション
+     */
+    redirect_options: RedirectOptionsResponse;
+    /**
      * Last Setup Error
      *
      * この SetupFlow で発生した最後のエラー
@@ -3499,6 +3551,10 @@ export type SetupFlowUpdateRequest = {
      * この SetupFlow で使用できる支払い方法の種類のリスト。 指定しない場合は、PAY.JP は支払い方法の設定から利用可能な支払い方法を動的に表示します。
      */
     payment_method_types?: Array<'card'>;
+    /**
+     * return_url へリダイレクトする際のオプション
+     */
+    redirect_options?: RedirectOptionsRequest;
     /**
      * Description
      *
@@ -3735,6 +3791,10 @@ export type TaxRateCreateRequest = {
      */
     description?: string;
     /**
+     * 税金の種類。日本の消費税は `jct` を指定します。
+     */
+    tax_type?: TaxType | null;
+    /**
      * Metadata
      *
      * キーバリューの任意のデータを格納できます。20件まで登録可能で、空文字列を指定するとそのキーを削除できます。<a href="https://docs.pay.jp/v2/guide/developers/metadata">詳細はメタデータのドキュメントを参照してください。</a>
@@ -3798,6 +3858,10 @@ export type TaxRateDetailsResponse = {
      * 説明。管理画面内のみで表示され、顧客には表示されません。
      */
     description: string | null;
+    /**
+     * 税金の種類。日本の消費税は `jct` です。
+     */
+    tax_type: TaxType | null;
     /**
      * Created At
      *
@@ -3873,6 +3937,10 @@ export type TaxRateUpdateRequest = {
      */
     display_name?: string;
     /**
+     * 税金の種類。日本の消費税は `jct` を指定します。
+     */
+    tax_type?: TaxType | null;
+    /**
      * Metadata
      *
      * キーバリューの任意のデータを格納できます。20件まで登録可能で、空文字列を指定するとそのキーを削除できます。<a href="https://docs.pay.jp/v2/guide/developers/metadata">詳細はメタデータのドキュメントを参照してください。</a>
@@ -3881,6 +3949,11 @@ export type TaxRateUpdateRequest = {
         [key: string]: string | number | boolean;
     };
 };
+
+/**
+ * TaxType
+ */
+export type TaxType = 'jct';
 
 /**
  * TermListResponse
