@@ -156,6 +156,11 @@ export type BalanceUrlResponse = {
 };
 
 /**
+ * BankAccountStatus
+ */
+export type BankAccountStatus = 'success' | 'failed' | 'pending';
+
+/**
  * BankInfoResponse
  */
 export type BankInfoResponse = {
@@ -174,7 +179,7 @@ export type BankInfoResponse = {
     /**
      * Bank Account Type
      *
-     * 口座種別
+     * 口座種別。`普通` または `当座`
      */
     bank_account_type: string;
     /**
@@ -190,8 +195,6 @@ export type BankInfoResponse = {
      */
     bank_account_holder_name: string;
     /**
-     * Bank Account Status
-     *
      * 最新振込結果
      *
      * | 値 |
@@ -200,13 +203,20 @@ export type BankInfoResponse = {
      * | **failed**: 失敗 |
      * | **pending**: 初回振込み前 |
      */
-    bank_account_status: string;
+    bank_account_status: BankAccountStatus;
 };
 
 /**
  * CaptureMethod
  */
 export type CaptureMethod = 'automatic' | 'manual';
+
+/**
+ * CardBrand
+ *
+ * カードのブランド
+ */
+export type CardBrand = 'Visa' | 'MasterCard' | 'JCB' | 'American Express' | 'Diners Club' | 'Discover';
 
 /**
  * CardConfigRequest
@@ -217,6 +227,13 @@ export type CardConfigRequest = {
      */
     display_preference?: DisplayPreferenceRequest | null;
 };
+
+/**
+ * CardFunding
+ *
+ * BIN帯から判定されるカードの資金源（funding）種別
+ */
+export type CardFunding = 'debit' | 'prepaid';
 
 /**
  * CheckoutSessionCreateRequest
@@ -293,7 +310,8 @@ export type CheckoutSessionCreateRequest = {
     /**
      * Expires At
      *
-     * Checkout Session の有効期限が失効する日時
+     * Checkout Session の有効期限が失効する日時<br>
+     * 24時間以内の日時を指定できます。未指定の場合は作成時点から24時間後になります。
      */
     expires_at?: string;
     /**
@@ -702,8 +720,6 @@ export type CheckoutSessionMode = 'payment' | 'setup';
  */
 export type CheckoutSessionPaymentMethodOptionsCardRequest = {
     /**
-     * Request Extended Authorization
-     *
      * オーソリ期間の延長要求
      *
      * | 指定できる値 |
@@ -712,10 +728,8 @@ export type CheckoutSessionPaymentMethodOptionsCardRequest = {
      * | **must_extend**: オーソリ期間の延長を必須とします。延長できない場合はエラーを返します。 |
      * | **never**: オーソリ期間の延長要求を行いません。 |
      */
-    request_extended_authorization?: 'if_available' | 'must_extend' | 'never';
+    request_extended_authorization?: RequestExtendedAuthorization;
     /**
-     * Request Three D Secure
-     *
      * 3D セキュア認証の要求方法
      *
      * | 指定できる値 |
@@ -723,7 +737,7 @@ export type CheckoutSessionPaymentMethodOptionsCardRequest = {
      * | **any**: 3D セキュア認証を要求します。 |
      * | **automatic**: 必要な場合にのみ 3D セキュア認証を要求します。 |
      */
-    request_three_d_secure?: 'any' | 'automatic';
+    request_three_d_secure?: RequestThreeDSecure;
 };
 
 /**
@@ -941,8 +955,6 @@ export type CustomerUpdateRequest = {
  */
 export type DisplayPreferenceRequest = {
     /**
-     * Preference
-     *
      * この支払い方法がアカウントで有効になっているかどうか
      *
      * | 値 |
@@ -951,7 +963,7 @@ export type DisplayPreferenceRequest = {
      * | **off**: この決済手段を決済画面に表示しない |
      * | **none**: デフォルト設定を使用 |
      */
-    preference: 'none' | 'off' | 'on';
+    preference: PaymentMethodConfigurationPreference;
 };
 
 /**
@@ -1263,8 +1275,6 @@ export type PaymentDisputeStatus = 'pre_warning_needs_response' | 'warning_needs
  */
 export type PaymentFlowCancelRequest = {
     /**
-     * Cancellation Reason
-     *
      * この PaymentFlow のキャンセル理由
      * | 値 |
      * |:---|
@@ -1274,7 +1284,7 @@ export type PaymentFlowCancelRequest = {
      * | **abandoned**: 顧客が支払いを完了しなかった場合。 |
      *
      */
-    cancellation_reason?: 'duplicate' | 'fraudulent' | 'requested_by_customer' | 'abandoned';
+    cancellation_reason?: PaymentFlowCancellationReason;
 };
 
 /**
@@ -1476,8 +1486,6 @@ export type PaymentFlowListResponse = {
  */
 export type PaymentFlowPaymentMethodOptionsCardRequest = {
     /**
-     * Request Extended Authorization
-     *
      * オーソリ期間の延長要求
      *
      * | 値 |
@@ -1486,10 +1494,8 @@ export type PaymentFlowPaymentMethodOptionsCardRequest = {
      * | **must_extend**: オーソリ期間の延長を必須とします。延長できない場合はエラーを返します。 |
      * | **never**: オーソリ期間の延長要求を行いません。 |
      */
-    request_extended_authorization?: 'if_available' | 'must_extend' | 'never';
+    request_extended_authorization?: RequestExtendedAuthorization;
     /**
-     * Request Three D Secure
-     *
      * 3D セキュア認証の要求方法。
      *
      * | 値 |
@@ -1497,7 +1503,7 @@ export type PaymentFlowPaymentMethodOptionsCardRequest = {
      * | **any**: 3D セキュア認証を要求します。 |
      * | **automatic**: 必要な場合にのみ 3D セキュア認証を要求します。 |
      */
-    request_three_d_secure?: 'any' | 'automatic';
+    request_three_d_secure?: RequestThreeDSecure;
 };
 
 /**
@@ -2037,12 +2043,7 @@ export type PaymentMethodCardDetailsResponse = {
      * カードの下4桁
      */
     last4: string;
-    /**
-     * Brand
-     *
-     * カードのブランド
-     */
-    brand: string;
+    brand: CardBrand;
     /**
      * Exp Month
      *
@@ -2064,9 +2065,19 @@ export type PaymentMethodCardDetailsResponse = {
     /**
      * Country
      *
-     * カードの発行国
+     * カードの発行国（ISO 3166-1 alpha-2 の2文字コード）。発行国を判定できない場合は null。テストモードでは JP を返し、<a href="https://docs.pay.jp/v2/guide/developers/testcards#%E6%94%AF%E6%89%95%E3%81%84%E4%BD%9C%E6%88%90%E3%81%8C%E5%8F%AF%E8%83%BD%E3%81%AA%E6%B5%B7%E5%A4%96%E7%99%BA%E8%A1%8C%E3%83%86%E3%82%B9%E3%83%88%E3%82%AB%E3%83%BC%E3%83%89" target="_blank">海外発行テストカード</a>の場合だけ ZZ を返します。
      */
     country: string | null;
+    /**
+     * カードの種別。BIN に基づいて判定するため、実際の種別と異なる場合があります。
+     *
+     * | 値 |
+     * |:---|
+     * | **debit**: デビットカード |
+     * | **prepaid**: プリペイドカード |
+     * | **null**: 上記以外のカード、または種別を判定できないカード |
+     */
+    funding: CardFunding | null;
 };
 
 /**
@@ -2210,8 +2221,6 @@ export type PaymentMethodConfigurationDetailsResponse = {
  */
 export type PaymentMethodConfigurationDisplayPreference = {
     /**
-     * Preference
-     *
      * この支払い方法がアカウントで有効になっているかどうか
      *
      * | 値 |
@@ -2220,10 +2229,8 @@ export type PaymentMethodConfigurationDisplayPreference = {
      * | **off**: この決済手段を決済画面に表示しない |
      * | **none**: デフォルト設定を使用 |
      */
-    preference?: 'none' | 'off' | 'on';
+    preference?: PaymentMethodConfigurationPreference;
     /**
-     * Value
-     *
      * この支払い方法を決済画面に表示するかどうか。
      *
      * | 値 |
@@ -2231,7 +2238,7 @@ export type PaymentMethodConfigurationDisplayPreference = {
      * | **on**: この決済手段を決済画面に表示する |
      * | **off**: この決済手段を決済画面に表示しない |
      */
-    value?: 'off' | 'on';
+    value?: PaymentMethodConfigurationValue;
 };
 
 /**
@@ -2259,6 +2266,11 @@ export type PaymentMethodConfigurationListResponse = {
      */
     data: Array<PaymentMethodConfigurationDetailsResponse>;
 };
+
+/**
+ * PaymentMethodConfigurationPreference
+ */
+export type PaymentMethodConfigurationPreference = 'on' | 'off' | 'none';
 
 /**
  * PaymentMethodConfigurationSettingResponse
@@ -2296,6 +2308,11 @@ export type PaymentMethodConfigurationUpdateRequest = {
     paypay?: PayPayConfigRequest | null;
     apple_pay?: ApplePayConfigRequest | null;
 };
+
+/**
+ * PaymentMethodConfigurationValue
+ */
+export type PaymentMethodConfigurationValue = 'on' | 'off';
 
 /**
  * PaymentMethodCreateCardDetailsRequest
@@ -3020,7 +3037,7 @@ export type ProductCreateRequest = {
     /**
      * Id
      *
-     * 商品 ID
+     * 商品 ID（255文字以内）
      */
     id?: string;
     /**
@@ -3252,6 +3269,16 @@ export type RedirectOptionsResponse = {
 };
 
 /**
+ * RequestExtendedAuthorization
+ */
+export type RequestExtendedAuthorization = 'if_available' | 'must_extend' | 'never';
+
+/**
+ * RequestThreeDSecure
+ */
+export type RequestThreeDSecure = 'any' | 'automatic';
+
+/**
  * SetupFlowCancelRequest
  */
 export type SetupFlowCancelRequest = {
@@ -3374,8 +3401,6 @@ export type SetupFlowListResponse = {
  */
 export type SetupFlowPaymentMethodOptionsCardRequest = {
     /**
-     * Request Three D Secure
-     *
      * 3D セキュア認証の要求方法。
      *
      * | 値 |
@@ -3383,7 +3408,7 @@ export type SetupFlowPaymentMethodOptionsCardRequest = {
      * | **any**: 3D セキュア認証を要求します。 |
      * | **automatic**: 必要な場合にのみ 3D セキュア認証を要求します。 |
      */
-    request_three_d_secure?: 'automatic' | 'any';
+    request_three_d_secure?: RequestThreeDSecure;
 };
 
 /**
@@ -4064,6 +4089,10 @@ export type GetAllPaymentMethodsErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type GetAllPaymentMethodsError = GetAllPaymentMethodsErrors[keyof GetAllPaymentMethodsErrors];
@@ -4097,6 +4126,10 @@ export type CreatePaymentMethodErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type CreatePaymentMethodError = CreatePaymentMethodErrors[keyof CreatePaymentMethodErrors];
@@ -4131,6 +4164,10 @@ export type GetPaymentMethodErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type GetPaymentMethodError = GetPaymentMethodErrors[keyof GetPaymentMethodErrors];
@@ -4169,6 +4206,10 @@ export type UpdatePaymentMethodErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type UpdatePaymentMethodError = UpdatePaymentMethodErrors[keyof UpdatePaymentMethodErrors];
@@ -4203,6 +4244,10 @@ export type GetPaymentMethodByCardErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type GetPaymentMethodByCardError = GetPaymentMethodByCardErrors[keyof GetPaymentMethodByCardErrors];
@@ -4241,6 +4286,10 @@ export type AttachPaymentMethodErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type AttachPaymentMethodError = AttachPaymentMethodErrors[keyof AttachPaymentMethodErrors];
@@ -4279,6 +4328,10 @@ export type DetachPaymentMethodErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type DetachPaymentMethodError = DetachPaymentMethodErrors[keyof DetachPaymentMethodErrors];
@@ -4313,6 +4366,10 @@ export type GetPaymentMethodConfigurationErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type GetPaymentMethodConfigurationError = GetPaymentMethodConfigurationErrors[keyof GetPaymentMethodConfigurationErrors];
@@ -4347,6 +4404,10 @@ export type UpdatePaymentMethodConfigurationErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type UpdatePaymentMethodConfigurationError = UpdatePaymentMethodConfigurationErrors[keyof UpdatePaymentMethodConfigurationErrors];
@@ -4395,6 +4456,10 @@ export type GetAllPaymentMethodConfigurationsErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type GetAllPaymentMethodConfigurationsError = GetAllPaymentMethodConfigurationsErrors[keyof GetAllPaymentMethodConfigurationsErrors];
@@ -4443,6 +4508,10 @@ export type GetAllProductsErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type GetAllProductsError = GetAllProductsErrors[keyof GetAllProductsErrors];
@@ -4472,6 +4541,10 @@ export type CreateProductErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type CreateProductError = CreateProductErrors[keyof CreateProductErrors];
@@ -4510,6 +4583,10 @@ export type DeleteProductErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type DeleteProductError = DeleteProductErrors[keyof DeleteProductErrors];
@@ -4544,6 +4621,10 @@ export type GetProductErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type GetProductError = GetProductErrors[keyof GetProductErrors];
@@ -4582,6 +4663,10 @@ export type UpdateProductErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type UpdateProductError = UpdateProductErrors[keyof UpdateProductErrors];
@@ -4636,6 +4721,10 @@ export type GetAllPricesErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type GetAllPricesError = GetAllPricesErrors[keyof GetAllPricesErrors];
@@ -4665,6 +4754,10 @@ export type CreatePriceErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type CreatePriceError = CreatePriceErrors[keyof CreatePriceErrors];
@@ -4699,6 +4792,10 @@ export type GetPriceErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type GetPriceError = GetPriceErrors[keyof GetPriceErrors];
@@ -4737,6 +4834,10 @@ export type UpdatePriceErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type UpdatePriceError = UpdatePriceErrors[keyof UpdatePriceErrors];
@@ -4771,6 +4872,10 @@ export type GetPaymentFlowErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type GetPaymentFlowError = GetPaymentFlowErrors[keyof GetPaymentFlowErrors];
@@ -4809,6 +4914,10 @@ export type UpdatePaymentFlowErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type UpdatePaymentFlowError = UpdatePaymentFlowErrors[keyof UpdatePaymentFlowErrors];
@@ -4863,6 +4972,10 @@ export type GetAllPaymentFlowsErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type GetAllPaymentFlowsError = GetAllPaymentFlowsErrors[keyof GetAllPaymentFlowsErrors];
@@ -4900,6 +5013,10 @@ export type CreatePaymentFlowErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type CreatePaymentFlowError = CreatePaymentFlowErrors[keyof CreatePaymentFlowErrors];
@@ -4941,6 +5058,10 @@ export type CancelPaymentFlowErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type CancelPaymentFlowError = CancelPaymentFlowErrors[keyof CancelPaymentFlowErrors];
@@ -4986,6 +5107,10 @@ export type CapturePaymentFlowErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type CapturePaymentFlowError = CapturePaymentFlowErrors[keyof CapturePaymentFlowErrors];
@@ -5031,6 +5156,10 @@ export type ConfirmPaymentFlowErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type ConfirmPaymentFlowError = ConfirmPaymentFlowErrors[keyof ConfirmPaymentFlowErrors];
@@ -5088,6 +5217,10 @@ export type GetPaymentFlowRefundsErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type GetPaymentFlowRefundsError = GetPaymentFlowRefundsErrors[keyof GetPaymentFlowRefundsErrors];
@@ -5122,6 +5255,10 @@ export type GetPaymentRefundErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type GetPaymentRefundError = GetPaymentRefundErrors[keyof GetPaymentRefundErrors];
@@ -5160,6 +5297,10 @@ export type UpdatePaymentRefundErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type UpdatePaymentRefundError = UpdatePaymentRefundErrors[keyof UpdatePaymentRefundErrors];
@@ -5208,6 +5349,10 @@ export type GetAllPaymentRefundsErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type GetAllPaymentRefundsError = GetAllPaymentRefundsErrors[keyof GetAllPaymentRefundsErrors];
@@ -5245,6 +5390,10 @@ export type CreatePaymentRefundErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type CreatePaymentRefundError = CreatePaymentRefundErrors[keyof CreatePaymentRefundErrors];
@@ -5279,6 +5428,10 @@ export type GetPaymentDisputeErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type GetPaymentDisputeError = GetPaymentDisputeErrors[keyof GetPaymentDisputeErrors];
@@ -5339,6 +5492,10 @@ export type GetAllPaymentDisputesErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type GetAllPaymentDisputesError = GetAllPaymentDisputesErrors[keyof GetAllPaymentDisputesErrors];
@@ -5373,6 +5530,10 @@ export type GetSetupFlowErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type GetSetupFlowError = GetSetupFlowErrors[keyof GetSetupFlowErrors];
@@ -5411,6 +5572,10 @@ export type UpdateSetupFlowErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type UpdateSetupFlowError = UpdateSetupFlowErrors[keyof UpdateSetupFlowErrors];
@@ -5459,6 +5624,10 @@ export type GetAllSetupFlowsErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type GetAllSetupFlowsError = GetAllSetupFlowsErrors[keyof GetAllSetupFlowsErrors];
@@ -5495,6 +5664,10 @@ export type CreateSetupFlowErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type CreateSetupFlowError = CreateSetupFlowErrors[keyof CreateSetupFlowErrors];
@@ -5536,6 +5709,10 @@ export type CancelSetupFlowErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type CancelSetupFlowError = CancelSetupFlowErrors[keyof CancelSetupFlowErrors];
@@ -5570,6 +5747,10 @@ export type GetStatementErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type GetStatementError = GetStatementErrors[keyof GetStatementErrors];
@@ -5640,6 +5821,10 @@ export type GetAllStatementsErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type GetAllStatementsError = GetAllStatementsErrors[keyof GetAllStatementsErrors];
@@ -5674,6 +5859,10 @@ export type CreateStatementUrlErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type CreateStatementUrlError = CreateStatementUrlErrors[keyof CreateStatementUrlErrors];
@@ -5708,6 +5897,10 @@ export type GetBalanceErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type GetBalanceError = GetBalanceErrors[keyof GetBalanceErrors];
@@ -5790,6 +5983,10 @@ export type GetAllBalancesErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type GetAllBalancesError = GetAllBalancesErrors[keyof GetAllBalancesErrors];
@@ -5824,6 +6021,10 @@ export type CreateBalanceUrlErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type CreateBalanceUrlError = CreateBalanceUrlErrors[keyof CreateBalanceUrlErrors];
@@ -5872,6 +6073,10 @@ export type GetAllCheckoutSessionsErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type GetAllCheckoutSessionsError = GetAllCheckoutSessionsErrors[keyof GetAllCheckoutSessionsErrors];
@@ -5901,6 +6106,10 @@ export type CreateCheckoutSessionErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type CreateCheckoutSessionError = CreateCheckoutSessionErrors[keyof CreateCheckoutSessionErrors];
@@ -5935,6 +6144,10 @@ export type GetCheckoutSessionErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type GetCheckoutSessionError = GetCheckoutSessionErrors[keyof GetCheckoutSessionErrors];
@@ -5973,6 +6186,10 @@ export type UpdateCheckoutSessionErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type UpdateCheckoutSessionError = UpdateCheckoutSessionErrors[keyof UpdateCheckoutSessionErrors];
@@ -6011,6 +6228,10 @@ export type ExpireCheckoutSessionErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type ExpireCheckoutSessionError = ExpireCheckoutSessionErrors[keyof ExpireCheckoutSessionErrors];
@@ -6068,6 +6289,10 @@ export type GetAllCheckoutSessionLineItemsErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type GetAllCheckoutSessionLineItemsError = GetAllCheckoutSessionLineItemsErrors[keyof GetAllCheckoutSessionLineItemsErrors];
@@ -6128,6 +6353,10 @@ export type GetAllTaxRatesErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type GetAllTaxRatesError = GetAllTaxRatesErrors[keyof GetAllTaxRatesErrors];
@@ -6153,6 +6382,10 @@ export type CreateTaxRateErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type CreateTaxRateError = CreateTaxRateErrors[keyof CreateTaxRateErrors];
@@ -6187,6 +6420,10 @@ export type GetTaxRateErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type GetTaxRateError = GetTaxRateErrors[keyof GetTaxRateErrors];
@@ -6225,6 +6462,10 @@ export type UpdateTaxRateErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type UpdateTaxRateError = UpdateTaxRateErrors[keyof UpdateTaxRateErrors];
@@ -6273,6 +6514,10 @@ export type GetAllCustomersErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type GetAllCustomersError = GetAllCustomersErrors[keyof GetAllCustomersErrors];
@@ -6306,6 +6551,10 @@ export type CreateCustomerErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type CreateCustomerError = CreateCustomerErrors[keyof CreateCustomerErrors];
@@ -6340,6 +6589,10 @@ export type DeleteCustomerErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type DeleteCustomerError = DeleteCustomerErrors[keyof DeleteCustomerErrors];
@@ -6374,6 +6627,10 @@ export type GetCustomerErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type GetCustomerError = GetCustomerErrors[keyof GetCustomerErrors];
@@ -6412,6 +6669,10 @@ export type UpdateCustomerErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type UpdateCustomerError = UpdateCustomerErrors[keyof UpdateCustomerErrors];
@@ -6469,6 +6730,10 @@ export type GetCustomerPaymentMethodsErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type GetCustomerPaymentMethodsError = GetCustomerPaymentMethodsErrors[keyof GetCustomerPaymentMethodsErrors];
@@ -6535,6 +6800,10 @@ export type GetAllEventsErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type GetAllEventsError = GetAllEventsErrors[keyof GetAllEventsErrors];
@@ -6569,6 +6838,10 @@ export type GetEventErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type GetEventError = GetEventErrors[keyof GetEventErrors];
@@ -6603,6 +6876,10 @@ export type GetPaymentTransactionErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type GetPaymentTransactionError = GetPaymentTransactionErrors[keyof GetPaymentTransactionErrors];
@@ -6649,13 +6926,13 @@ export type GetAllPaymentTransactionsData = {
          *
          * 取引タイプ
          */
-        type?: string;
+        type?: PaymentTransactionType | null;
         /**
          * Payment Method Type
          *
          * 支払い方法タイプ
          */
-        payment_method_type?: string;
+        payment_method_type?: PaymentMethodTypes | null;
     };
     url: '/v2/payment_transactions';
 };
@@ -6673,6 +6950,10 @@ export type GetAllPaymentTransactionsErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type GetAllPaymentTransactionsError = GetAllPaymentTransactionsErrors[keyof GetAllPaymentTransactionsErrors];
@@ -6707,6 +6988,10 @@ export type GetTermErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type GetTermError = GetTermErrors[keyof GetTermErrors];
@@ -6767,6 +7052,10 @@ export type GetAllTermsErrors = {
      * Validation Error
      */
     422: ErrorResponse;
+    /**
+     * Too Many Requests
+     */
+    429: ErrorResponse;
 };
 
 export type GetAllTermsError = GetAllTermsErrors[keyof GetAllTermsErrors];
