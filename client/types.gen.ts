@@ -1706,39 +1706,39 @@ export type PaymentFlowUpdateRequest = {
     /**
      * Amount
      *
-     * 支払い予定の金額。50円以上9,999,999円以下である必要があります。
+     * 支払い予定の金額。50円以上9,999,999円以下である必要があります。status が requires_payment_method または requires_confirmation のときのみ指定できます。
      */
     amount?: number;
     /**
      * Customer Id
      *
-     * この PaymentFlow に関連付ける顧客の ID
+     * この PaymentFlow に関連付ける顧客の ID。status が requires_payment_method または requires_confirmation のときのみ指定できます。
      */
     customer_id?: string;
     /**
      * Payment Method Id
      *
-     * 支払い方法 ID。customer_id の指定が必須です。Customer が所持する PaymentMethod のみ指定できます。payment_method_id を指定せず、Customer に default_payment_method_id が設定されている場合はそちらが自動でセットされます。
+     * 支払い方法 ID。customer_id の指定が必須です。Customer が所持する PaymentMethod のみ指定できます。payment_method_id を指定せず、Customer に default_payment_method_id が設定されている場合はそちらが自動でセットされます。status が requires_payment_method または requires_confirmation のときのみ指定できます。
      */
     payment_method_id?: string;
     /**
-     * この PaymentFlow 固有の支払い方法の設定
+     * この PaymentFlow 固有の支払い方法の設定。status が requires_payment_method または requires_confirmation のときのみ指定できます。
      */
     payment_method_options?: PaymentFlowPaymentMethodOptionsRequest;
     /**
      * Payment Method Types
      *
-     * この PaymentFlow で使用できる支払い方法の種類のリスト。指定しない場合は、PAY.JP は支払い方法の設定から利用可能な支払い方法を動的に表示します。
+     * この PaymentFlow で使用できる支払い方法の種類のリスト。指定しない場合は、PAY.JP は支払い方法の設定から利用可能な支払い方法を動的に表示します。status が requires_payment_method または requires_confirmation のときのみ指定できます。
      */
     payment_method_types?: Array<PaymentMethodTypes>;
     /**
      * Return Url
      *
-     * 顧客が支払いを完了後かキャンセルした後にリダイレクトされる URL。アプリにリダイレクトしたい場合は URI Scheme を指定できます。
+     * 顧客が支払いを完了後かキャンセルした後にリダイレクトされる URL。アプリにリダイレクトしたい場合は URI Scheme を指定できます。status が requires_payment_method または requires_confirmation のときのみ指定できます。
      */
     return_url?: string;
     /**
-     * return_url へリダイレクトする際のオプション
+     * return_url へリダイレクトする際のオプション。status が requires_payment_method または requires_confirmation のときのみ指定できます。
      */
     redirect_options?: RedirectOptionsRequest;
     /**
@@ -3563,21 +3563,21 @@ export type SetupFlowUpdateRequest = {
     /**
      * Customer Id
      *
-     * この SetupFlow に関連付ける顧客の ID。SetupFlow により作られた PaymentMethod はこの顧客に紐付きます。
+     * この SetupFlow に関連付ける顧客の ID。SetupFlow により作られた PaymentMethod はこの顧客に紐付きます。status が requires_payment_method または requires_confirmation のときのみ指定できます。
      */
     customer_id?: string;
     /**
-     * この SetupFlow 固有の支払い方法の設定
+     * この SetupFlow 固有の支払い方法の設定。status が requires_payment_method または requires_confirmation のときのみ指定できます。
      */
     payment_method_options?: SetupFlowPaymentMethodOptionsRequest;
     /**
      * Payment Method Types
      *
-     * この SetupFlow で使用できる支払い方法の種類のリスト。 指定しない場合は、PAY.JP は支払い方法の設定から利用可能な支払い方法を動的に表示します。
+     * この SetupFlow で使用できる支払い方法の種類のリスト。指定しない場合は、PAY.JP は支払い方法の設定から利用可能な支払い方法を動的に表示します。status が requires_payment_method または requires_confirmation のときのみ指定できます。
      */
     payment_method_types?: Array<'card'>;
     /**
-     * return_url へリダイレクトする際のオプション
+     * return_url へリダイレクトする際のオプション。status が requires_payment_method または requires_confirmation のときのみ指定できます。
      */
     redirect_options?: RedirectOptionsRequest;
     /**
@@ -4903,7 +4903,7 @@ export type UpdatePaymentFlowData = {
 
 export type UpdatePaymentFlowErrors = {
     /**
-     * Invalid Status<br>Detached Payment Method Not Usable<br>Payment Method Not Owned By Customer<br>Payment Method Type Not Allowed<br>Metadata Limit Exceeded
+     * Fields Not Updatable In Current Status<br>Detached Payment Method Not Usable<br>Payment Method Not Owned By Customer<br>Payment Method Type Not Allowed<br>Metadata Limit Exceeded
      */
     400: ErrorResponse;
     /**
@@ -5047,7 +5047,7 @@ export type CancelPaymentFlowData = {
 
 export type CancelPaymentFlowErrors = {
     /**
-     * Invalid Status
+     * Invalid Status<br>Payment Flow Not Cancelable
      */
     400: ErrorResponse;
     /**
@@ -5561,7 +5561,7 @@ export type UpdateSetupFlowData = {
 
 export type UpdateSetupFlowErrors = {
     /**
-     * Invalid Status<br>Detached Payment Method Not Usable<br>Metadata Limit Exceeded
+     * Fields Not Updatable In Current Status<br>Detached Payment Method Not Usable<br>Metadata Limit Exceeded
      */
     400: ErrorResponse;
     /**
@@ -5611,6 +5611,12 @@ export type GetAllSetupFlowsData = {
          * このIDより前のデータを取得
          */
         ending_before?: string;
+        /**
+         * Customer Id
+         *
+         * 指定した顧客のデータのみを取得
+         */
+        customer_id?: string;
     };
     url: '/v2/setup_flows';
 };
